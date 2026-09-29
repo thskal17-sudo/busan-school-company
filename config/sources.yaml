@@ -966,6 +966,36 @@ sources:
       date_selector: ".txt2 span"
       org_name: 해운대여성인력개발센터
 
+  - id: donggu_woman_notice
+    name: 동구여성인력개발센터 - 공지사항
+    org_type: 여성·가족
+    district: 동구
+    collector: generic_board
+    url: http://www.ewoman.or.kr/p/?j=41  # https 는 인증서 이름이 맞지 않아 http 로 읽는다
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bbs_uid
+      org_name: 동구여성인력개발센터
+
+  - id: saha_woman_notice
+    name: 사하여성인력개발센터 - 공지사항
+    org_type: 여성·가족
+    district: 사하구
+    collector: generic_board
+    url: https://www.sahawcenter.or.kr/sub5/sub1.aspx
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: b
+      org_name: 사하여성인력개발센터
+
   - id: sasang_woman
     name: 사상여성인력개발센터
     org_type: 여성·가족
@@ -1085,5 +1115,5 @@ sources:
   #   → 중구·북구·기장군은 위의 구청 일자리 게시판으로, 강서구는 새올 고시공고 전체(gangseo_gosi)로 대신 받는다
   # - 부산시청 채용공고(nbincruit): 분야별 통합 채용정보(city_jobs)와 같은 글
   # - 부산교육청 공지사항·늘봄지원센터 공지: 강사 모집이 아닌 안내 글, 교육공무직원 채용(ginsa.pen.go.kr): 조리실무사 등
-  # - 여성회관 강사초빙: 목록이 비어 있는 안내 화면. 여성인력개발센터(부산진·동래·사상·해운대): 첫 화면·스크립트 목록이라 보류
+  # - 여성회관 강사초빙: 목록이 비어 있는 안내 화면
   # - 부산디자인진흥원·부산정보산업진흥원: 정규 직원 채용만 올라옴
