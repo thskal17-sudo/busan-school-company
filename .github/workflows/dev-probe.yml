@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        attempt: [1, 2, 3]  # 러너가 달라지면(지역) 해외 차단 사이트가 열리는지 보려고 세 번
+        attempt: [1]
     env:
       PYTHONPATH: src
       PYTHONUNBUFFERED: "1"
