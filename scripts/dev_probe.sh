@@ -1,20 +1,12 @@
 #!/usr/bin/env bash
-# (임시) 청소년상담복지센터 2차: 나머지 센터 첫 화면 + 찾은 게시판 목록
+# (임시) 청소년상담복지센터 3차: 새 소스 목록 확인 + 해운대 AJAX 목록·기장·서구
 f() { python scripts/dev_fetch.py "$@" || true; }
-f cando_notice "http://www.cando.or.kr/bbs/board.php?bo_table=notice"
-f cando_recruit "http://www.cando.or.kr/bbs/board.php?bo_table=recruit"
-f bsjin_notice "https://www.bsjin1388.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME"
-f haeundae_notice "http://u-dream.or.kr/04/01.php"
-f bukgu_notice2 "https://www.bsbukgu.go.kr/youth/index.bsbukgu?menuCd=DOM_000000904001000000"
-f geumjeong "http://www.gjyouth1388.or.kr/"
-f gijang "http://gijangcmc.or.kr/1388/main/main.asp"
-f namgu "http://www.namgu1388.kr/"
-f donggu "http://bsdg1388.kr/"
-f dongnae "http://www.1388youth.kr/"
-f sasang "http://sasang1388.kr/"
-f saha "http://www.saha1388.kr/"
-f seogu "http://www.flyseogu1388.or.kr/"
-f suyeong "http://meetyou.kr/"
-f yeongdo "http://www.busanyouth.or.kr/"
-f junggu "http://www.junggu1388.or.kr/"
-f yeonje "http://www.yeonje1388.or.kr/"
+f udream_list_post "http://u-dream.or.kr/04/01.php?mode=list_ok&skind=&skey=&search=&page=1" "post:"
+f udream_view "http://u-dream.or.kr/04/01.php?mode=view&uid=1"
+f gijang1388 "https://www.gijangcmc.or.kr/1388/main/main.asp"
+f seogu_https "https://www.flyseogu1388.or.kr/" ua
+f seogu_ua "http://www.flyseogu1388.or.kr/" ua
+f namgu_notice "https://www.namgu1388.kr/notice"
+f meetyou_notice "http://meetyou.kr/community/notice/"
+IDS="cando_notice cando_recruit gjyouth1388_notice namgu1388_notice bukgu1388_notice saha1388_notice meetyou_notice yeongdo1388_notice bsjin1388_notice udream_notice yeonje1388_notice"
+python -m busan_jobs check-source $IDS 2>&1 | tee probe_out/_check.txt | grep -E "^===|목록|오류"

@@ -1227,6 +1227,170 @@ sources:
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 해운대청소년문화의집
 
+  # 청소년상담복지센터 (부산광역시청소년상담복지센터 '부산지역 청소년상담복지센터' 목록의 16곳). 집단상담·예방교육 강사 모집과 직원 채용이 공지사항에 올라온다
+  - id: cando_notice
+    name: 부산광역시청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 부산전체
+    collector: generic_board
+    url: http://www.cando.or.kr/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산광역시청소년상담복지센터
+  - id: cando_recruit
+    name: 부산광역시청소년상담복지센터 - 채용정보
+    org_type: 청소년
+    district: 부산전체
+    collector: generic_board
+    url: http://www.cando.or.kr/bbs/board.php?bo_table=recruit
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산광역시청소년상담복지센터
+  - id: gjyouth1388_notice
+    name: 금정구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 금정구
+    collector: generic_board
+    url: https://www.gjyouth1388.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 금정구청소년상담복지센터
+  - id: namgu1388_notice
+    name: 남구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 남구
+    collector: generic_board
+    url: https://www.namgu1388.kr/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 남구청소년상담복지센터
+  - id: bukgu1388_notice
+    name: 북구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 북구
+    collector: generic_board
+    # 북구청 누리집 안의 센터 게시판
+    url: https://www.bsbukgu.go.kr/youth/board/list.bsbukgu?boardId=BBS_0000064&menuCd=DOM_000000904001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 북구청소년상담복지센터
+  - id: saha1388_notice
+    name: 사하구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 사하구
+    collector: generic_board
+    url: https://saha1388.kr/bbs/board.php?bo_table=center_notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 사하구청소년상담복지센터
+  - id: meetyou_notice
+    name: 수영구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 수영구
+    collector: generic_board
+    url: http://meetyou.kr/community/notice/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 수영구청소년상담복지센터
+  - id: yeongdo1388_notice
+    name: 영도구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 영도구
+    collector: generic_board
+    # busanyouth.or.kr (청소년활동진흥센터 busanyouth.net 과 다른 곳)
+    url: http://www.busanyouth.or.kr/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 영도구청소년상담복지센터
+  - id: bsjin1388_notice
+    name: 부산진구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 부산진구
+    collector: generic_board
+    url: https://www.bsjin1388.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산진구청소년상담복지센터
+  - id: udream_notice
+    name: 해운대구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 해운대구
+    collector: generic_board
+    # 공지 목록은 화면이 AJAX 로 불러오는 주소(mode=list_ok)를 바로 받는다
+    url: http://u-dream.or.kr/04/01.php?mode=list_ok&skind=&skey=&search=&page=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 해운대구청소년상담복지센터
+  - id: yeonje1388_notice
+    name: 연제구청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 연제구
+    collector: generic_board
+    url: https://www.yeonje1388.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 연제구청소년상담복지센터
+
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항
     org_type: 청소년
