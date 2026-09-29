@@ -53,6 +53,7 @@ _PERSON = re.compile(r"[가-힣]{2,4}")
 _ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
 # 제목 속 학교·유치원 이름 (작성자가 사람 이름인 교육청 게시판에서 기관명으로 씀)
 _SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|(?<!방과후)학교(?!밖)|유치원)")  # '통합방과후학교'·'학교밖'은 빼고
+_GENERIC_SCHOOLS = {"초등학교", "중학교", "고등학교", "대학교"}  # '검정고시 고등학교' 처럼 이름 없이 쓴 말
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
@@ -180,6 +181,21 @@ def _clean(text: str | None) -> str:
     return re.sub(r"\s+", " ", _HIDDEN_CHARS.sub("", text or "")).strip()
 
 
+def _list_date(text: str, today: date) -> date | None:
+    """목록 날짜 칸. 연도 없는 '09-03'(그누보드 기본 목록)은 오늘 이전의 가장 가까운 날로 본다."""
+    m = re.fullmatch(r"\s*(\d{1,2})-(\d{1,2})\s*", text or "")
+    if not m:
+        return parse_date(text, today)
+    for year in (today.year, today.year - 1):
+        try:
+            d = date(year, int(m.group(1)), int(m.group(2)))
+        except ValueError:
+            continue
+        if d <= today:
+            return d
+    return None
+
+
 def _org_name(raw: str, title: str) -> str:
     """작성자·부서 칸의 값을 기관명으로. 사람 이름·관리자·가린 이름(일*과)이면 제목 속 학교 이름, 그것도 없으면 빈 값."""
     org = re.sub(r"^ou=", "", raw)
@@ -187,7 +203,7 @@ def _org_name(raw: str, title: str) -> str:
         org = ""
     if not org:
         m = _SCHOOL.search(re.sub(r"(19|20)\d{2}\s*(학년도|년도|년)", " ", title))
-        org = m.group(0) if m else ""
+        org = m.group(0) if m and m.group(0) not in _GENERIC_SCHOOLS else ""
     return org
 
 
@@ -358,7 +374,7 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             label = headers[col[role]]
             return text[len(label):].strip() if label and text.startswith(label + " ") else text
 
-        posted = parse_date(cell("posted"), today)
+        posted = _list_date(cell("posted"), today)
         if posted is None:
             for td in tds:
                 if td is not title_td and has_full_date(td.get_text()):

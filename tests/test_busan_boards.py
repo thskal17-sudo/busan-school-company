@@ -8,7 +8,7 @@ from urllib.parse import parse_qs, urlsplit
 import pytest
 
 from busan_jobs.classify import judge
-from busan_jobs.collectors.board import _org_name, parse_board, stable_key
+from busan_jobs.collectors.board import _list_date, _org_name, parse_board, stable_key
 from busan_jobs.config import load_settings, source_rules
 
 TODAY = date(2026, 9, 29)
@@ -125,6 +125,7 @@ def test_list_board_with_selectors(fixture_bytes):
         ("문화의집관리자", "", ""),  # 관리자 계정 이름
         ("", "[모집] 부산진구통합방과후학교 안전도우미 인력 모집 공고", ""),  # 방과후학교는 사업 이름
         ("", "2026학년도 우암초등학교 방과후학교 강사 모집", "우암초등학교"),
+        ("", "2026년 학교 밖 청소년 고등학교 검정고시 합격축하금 지원 사업 안내", ""),  # 이름 없는 '고등학교'
         ("", "2026년 사상구학교밖청소년지원센터 신규 학교밖청소년 모집", ""),  # '학교밖'은 학교 이름이 아님
     ],
 )
@@ -239,3 +240,39 @@ def test_onclick_board_with_pc_and_mobile_lists(fixture_bytes):
     # 중구청소년문화의집: 같은 목록이 <div id="only_pc">·<div id="only_mobile"> 에 두 번 → PC 쪽만 (날짜 칸이 있음)
     rows = rows_of(fixture_bytes, "purun1318_notice", "busan_purun1318_notice.html")
     assert [(r.key, r.posted) for r in rows] == [("1672", date(2026, 6, 30)), ("1647", date(2026, 4, 7))]
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("09-03", date(2026, 9, 3)),
+        ("11-18", date(2025, 11, 18)),  # 오늘(9/29)보다 뒤 → 작년 글
+        ("09-29", date(2026, 9, 29)),
+        ("2026-04-02", date(2026, 4, 2)),
+        ("10:57", None),  # 오늘 글은 시각만
+    ],
+)
+def test_list_date_without_year(text, expected):
+    # 그누보드 기본 목록(남구청소년상담복지센터)은 날짜를 '09-03' 으로만 보여 준다
+    assert _list_date(text, TODAY) == expected
+
+
+def test_ajax_list_with_js_form_links(fixture_bytes, rules):
+    # 해운대구청소년상담복지센터: 화면이 AJAX 로 불러오는 목록(mode=list_ok)을 바로 받고,
+    # 제목 링크 onclick="view('270')" (GET 폼 제출) → link_template 로 mode=view&uid=270
+    rows = rows_of(fixture_bytes, "udream_notice", "busan_udream_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("267", date(2026, 9, 9)), ("270", date(2026, 9, 23)), ("258", date(2026, 1, 27)),
+    ]
+    assert rows[2].url == "http://u-dream.or.kr/04/01.php?mode=view&uid=258" and rows[2].detail_ok
+    narrow = source_rules(rules, SOURCES["udream_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None, "모집중"]  # '전문강사 모집 공고'만
+
+
+def test_gnuboard_li_list(fixture_bytes):
+    # 사하구청소년상담복지센터: 그누보드인데 표가 아닌 <li class="gw_tb_tr"> 목록
+    rows = rows_of(fixture_bytes, "saha1388_notice", "busan_saha1388_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("186", date(2026, 7, 24)), ("189", date(2026, 9, 2)), ("188", date(2026, 8, 31)),
+    ]
+    assert rows[1].title == "2026년 학교 밖 청소년 수학여행 지원사업 수의계약 내역 공개"
