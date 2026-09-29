@@ -885,7 +885,178 @@ sources:
     verified: true
     options:
       key_param: intnum
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]  # '예비청소년지도자 연수'·'방과후아카데미 청소년 모집' 은 거름
       org_name: 부산청소년활동진흥센터
+
+  - id: busanyouth_hire
+    name: 부산청소년활동진흥센터 - 채용정보 (부산 청소년시설 채용 모음)
+    org_type: 청소년
+    district: 부산전체
+    collector: generic_board
+    # 청소년수련관·문화의집·청소년센터·상담복지센터 등의 채용 공고가 모인다 (직원 채용이 대부분)
+    url: https://www.busanyouth.net/sub/template.php?midx=138
+    pages: 2
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      page_param: page
+      # <div class="newsBlist"><ul><li>: 제목 칸에 기관 이름이 먼저 나오고, '바로가기'는 u_re('글번호','실제 공고 주소')
+      row_selector: "div.newsBlist > ul > li"
+      title_selector: ".tit"
+      org_selector: ".tit > span"
+      date_selector: ".date"
+      link_template: "{1}"
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]  # '청소년지도사 채용'(직원)은 거름
+
+  # 청소년수련관 (부산청소년활동진흥센터 '부산 청소년 시설' 현황의 청소년수련관 9곳). 강사 모집은 각 수련관 공지·채용 게시판에 올라온다.
+  # 청소년 기관 게시판에는 '청소년지도사 채용'(직원)·'방과후아카데미 청소년 모집'(학생) 글이 많아 포함 키워드를 강사·코치로 좁힌다
+  - id: youthcool_notice
+    name: 금정청소년수련관 - 공지사항
+    org_type: 청소년
+    district: 금정구
+    collector: generic_board
+    url: https://www.youthcool.or.kr/SW_bbs/notice/list.php?zipEncode==atpLrxydrMCH9MyMu2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산광역시금정청소년수련관
+
+  - id: onnainna_hire
+    name: 동래구청소년센터 - 채용공고
+    org_type: 청소년
+    district: 동래구
+    collector: generic_board
+    url: https://www.onnainna.kr/community/employment_board
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 동래구청소년센터
+
+  - id: onnainna_notice
+    name: 동래구청소년센터 - 공지사항
+    org_type: 청소년
+    district: 동래구
+    collector: generic_board
+    url: https://www.onnainna.kr/community/notice_board
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 동래구청소년센터
+
+  - id: power0924_notice
+    name: 양정청소년수련관 - 공지사항
+    org_type: 청소년
+    district: 부산진구
+    collector: generic_board
+    url: https://www.power0924.org/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산광역시양정청소년수련관
+
+  - id: kumgok_notice
+    name: 금곡청소년수련관 - 공지사항
+    org_type: 청소년
+    district: 북구
+    collector: generic_board
+    url: http://kum-gok.or.kr/p41.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산광역시금곡청소년수련관
+
+  - id: yzzang_hire
+    name: 사상구청소년센터 - 채용안내
+    org_type: 청소년
+    district: 사상구
+    collector: generic_board
+    url: https://www.yzzang.com/sb55.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 사상구청소년센터
+
+  - id: yzzang_notice
+    name: 사상구청소년센터 - 공지사항
+    org_type: 청소년
+    district: 사상구
+    collector: generic_board
+    url: https://www.yzzang.com/sb51.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 사상구청소년센터
+
+  - id: gudeok_notice
+    name: 구덕청소년수련관 - 공지사항
+    org_type: 청소년
+    district: 서구
+    collector: generic_board
+    url: https://gudeok.or.kr/sb51.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 구덕청소년수련관
+
+  - id: ymcahy_notice
+    name: 해운대청소년수련관 - 공지사항
+    org_type: 청소년
+    district: 해운대구
+    collector: generic_board
+    url: http://www.ymcahy.or.kr/bbs/board.php?bo_table=notice
+    keyword_filter: true
+    phase: 3
+    enabled: false
+    verified: false
+    blocked: 해외(GitHub 러너)에서 접속 시간 초과 (http·https 모두, 2026-09-29 세 번). 채용 공고는 청소년활동진흥센터 채용정보(busanyouth_hire)에도 올라옴
 
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항

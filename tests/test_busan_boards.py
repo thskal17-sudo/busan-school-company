@@ -122,6 +122,7 @@ def test_list_board_with_selectors(fixture_bytes):
         ("서구청", "", "서구청"),
         ("일*과", "", ""),  # 가린 이름
         ("관리자", "부산정관늘봄전용학교 강사 모집", "부산정관늘봄전용학교"),
+        ("", "2026년 사상구학교밖청소년지원센터 신규 학교밖청소년 모집", ""),  # '학교밖'은 학교 이름이 아님
     ],
 )
 def test_org_name(raw, title, expected):
@@ -181,3 +182,39 @@ def test_women_center_board_with_private_posts(fixture_bytes, rules):
     assert [r.key for r in rows[:2]] == ["199", "187"]
     assert rows[0].title == "(동구새일) 직업상담사 채용공고(직업상담사, 육아휴직대체근무자)"
     assert judge(rows[2].title, rules, True) is None
+
+
+def test_youth_hire_list_strips_org_from_title(fixture_bytes, rules):
+    # 부산청소년활동진흥센터 채용정보: <li><span class="tit"><span>기관</span> 제목</span>, 바로가기는 u_re('글번호','공고 주소')
+    rows = rows_of(fixture_bytes, "busanyouth_hire", "busan_busanyouth_hire.html")
+    r = rows[2]
+    assert r.title == "2026년 해운대청소년수련관 청소년활동팀 팀원 채용 공고" and r.org == "해운대청소년수련관"
+    assert r.key == "234760" and r.posted == date(2026, 9, 8)
+    assert r.url.startswith("https://www.work24.go.kr/wk/a/b/1500/empDetailAuthView.do?wantedAuthNo=K130112609080079")
+    assert rows[0].org == "동래구청소년지원센터꿈드림"
+    # 직원 채용은 청소년 기관용 포함 키워드(강사·코치·활동지도자 등)에 걸리지 않는다
+    narrow = source_rules(rules, SOURCES["busanyouth_hire"])
+    assert all(judge(r.title, narrow, True) is None for r in rows)
+
+
+def test_youth_center_onclick_board(fixture_bytes, rules):
+    # 사상구청소년센터(금곡·구덕과 같은 제작사): 제목 칸 <td onclick="location.href='/sb55.php?md=V&idx=…'">,
+    # 위쪽 메뉴 표도 td onclick 이라 row_selector 로 게시판 줄만 고른다
+    rows = rows_of(fixture_bytes, "yzzang_hire", "busan_yzzang_hire.html")
+    assert [r.key for r in rows] == ["1810", "1784", "1768", "1757"]
+    r = rows[2]
+    assert r.title == "긴급) 주말방과후아카데미 활동지도자 채용 공고" and r.posted == date(2026, 8, 4)
+    assert r.url.startswith("https://www.yzzang.com/sb55.php?md=V&idx=1768")
+    narrow = source_rules(rules, SOURCES["yzzang_hire"])
+    verdicts = [judge(r.title, narrow, True) for r in rows]
+    assert verdicts == [None, None, "모집중", None]  # 아르바이트·학교밖센터 직원·최종합격자 안내는 거름
+    assert judge(rows[1].title, narrow, True, keep_results=True) == "결과공고"
+
+
+def test_youth_notice_keywords(rules):
+    narrow = source_rules(rules, SOURCES["busanyouth_notice"])
+    assert judge("[모집]2026년 청소년자원봉사 신규 교육강사", narrow, True) == "모집중"
+    assert judge("주말형청소년방과후아카데미 음악(기타/베이스/드럼), 뉴스포츠 강사 모집 공고", narrow, True) == "모집중"
+    assert judge("2026 청소년방과후아카데미 신규 청소년 모집", narrow, True) is None
+    assert judge("청소년지도사 채용 공고", narrow, True) is None
+    assert judge("방과후과정 지원 자원봉사자 모집", rules, True) is None

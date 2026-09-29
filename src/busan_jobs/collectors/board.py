@@ -18,7 +18,7 @@ options (모두 선택)
                     link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
     title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때)
     date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로
-    org_selector    행 안의 기관명 요소
+    org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
 """
 from __future__ import annotations
@@ -50,10 +50,11 @@ _NOT_ORG = re.compile(r"^(관리자|담당자|admin|운영자|홈페이지|-)?$"
 _PERSON = re.compile(r"[가-힣]{2,4}")
 _ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
 # 제목 속 학교·유치원 이름 (작성자가 사람 이름인 교육청 게시판에서 기관명으로 씀)
-_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교|유치원)")
+_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교(?!밖)|유치원)")
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
+_LOCATION_HREF = re.compile(r"""location\.href\s*=\s*['"]([^'"]+)['"]""")
 
 
 @dataclass
@@ -368,7 +369,10 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             posted = parse_date(date_text, today) or posted
             if re.search(r"[~∼～]", date_text):
                 deadline = extract_deadline(date_text, today) or deadline
-        org = _org_name(_select_text(tr, opts.get("org_selector")) or cell("org"), title)
+        picked_org = _select_text(tr, opts.get("org_selector"))
+        if picked_org and title.startswith(picked_org + " ") and len(title) > len(picked_org) + 5:
+            title = title[len(picked_org) + 1:]  # 제목 칸 안에 기관 이름이 먼저 나오는 목록 (청소년활동진흥센터 채용정보)
+        org = _org_name(picked_org or cell("org"), title)
         out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), cell("district")))
     return out
 
@@ -397,6 +401,12 @@ def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tupl
         value = str(anchor.get(attr)).strip()
         url = template.format(value) if template else urljoin(base_url, value)
         return url, key_from(url, value), True
+
+    # onclick="location.href='/p41.php?md=V&idx=22387'" (금곡·사상·구덕 청소년수련관): 주소를 그대로 쓴다
+    m = _LOCATION_HREF.search(onclick)
+    if m and not (href and not href.lower().startswith("javascript") and not href.startswith("#")):
+        url = urljoin(base_url, m.group(1))
+        return url, key_from(url, stable_key(url)), True
 
     # link_template 이 있고 onclick 에 인자가 있으면 href 보다 우선
     # (남구 평생학습: href="/edu/board/eduBoard/view.do" + onclick="goBoardArticle('534458')")
