@@ -11,7 +11,6 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-from urllib.parse import urlsplit
 
 from .classify import judge
 from .collectors import COLLECTORS, NotConfigured
@@ -74,8 +73,8 @@ def cmd_check_source(args) -> int:
         if cls is None:
             print(f"    수집기 '{src.collector}' 미구현")
             continue
-        if src.options.get("legacy_tls") and src.url:
-            http.allow_legacy_tls(urlsplit(src.url).hostname or "")
+        if src.url:
+            http.setup_host(src.url, src.options)
         collector = cls(src, http, today)
         try:
             items = collector.collect()

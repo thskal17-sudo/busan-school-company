@@ -83,3 +83,17 @@ def test_connect_wait_is_bounded(http):
     assert calls[0][1] == (10.0, 20.0)
     retry = client.session.get_adapter("https://up.example/").max_retries
     assert retry.connect == 1
+
+
+def test_short_headers_drop_accept_language(monkeypatch):
+    # 부산 남구·사상구 새올: 머리글이 길면 400 → 이 호스트만 Accept-Language 를 빼고 보낸다
+    client = Http(min_interval=0)
+    sent = []
+    monkeypatch.setattr(client.session, "request", lambda method, url, **kw: sent.append((url, kw.get("headers"))) or _Resp())
+    client.setup_host("https://eminwon.bsnamgu.go.kr/emwp/list", {"short_headers": True})
+    client.get("https://eminwon.bsnamgu.go.kr/emwp/view")
+    client.get("https://eminwon.saha.go.kr/emwp/view")
+    assert sent == [
+        ("https://eminwon.bsnamgu.go.kr/emwp/view", {"Accept-Language": None}),
+        ("https://eminwon.saha.go.kr/emwp/view", None),
+    ]

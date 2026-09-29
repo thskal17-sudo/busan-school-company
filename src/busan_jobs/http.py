@@ -9,6 +9,9 @@ Access) 항목에서 중간 인증서를 내려받아 신뢰 목록(certifi)에 
 기본값으로는 연결 자체가 안 된다. sources.yaml 에서 legacy_tls: true 로 지정한 호스트에 한해
 암호 강도 하한만 낮춘 연결을 쓴다 (인증서 검증은 그대로).
 
+일부 새올 서버(부산 남구·사상구)는 요청 머리글이 길면 '400 Bad Request (missing ':' separator)' 를 돌려준다.
+sources.yaml 에서 short_headers: true 로 지정한 호스트에는 Accept-Language 머리글을 빼고 보낸다.
+
 접속 자체가 안 되는 서버(해외 접속 차단·장애)는 기다리는 시간이 전체 실행 시간을 잡아먹는다.
 연결 대기는 10초씩 두 번까지만 하고, 한 번 접속에 실패한 서버는 같은 실행 안에서 다시 기다리지
 않고 바로 실패시킨다 (같은 서버의 다른 게시판들). 실행 끝의 재시도 전에 forget_unreachable() 로 잊는다.
@@ -75,11 +78,20 @@ class Http:
         self._last_request: dict[str, float] = {}
         self._ca_bundles: dict[str, str] = {}
         self._unreachable: set[str] = set()
+        self._short_headers: set[str] = set()
         self._lock = threading.Lock()
 
     def allow_legacy_tls(self, host: str) -> None:
         """이 호스트에만 구형 TLS 설정(짧은 DH 키·구형 암호군·TLS 1.0/1.1)을 허용한다."""
         self.session.mount(f"https://{host}/", LegacyTLSAdapter(max_retries=self._retry))
+
+    def setup_host(self, url: str, options: dict) -> None:
+        """sources.yaml 의 호스트별 연결 옵션을 적용한다 (legacy_tls, short_headers)."""
+        host = urlsplit(url).hostname or ""
+        if options.get("legacy_tls"):
+            self.allow_legacy_tls(host)
+        if options.get("short_headers"):
+            self._short_headers.add(host)
 
     def forget_unreachable(self) -> None:
         """접속 실패로 기억해 둔 서버를 잊는다 (실행 끝에서 한 번 더 시도하기 전에)."""
@@ -100,6 +112,8 @@ class Http:
         kwargs["stream"] = True
         if host in self._ca_bundles:
             kwargs.setdefault("verify", self._ca_bundles[host])
+        if host in self._short_headers:
+            kwargs["headers"] = {**(kwargs.get("headers") or {}), "Accept-Language": None}  # None = 세션 머리글에서 뺌
         try:
             resp = self.session.request(method, url, **kwargs)
         except requests.exceptions.SSLError as exc:

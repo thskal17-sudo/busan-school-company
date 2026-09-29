@@ -102,7 +102,7 @@ sources:
       link_attr: data-id
       link_template: "https://www.pen.go.kr/main/na/ntt/selectNttInfo.do?mi=30361&bbsId=2342&nttSn={0}"
       key_param: nttSn
-      org_name: 부산광역시교육청
+      org_prefix: 부산광역시교육청  # 작성자 칸이 담당 부서(인성체육급식과 등)
 
   - id: pen_kinder_hire
     name: 부산교육청 유치원 인력 구인
@@ -449,6 +449,42 @@ sources:
       org_prefix: 부산 연제구청
       link_template: "https://eminwon.yeonje.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectOfrNotAncmt&methodnm=selectOfrNotAncmtRegst&not_ancmt_mgt_no={0}&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&list_gubun=A&Key=B_Subject"
       key_param: not_ancmt_mgt_no
+
+  - id: namgu_eminwon
+    name: 남구청 채용공고(새올)
+    org_type: 지자체
+    district: 남구
+    collector: generic_board
+    url: "https://eminwon.bsnamgu.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&epcCheck=Y&nodate_recent_mm=12&pageIndex=1"
+    pages: 2
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      page_param: pageIndex
+      org_prefix: 부산 남구청
+      link_template: "https://eminwon.bsnamgu.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectOfrNotAncmt&methodnm=selectOfrNotAncmtRegst&not_ancmt_mgt_no={0}&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&list_gubun=A&Key=B_Subject"
+      key_param: not_ancmt_mgt_no
+      short_headers: true  # 요청 머리글이 길면 400 Bad Request → Accept-Language 를 빼고 보냄
+
+  - id: sasang_eminwon
+    name: 사상구청 채용공고(새올)
+    org_type: 지자체
+    district: 사상구
+    collector: generic_board
+    url: "https://eminwon.sasang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&epcCheck=Y&nodate_recent_mm=12&pageIndex=1"
+    pages: 2
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      page_param: pageIndex
+      org_prefix: 부산 사상구청
+      link_template: "https://eminwon.sasang.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectOfrNotAncmt&methodnm=selectOfrNotAncmtRegst&not_ancmt_mgt_no={0}&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&list_gubun=A&Key=B_Subject"
+      key_param: not_ancmt_mgt_no
+      short_headers: true  # 요청 머리글이 길면 400 Bad Request → Accept-Language 를 빼고 보냄
 
   - id: donggu_hire
     name: 동구청 채용공고 (체육교실 강사 등)
@@ -938,8 +974,8 @@ sources:
   # 조사했지만 넣지 않은 곳 (2026-09-29 GitHub 러너에서 확인)
   # - 해외 접속 차단: 부산시설공단(bisco.or.kr), 수영구청(www·eminwon.suyeong.go.kr), 금정구청 홈페이지(www.geumjeong.go.kr;
   #   새올 eminwon.geumjeong.go.kr 은 됨), 해운대YMCA청소년수련관, 부산관광공사
-  # - 새올이 막히거나 채용공고가 비어 있는 구: 남구·사상구·기장군 새올은 400 응답, 중구·북구·강서구 새올 채용공고는 0건
-  #   → 남구·기장군·중구는 위의 구청 일자리 게시판으로 대신 받는다. 사상구·북구·강서구는 구청 채용 게시판을 아직 못 찾음
+  # - 새올 채용공고가 비어 있는 구: 중구·북구·강서구·기장군 (not_ancmt_se_code=05 가 0건)
+  #   → 중구·기장군은 위의 구청 일자리 게시판으로 대신 받는다. 북구·강서구는 구청 채용 게시판을 아직 못 찾음
   # - 부산시청 채용공고(nbincruit): 분야별 통합 채용정보(city_jobs)와 같은 글
   # - 부산교육청 공지사항·늘봄지원센터 공지: 강사 모집이 아닌 안내 글, 교육공무직원 채용(ginsa.pen.go.kr): 조리실무사 등
   # - 여성회관 강사초빙: 목록이 비어 있는 안내 화면. 여성인력개발센터(부산진·동래·사상·해운대): 첫 화면·스크립트 목록이라 보류

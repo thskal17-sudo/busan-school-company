@@ -2,10 +2,14 @@
 
 신규 판정은 '처음 본 시각'이 아니라 '아직 메일로 보내지 않았는가(reported_at IS NULL)'로 한다.
 메일 발송이 실패하면 다음 실행 때 다시 신규로 잡혀서 공고를 놓치지 않는다.
+
+같은 공고가 여러 게시판에 올라오는 경우(부산교육청 학교인력채용 ↔ 교육지원청 게시판, 구청 새올 ↔ 부산일자리정보망)
+먼저 저장된 공고와 제목이 같고 게시일·지역이 맞으면 '중복'으로 저장해 신규·진행중에서 뺀다.
 """
 from __future__ import annotations
 
 import json
+import re
 import sqlite3
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -45,6 +49,23 @@ CREATE TABLE IF NOT EXISTS source_runs (
 
 
 CLOSED = "결과발표"  # 결과공고가 올라와 모집이 끝난 공고
+DUPLICATE = "중복"  # 다른 게시판에 먼저 올라온 같은 공고
+_STICKY = (CLOSED, DUPLICATE)  # 다음 날 목록에 그대로 있어도 '모집중'으로 되돌리지 않는 상태
+_WHOLE_CITY = ("", "부산전체")
+
+
+def title_key(title: str) -> str:
+    """중복 비교용 제목: 글자·숫자만 (공백·괄호·기호 무시)."""
+    return re.sub(r"[^0-9A-Za-z가-힣]", "", title or "")
+
+
+def _same_posting(p: Posting, title: str, district: str | None, posted: date | None, min_key: int = 12) -> bool:
+    key = title_key(p.title)
+    if len(key) < min_key or key != title_key(title):
+        return False  # '시간강사 채용 공고' 처럼 짧은 제목은 기관이 달라도 같을 수 있어 비교하지 않음
+    if p.district not in _WHOLE_CITY and (district or "") not in _WHOLE_CITY and p.district != district:
+        return False
+    return p.posted_date is None or posted is None or abs((p.posted_date - posted).days) <= 7
 
 
 def _d(value: str | None) -> date | None:
@@ -74,27 +95,41 @@ class Store:
         row = self.conn.execute("SELECT title FROM postings WHERE uid = ?", (uid,)).fetchone()
         return row[0] if row else None
 
+    def twin_of(self, p: Posting, now: datetime, window_days: int = 60) -> str | None:
+        """다른 게시판에 먼저 저장된 같은 공고의 uid (없으면 None)."""
+        since = (now - timedelta(days=window_days)).isoformat(timespec="seconds")
+        rows = self.conn.execute(
+            """SELECT uid, title, district, posted_date FROM postings
+               WHERE source_id != ? AND status != ? AND first_seen_at >= ?""",
+            (p.source_id, DUPLICATE, since),
+        )
+        for r in rows:
+            if _same_posting(p, r["title"], r["district"], _d(r["posted_date"])):
+                return r["uid"]
+        return None
+
     def upsert(self, p: Posting, now: datetime) -> bool:
-        """저장하고, 처음 보는 공고면 True."""
+        """저장하고, 처음 보는 공고면 True (다른 게시판에 먼저 올라온 같은 공고면 '중복'으로 저장하고 False)."""
         ts = now.isoformat(timespec="seconds")
         row = self.conn.execute("SELECT uid FROM postings WHERE uid = ?", (p.uid,)).fetchone()
         if row is None:
+            duplicate = p.status == "모집중" and self.twin_of(p, now) is not None
             self.conn.execute(
                 """INSERT INTO postings (uid, source_id, post_key, org_name, org_type, district, title, url,
                        posted_date, deadline, category, status, first_seen_at, last_seen_at)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (p.uid, p.source_id, p.post_key, p.org_name, p.org_type, p.district, p.title, p.url,
-                 _iso(p.posted_date), _iso(p.deadline), p.category, p.status, ts, ts),
+                 _iso(p.posted_date), _iso(p.deadline), p.category, DUPLICATE if duplicate else p.status, ts, ts),
             )
-            return True
+            return not duplicate
         self.conn.execute(
             """UPDATE postings SET title = ?, url = ?, category = ?, last_seen_at = ?,
-                   status = CASE WHEN status = ? THEN status ELSE ? END,
+                   status = CASE WHEN status IN (?, ?) THEN status ELSE ? END,
                    org_name = COALESCE(NULLIF(?, ''), org_name),
                    posted_date = COALESCE(posted_date, ?),
                    deadline = COALESCE(?, deadline)
                WHERE uid = ?""",
-            (p.title, p.url, p.category, ts, CLOSED, p.status, p.org_name, _iso(p.posted_date), _iso(p.deadline),
+            (p.title, p.url, p.category, ts, *_STICKY, p.status, p.org_name, _iso(p.posted_date), _iso(p.deadline),
              p.uid),
         )
         return False

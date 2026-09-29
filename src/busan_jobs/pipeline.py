@@ -7,7 +7,6 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
-from urllib.parse import urlsplit
 
 import requests
 
@@ -123,8 +122,8 @@ def _collect_source(
     if not src.url and not src.collector.endswith("_api"):
         result.state, result.error = "설정필요", "url 없음"
         return result
-    if src.options.get("legacy_tls") and src.url:
-        http.allow_legacy_tls(urlsplit(src.url).hostname or "")
+    if src.url and (src.options.get("legacy_tls") or src.options.get("short_headers")):
+        http.setup_host(src.url, src.options)
     collector = collector_cls(src, http, today)
     log.info("수집: %s", src.name)
     try:
