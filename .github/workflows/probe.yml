@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       args:
-        description: "probe.py 인자 (예: --detail uic_notice / --url https://...)"
+        description: "probe.py 인자 (예: --no-reach --parse --url https://... / --detail pen_school_hire)"
         required: false
         default: ""
       check:
-        description: "check-source 로 시험 수집할 소스 id (공백 구분, 예: junggu_hire ubimc_hire)"
+        description: "check-source 로 시험 수집할 소스 id (공백 구분, 예: pen_school_hire bnfmc_hire)"
         required: false
         default: ""
   push:
