@@ -885,7 +885,30 @@ sources:
     verified: true
     options:
       key_param: intnum
+      include: [강사, 코치, 트레이너, 튜터]  # '예비청소년지도자 연수'·'방과후아카데미 청소년 모집' 은 거름
       org_name: 부산청소년활동진흥센터
+
+  - id: busanyouth_hire
+    name: 부산청소년활동진흥센터 - 채용정보 (부산 청소년시설 채용 모음)
+    org_type: 청소년
+    district: 부산전체
+    collector: generic_board
+    # 청소년수련관·문화의집·청소년센터·상담복지센터 등의 채용 공고가 모인다 (직원 채용이 대부분)
+    url: https://www.busanyouth.net/sub/template.php?midx=138
+    pages: 2
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      page_param: page
+      # <div class="newsBlist"><ul><li>: 제목 칸에 기관 이름이 먼저 나오고, '바로가기'는 u_re('글번호','실제 공고 주소')
+      row_selector: "div.newsBlist > ul > li"
+      title_selector: ".tit"
+      org_selector: ".tit > span"
+      date_selector: ".date"
+      link_template: "{1}"
+      include: [강사, 코치, 트레이너, 튜터]  # '청소년지도사 채용'(직원)은 거름
 
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항
