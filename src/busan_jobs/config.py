@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +37,12 @@ class Rules:
     new_max_age_days: int = 45
     active_max_age_days: int = 30
     closing_soon_days: int = 3
+
+
+def source_rules(rules: Rules, src: Source) -> Rules:
+    """게시판에 include 옵션이 있으면 포함 키워드만 그것으로 바꾼 규칙
+    (이용자 공지가 많은 게시판에서 '수영강습 접수 안내' 같은 글이 '강습'으로 걸리지 않게)."""
+    return replace(rules, include=list(src.options["include"])) if src.options.get("include") else rules
 
 
 @dataclass

@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 
 from .classify import judge
 from .collectors import COLLECTORS, NotConfigured
-from .config import DEFAULT_CONFIG_DIR, load_rules, load_settings
+from .config import DEFAULT_CONFIG_DIR, load_rules, load_settings, source_rules
 from .dates import dday_label
 from .http import Http
 from .models import now_kst, today_kst
@@ -88,7 +88,7 @@ def cmd_check_source(args) -> int:
             continue
         print(f"    목록 {len(items)}건")
         for p in items:
-            verdict = judge(p.title, rules, src.keyword_filter, p.label) or "제외"
+            verdict = judge(p.title, source_rules(rules, src), src.keyword_filter, p.label) or "제외"
             print(f"    [{verdict:^4}] {p.posted_date or '-'} ~{p.deadline or '?'} | {p.label or '-'} | {p.org_name or '-'} | {p.title}")
             print(f"             {p.url}")
     return status_code

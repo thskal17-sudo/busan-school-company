@@ -11,8 +11,15 @@ options (모두 선택)
     form_link       true 면 onclick 으로 제출하는 <form> 의 action + hidden 값으로 상세 주소를 만든다
     detail_get      상세 페이지를 GET 으로 열 수 있으면 true (마감일 추출에 사용, 기본 true)
     org_name        기관명 기본값 (작성자 열이 '관리자' 등일 때)
+    org_prefix      부서 칸 앞에 붙일 기관 이름 (새올 '체육진흥과' → '부산 서구청 체육진흥과')
     link_base       상대 링크를 풀 기준 주소 (페이지 주소와 다를 때. <base href> 가 있으면 자동 적용)
     row_must_contain 이 글자가 있는 행만 (예: 근무지 열이 있는 전국 게시판에서 '부산')
+    link_attr       제목 링크의 이 속성 값으로 상세 주소를 만든다 (예: data-id → link_template 의 {0},
+                    link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
+    title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때)
+    date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로
+    org_selector    행 안의 기관명 요소
+    include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
 """
 from __future__ import annotations
 
@@ -36,9 +43,15 @@ _HEADER_MAP = {
     "label": r"^(구분|분류|분야|직종)$",
     "district": r"^(지역|구군|구·군)$",
 }
-# 게시글 식별값에서 빼는 쿼리 파라미터 (페이지 번호·검색어·세션 등은 같은 글이라도 달라진다)
-_VOLATILE_PARAMS = re.compile(r"page|currpage|rowperpage|search|sort|_csrf|jsessionid", re.I)
+# 게시글 식별값에서 빼는 쿼리 파라미터 (페이지 번호·검색어·검색 기간(srchBeginDt)·세션 등은 같은 글이라도 달라진다)
+_VOLATILE_PARAMS = re.compile(r"page|currpage|rowperpage|search|srch|sort|_csrf|jsessionid", re.I)
 _NOT_ORG = re.compile(r"^(관리자|담당자|admin|운영자|홈페이지|-)?$", re.I)
+# 작성자 칸의 사람 이름 (최희상, 김예솔): 한글 2~4자이고 기관 이름처럼 끝나지 않는 것
+_PERSON = re.compile(r"[가-힣]{2,4}")
+_ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
+# 제목 속 학교·유치원 이름 (작성자가 사람 이름인 교육청 게시판에서 기관명으로 씀)
+_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교|유치원)")
+_HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
 
@@ -78,7 +91,7 @@ class BoardCollector(Collector):
                         title=r.title,
                         url=r.url,
                         post_key=r.key,
-                        org_name=r.org or opts.get("org_name", ""),
+                        org_name=_with_prefix(opts.get("org_prefix"), r.org) or opts.get("org_name", ""),
                         org_type=self.source.org_type,
                         district=infer_district(f"{r.district} {r.org}", self.source.district),
                         posted_date=r.posted,
@@ -103,6 +116,13 @@ class BoardCollector(Collector):
         if not param:
             return None
         return set_query(url, **{param: page})
+
+
+def _with_prefix(prefix: str | None, org: str) -> str:
+    """부서 칸 앞에 기관 이름을 붙인다 (새올 '체육진흥과' → '부산 서구청 체육진흥과')."""
+    if not prefix:
+        return org
+    return f"{prefix} {org}" if org and not org.startswith(prefix) else prefix
 
 
 class FormBoardCollector(BoardCollector):
@@ -154,7 +174,18 @@ def stable_key(url: str) -> str:
 
 
 def _clean(text: str | None) -> str:
-    return re.sub(r"\s+", " ", text or "").strip()
+    return re.sub(r"\s+", " ", _HIDDEN_CHARS.sub("", text or "")).strip()
+
+
+def _org_name(raw: str, title: str) -> str:
+    """작성자·부서 칸의 값을 기관명으로. 사람 이름·관리자·가린 이름(일*과)이면 제목 속 학교 이름, 그것도 없으면 빈 값."""
+    org = re.sub(r"^ou=", "", raw)
+    if _NOT_ORG.match(org) or "*" in org or (_PERSON.fullmatch(org) and not _ORG_END.search(org)):
+        org = ""
+    if not org:
+        m = _SCHOOL.search(re.sub(r"(19|20)\d{2}\s*(학년도|년도|년)", " ", title))
+        org = m.group(0) if m else ""
+    return org
 
 
 def _pick_rows(soup: BeautifulSoup, row_selector: str | None) -> tuple[list[Tag], list[str]]:
@@ -306,12 +337,20 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             url, key, detail_ok = _resolve_link(soup, anchor, tr, base_url, opts)
         else:
             continue
+        picked = _select_text(tr, opts.get("title_selector"))
+        if picked:
+            title = picked
         title = re.sub(r"\s*(새글|NEW|new|첨부파일|파일첨부)$", "", title)
         if len(title) < 2:
             continue
 
         def cell(role: str) -> str:
-            return _clean(tds[col[role]].get_text(" ")) if aligned and role in col else ""
+            if not (aligned and role in col):
+                return ""
+            text = _clean(tds[col[role]].get_text(" "))
+            # 모바일용으로 칸마다 숨겨 둔 머리글 (<em class="mTit">작성자</em> 가람중학교)
+            label = headers[col[role]]
+            return text[len(label):].strip() if label and text.startswith(label + " ") else text
 
         posted = parse_date(cell("posted"), today)
         if posted is None:
@@ -324,17 +363,28 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             parse_date(deadline_text, today) if deadline_text else None
         )
         deadline = deadline or extract_deadline(title, today)
-        org = cell("org")
-        if _NOT_ORG.match(org):
-            org = ""
+        date_text = _select_text(tr, opts.get("date_selector"))
+        if date_text:
+            posted = parse_date(date_text, today) or posted
+            if re.search(r"[~∼～]", date_text):
+                deadline = extract_deadline(date_text, today) or deadline
+        org = _org_name(_select_text(tr, opts.get("org_selector")) or cell("org"), title)
         out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), cell("district")))
     return out
+
+
+def _select_text(row: Tag, selector: str | None) -> str:
+    if not selector:
+        return ""
+    el = row.select_one(selector)
+    return _clean(el.get_text(" ")) if el is not None else ""
 
 
 def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tuple[str, str, bool]:
     href = (anchor.get("href") or "").strip()
     onclick = anchor.get("onclick") or tr.get("onclick") or ""
     key_param = opts.get("key_param")
+    template = opts.get("link_template")
 
     def key_from(url: str, fallback: str) -> str:
         if key_param:
@@ -342,9 +392,14 @@ def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tupl
             return values[0] if values else fallback
         return fallback
 
+    attr = opts.get("link_attr")
+    if attr and anchor.get(attr):
+        value = str(anchor.get(attr)).strip()
+        url = template.format(value) if template else urljoin(base_url, value)
+        return url, key_from(url, value), True
+
     # link_template 이 있고 onclick 에 인자가 있으면 href 보다 우선
     # (남구 평생학습: href="/edu/board/eduBoard/view.do" + onclick="goBoardArticle('534458')")
-    template = opts.get("link_template")
     onclick_args = _js_args(onclick) if onclick else []
     if template and onclick_args:
         try:

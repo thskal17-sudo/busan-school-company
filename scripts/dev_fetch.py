@@ -21,6 +21,10 @@ out.mkdir(exist_ok=True)
 name, url, *rest = sys.argv[1:]
 if "legacy" in rest:
     http.allow_legacy_tls(urlsplit(url).hostname or "")
+if "ua" in rest:  # 봇 표시 없는 일반 브라우저 User-Agent
+    http.session.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
+if "noal" in rest:
+    http.session.headers.pop("Accept-Language", None)
 post = next((r[5:] for r in rest if r.startswith("post:")), None)
 try:
     if post is not None:

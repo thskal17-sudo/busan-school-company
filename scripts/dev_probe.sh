@@ -1,93 +1,19 @@
 #!/usr/bin/env bash
-# (임시) 부산 게시판 조사 3차: 조사 보고서의 후보 게시판
+# (임시) 부산 게시판 조사 4차: 전체 시험 수집 + 새올 400 원인 확인 + 상세 페이지 샘플
 f() { python scripts/dev_fetch.py "$@" || true; }
-NA='na/ntt/selectNttList.do'
-# 교육청·교육지원청·늘봄지원센터
-f pen_hire "https://www.pen.go.kr/main/$NA?mi=30367&bbsId=2364"
-f pen_gosi "https://www.pen.go.kr/main/$NA?mi=30361&bbsId=2342"
-f pen_notice "https://www.pen.go.kr/main/$NA?mi=31659&bbsId=2282"
-f pen_kinder "https://www.pen.go.kr/main/$NA?mi=30370&bbsId=2377"
-f af_private "https://home.pen.go.kr/afterschool/$NA?mi=14360&bbsId=4177"
-f af_company "https://home.pen.go.kr/afterschool/$NA?mi=14361&bbsId=4178"
-f af_notice "https://home.pen.go.kr/afterschool/$NA?mi=17003&bbsId=5073"
-f edu_seobu "https://home.pen.go.kr/seobu/$NA?mi=15979&bbsId=4754"
-f edu_nambu "https://home.pen.go.kr/nambu/$NA?mi=11873&bbsId=3845"
-f edu_bukbu "https://home.pen.go.kr/bukbu/$NA?mi=13751&bbsId=3728"
-f edu_dongnae "https://home.pen.go.kr/dongnae/$NA?mi=11269&bbsId=3638"
-f edu_haeundae "https://home.pen.go.kr/haeundae/$NA?mi=11341&bbsId=3542"
-f ginsa "https://ginsa.pen.go.kr/view.do?no=81"
-f lib_simin "https://home.pen.go.kr/siminlib/$NA?mi=13146&bbsId=3951"
-f lib_bujun "https://home.pen.go.kr/bujunlib/$NA?mi=12783&bbsId=3571"
-# 시청 산하
-f city_jobgonji02 "https://www.busan.go.kr/depart/jobgonji02"
-f city_stadium "https://www.busan.go.kr/stadium/sfnotice"
-f city_woman_inv "https://www.busan.go.kr/woman/whinvitation"
-f city_woman_notice "https://www.busan.go.kr/woman/whnotice"
-f city_youth "https://www.busan.go.kr/youth/gnsaler01"
-f city_hrd "https://www.busan.go.kr/hrd/hrddata01"
-# 구·군 새올 (짧은 주소 / JSP)
-S='emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&homepage_pbs_yn=Y&not_ancmt_se_code=05&pageIndex=1'
-for h in bsnamgu sasang gijang suyeong bsjunggu bsbukgu bsgangseo; do f "ems_$h" "https://eminwon.$h.go.kr/$S"; done
-f emj_sasang "https://eminwon.sasang.go.kr/emwp/jsp/ofr/OfrNotAncmtLSub.jsp?not_ancmt_se_code=05"
-f emj_saha "https://eminwon.saha.go.kr/emwp/jsp/ofr/OfrNotAncmtLSub.jsp?not_ancmt_se_code=05&list_gubun=&cha_dep_code_nm=null"
-# 구·군 채용·일자리 게시판
-f junggu_186 "https://www.bsjunggu.go.kr/board/list.junggu?boardId=BBS_0000186&menuCd=DOM_000002102001001000"
-f junggu_185 "https://www.bsjunggu.go.kr/board/list.junggu?boardId=BBS_0000185&menuCd=DOM_000002101002000000"
-f seogu_39 "https://www.bsseogu.go.kr/board/list.bsseogu?boardId=BBS_0000039&menuCd=DOM_000000103001012000"
-f busanjin_hire "https://www.busanjin.go.kr/index.busanjin?menuCd=DOM_000000110002002000"
-f dongnae_sports "https://sports.dongnae.go.kr/subpage/index/29/"
-f dongnae_109 "https://www.dongnae.go.kr/board/list.dongnae?boardId=BBS_0000109&menuCd=DOM_000000105002001001"
-f namgu_17 "https://www.bsnamgu.go.kr/board/list.namgu?boardId=BBS_0000017&menuCd=DOM_000000125003003000"
-f bukgu_17 "https://www.bsbukgu.go.kr/board/list.bsbukgu?boardId=BBS_0000017&menuCd=DOM_000000103007004000"
-f haeundae_hire "https://www.haeundae.go.kr/index.do?menuCd=DOM_000000102012014000"
-f suyeong_hire "https://www.suyeong.go.kr/index.suyeong?menuCd=DOM_000000103001010001"
-f gijang_77 "https://www.gijang.go.kr/board/list.gijang?boardId=BBS_0000077&menuCd=DOM_000000104009004002"
-# 공단
-f bisco_hire "https://www.bisco.or.kr/about/about05/about05_2/?bcIdx=19&MODE=L&P=1&PC=20"
-f bisco_m "https://m.bisco.or.kr/html/sub/sub05/?bcIdx=19&MODE=L"
-f spo1 "https://www.spo1.or.kr/bbs/list.do?CT_ID=NOTICE"
-f bnfmc "https://www.bnfmc.or.kr/portal/gosiInfo/list.do?CATEGORY=03&mId=0404000000"
-f gijangcmc "https://www.gijangcmc.or.kr/impartment/impartment05.asp?id=che"
-f gijangcmc_gmspo "https://www.gijangcmc.or.kr/gmspo/01_info/01_info.asp?id=Notice"
-# 평생학습관·도서관
-f lll_haeundae "https://www.haeundae.go.kr/edu/board/list.do?boardId=BBS_0000137&menuCd=DOM_000001104001000000"
-f lll_saha "https://www.saha.go.kr/edu/bbs/list.do?ptIdx=115&mId=0501000000"
-f lll_geumjeong "https://lll.geumjeong.go.kr/board/list.geumj?boardId=BBS_0000223&menuCd=DOM_000000805001000000"
-f lll_yeonje "https://www.yeonje.go.kr/edu/bbs/list.do?ptIdx=134&mId=0606000000"
-f lll_gijang "https://www.gijang.go.kr/lll/board/list.gijang?boardId=BBS_0000127&menuCd=DOM_000000704001000000"
-f lll_namgu "https://www.bsnamgu.go.kr/edu/sub05/list.php?menu_id=notice"
-f lll_bukgu "https://www.bsbukgu.go.kr/edu/board/list.bsbukgu?boardId=BBS_0000068&menuCd=DOM_000000606001000000"
-f lll_donggu "https://www.bsdonggu.go.kr/lll/board/list.donggu?boardId=BBS_0000104&menuCd=DOM_000000605000000000"
-f lll_seogu "https://www.bsseogu.go.kr/edu/board/list.bsseogu?boardId=BBS_0000120&menuCd=DOM_000000707001000000"
-f lll_junggu "https://www.bsjunggu.go.kr/lll/board/list.junggu?boardId=BBS_0000087&menuCd=DOM_000000705001000000"
-f lll_sasang "https://www.sasang.go.kr/lll/board/list.sasang?boardId=BBS_0000009&menuCd=DOM_000000705001000000"
-f lll_gangseo "https://lll.bsgangseo.go.kr/html/?pCode=gsNews"
-f lll_yeongdo "https://www.yeongdo.go.kr/hll/01419/01420.web?gcode=1146"
-f lll_busanjin "https://www.busanjin.go.kr/lll/index.busanjin"
-f lll_dongnae "https://www.dongnae.go.kr/lll/index.dongnae"
-f bgli_other "https://www.bgli.re.kr/kor/CMS/Board/Board.do?mCode=MN098"
-f bgli_notice "https://www.bgli.re.kr/kor/CMS/Board/Board.do?mCode=MN083"
-f bgli_hire "https://www.bgli.re.kr/kor/CMS/Board/Board.do?mCode=MN084"
-f lib_busan "https://library.busan.go.kr/busanlibrary/board/index.do?menu_idx=34&manage_idx=14"
-f lib_portal "https://library.busan.go.kr/portal/board/index.do?menu_idx=69&manage_idx=594"
-# 청소년·여성
-f busanyouth_hire "https://www.busanyouth.net/sub/template.php?midx=138"
-f busanyouth_notice "https://www.busanyouth.net/sub/template.php?midx=48"
-f ymcahy "http://www.ymcahy.or.kr/bbs/board.php?bo_table=notice"
-f youthcool "https://www.youthcool.or.kr/SW_bbs/notice/list.php"
-f power0924 "https://www.power0924.org/SW_bbs/notice/list.php"
-f yzzang "http://www.yzzang.com/sb51.php"
-f hwcenter "https://hwcenter.or.kr/SW_bbs/notice/list.php"
-f bswoman "https://www.bswoman.or.kr/"
-f womancenter "https://www.womancenter.or.kr/"
-f bbwoman "http://www.bbwoman.or.kr/"
-# 출자·출연기관·일자리
-f bscf "https://www.bscf.or.kr/view.do?no=1025"
-f dcb "https://www.dcb.or.kr/01_news/?mcode=0401010000&mode=1"
-f bspass "https://busan.pass.or.kr/SW_bbs/notice/list.php"
-f bipa "https://bipa.kr/board/job/list"
-f bto "https://bto.or.kr/kor/CMS/Board/Board.do?mCode=MN049"
-f bmc "https://www.bmc.busan.kr/bmc/bbs/list.do?ptIdx=773&mId=0706000000"
-f beco "https://www.beco.or.kr/kor/CMS/Board/Board.do?mCode=MN0123"
-f busanjob_pub "https://www.busanjob.net/view.do?no=1309&pgMode=index&pageIndex=1"
-f alio_busan "https://job.alio.go.kr/recruit.do"
+S='emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&epcCheck=Y&nodate_recent_mm=12&pageIndex=1'
+for h in bsnamgu sasang gijang; do
+  f "ua_$h" "https://eminwon.$h.go.kr/$S" ua
+  f "noal_$h" "https://eminwon.$h.go.kr/$S" noal
+  f "both_$h" "https://eminwon.$h.go.kr/$S" ua noal
+done
+curl -s -m 20 -o probe_out/curl_bsnamgu.html -w "curl bsnamgu %{http_code} %{size_download}\n" "https://eminwon.bsnamgu.go.kr/$S" || true
+f det_pen "https://www.pen.go.kr/main/na/ntt/selectNttInfo.do?mi=30367&bbsId=2364&nttSn=1180893"
+f det_af "https://home.pen.go.kr/afterschool/na/ntt/selectNttInfo.do?mi=14360&bbsId=4177&nttSn=1014630"
+f det_bnfmc "https://www.bnfmc.or.kr/portal/gosiInfo/view.do?mId=0404000000&idx=297"
+f det_busanjob "https://www.busanjob.net/view.do?no=1309&pgMode=show&id=288592"
+f det_bscf "https://www.bscf.or.kr/view.do?no=1025&pgMode=show&pbancSn=2428"
+f pen_hire_p2 "https://www.pen.go.kr/main/na/ntt/selectNttList.do?mi=30367&bbsId=2364&currPage=2"
+python -m busan_jobs check-source gojobs_list alio_recruit pen_school_hire pen_gosi pen_kinder_hire afterschool_private afterschool_company seobu_edu_hire nambu_edu_hire bukbu_edu_hire dongnae_edu_hire haeundae_edu_hire city_jobs city_jobs_other city_stadium_notice seogu_eminwon donggu_eminwon yeongdo_eminwon busanjin_eminwon dongnae_eminwon haeundae_eminwon saha_eminwon geumjeong_eminwon yeonje_eminwon donggu_hire junggu_hire gijang_jobs namgu_jobs bnfmc_hire gijangcmc_hire dongnae_sports_hire haeundae_lifelong saha_lifelong geumjeong_lifelong yeonje_lifelong gijang_lifelong namgu_lifelong bukgu_lifelong donggu_lifelong seogu_lifelong junggu_lifelong sasang_lifelong gangseo_lifelong busan_library simin_library busanyouth_notice geumnyeonsan_youth womenhall_notice bgli_hire bgli_other bepa_hire bepa_training bscf_hire busanjob_public 2>&1 | tee probe_out/_check.txt | grep -E "^===|목록|오류|설정필요" || true
+python -m busan_jobs run --no-mail --db probe_out/test.db --out probe_out/out 2>&1 | tail -150 > probe_out/_run.txt || true
+tail -80 probe_out/_run.txt

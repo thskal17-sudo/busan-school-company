@@ -14,7 +14,7 @@ import requests
 from .attachments import extract_text, find_attachments
 from .classify import categorize, judge
 from .collectors import COLLECTORS, NotConfigured
-from .config import DEFAULT_CONFIG_DIR, Rules, Source, load_rules, load_settings
+from .config import DEFAULT_CONFIG_DIR, Rules, Source, load_rules, load_settings, source_rules
 from .dates import extract_deadline, first_period_end
 from .detail import extends, full_title, looks_truncated, page_text
 from .gangsaitda import TEMPLATE_NAME, build_gangsaitda
@@ -114,6 +114,7 @@ def _collect_source(
     src: Source, rules: Rules, store: Store, http: Http, now: datetime, budget: dict[str, int]
 ) -> SourceResult:
     today = now.date()
+    rules = source_rules(rules, src)
     result = SourceResult(src.id, src.name, src.org_type, src.url or "")
     collector_cls = COLLECTORS.get(src.collector)
     if collector_cls is None:
