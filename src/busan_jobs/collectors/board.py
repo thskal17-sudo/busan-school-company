@@ -8,6 +8,8 @@ options (모두 선택)
     row_selector    행 CSS 셀렉터 (자동 판별이 틀릴 때만)
     link_template   제목 링크가 javascript 일 때 onclick 인자로 상세 주소를 만드는 틀 ({0}, {1} …)
     key_param       상세 주소에서 게시글 번호로 쓸 쿼리 파라미터 (예: q_bbsDocNo)
+    key_pattern     상세 주소에서 게시글 번호를 뽑는 정규식 (첫 괄호). 같은 글이 두 가지 주소로
+                    나오는 게시판용 (XE: /xe/sub7_01/24564 와 ?document_srl=24564)
     form_link       true 면 onclick 으로 제출하는 <form> 의 action + hidden 값으로 상세 주소를 만든다
     detail_get      상세 페이지를 GET 으로 열 수 있으면 true (마감일 추출에 사용, 기본 true)
     org_name        기관명 기본값 (작성자 열이 '관리자' 등일 때)
@@ -45,12 +47,12 @@ _HEADER_MAP = {
 }
 # 게시글 식별값에서 빼는 쿼리 파라미터 (페이지 번호·검색어·검색 기간(srchBeginDt)·세션 등은 같은 글이라도 달라진다)
 _VOLATILE_PARAMS = re.compile(r"page|currpage|rowperpage|search|srch|sort|_csrf|jsessionid", re.I)
-_NOT_ORG = re.compile(r"^(관리자|담당자|admin|운영자|홈페이지|-)?$", re.I)
+_NOT_ORG = re.compile(r"^(\S*관리자|담당자|admin|운영자|홈페이지|-)?$", re.I)  # '문화의집관리자' 같은 계정 이름도
 # 작성자 칸의 사람 이름 (최희상, 김예솔): 한글 2~4자이고 기관 이름처럼 끝나지 않는 것
 _PERSON = re.compile(r"[가-힣]{2,4}")
 _ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
 # 제목 속 학교·유치원 이름 (작성자가 사람 이름인 교육청 게시판에서 기관명으로 씀)
-_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교(?!밖)|유치원)")
+_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|(?<!방과후)학교(?!밖)|유치원)")  # '통합방과후학교'·'학교밖'은 빼고
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
@@ -338,6 +340,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             url, key, detail_ok = _resolve_link(soup, anchor, tr, base_url, opts)
         else:
             continue
+        if opts.get("key_pattern"):
+            m = re.search(opts["key_pattern"], url)
+            key = m.group(1) if m else key
         picked = _select_text(tr, opts.get("title_selector"))
         if picked:
             title = picked

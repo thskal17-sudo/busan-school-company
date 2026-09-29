@@ -122,6 +122,9 @@ def test_list_board_with_selectors(fixture_bytes):
         ("서구청", "", "서구청"),
         ("일*과", "", ""),  # 가린 이름
         ("관리자", "부산정관늘봄전용학교 강사 모집", "부산정관늘봄전용학교"),
+        ("문화의집관리자", "", ""),  # 관리자 계정 이름
+        ("", "[모집] 부산진구통합방과후학교 안전도우미 인력 모집 공고", ""),  # 방과후학교는 사업 이름
+        ("", "2026학년도 우암초등학교 방과후학교 강사 모집", "우암초등학교"),
         ("", "2026년 사상구학교밖청소년지원센터 신규 학교밖청소년 모집", ""),  # '학교밖'은 학교 이름이 아님
     ],
 )
@@ -218,3 +221,21 @@ def test_youth_notice_keywords(rules):
     assert judge("2026 청소년방과후아카데미 신규 청소년 모집", narrow, True) is None
     assert judge("청소년지도사 채용 공고", narrow, True) is None
     assert judge("방과후과정 지원 자원봉사자 모집", rules, True) is None
+
+
+def test_xe_board_same_key_for_both_link_forms(fixture_bytes, rules):
+    # 부산진구 부전 청소년센터(XE): 공지 줄은 /xe/sub7_01/24564, 일반 줄은 index.php?…&document_srl=24556
+    # → key_pattern 으로 글번호만 식별값으로 (공지에서 내려와도 같은 글)
+    rows = rows_of(fixture_bytes, "bujeon_youth_notice", "busan_teenstory_notice.html")
+    assert [r.key for r in rows] == ["24564", "24556", "24288", "24273", "24153"]
+    assert rows[0].url == "https://teenstory.kr/xe/sub7_01/24564" and rows[0].org == ""  # '통합방과후학교'는 기관명 아님
+    assert rows[4].title == "청소년방과후아카데미 강사 모집 공고(댄스)" and rows[4].posted == date(2026, 2, 11)
+    narrow = source_rules(rules, SOURCES["bujeon_youth_notice"])
+    verdicts = [judge(r.title, narrow, True) for r in rows]
+    assert verdicts == [None, None, None, None, "모집중"]  # 안전도우미·직원 합격자·'[마감]' 강사 공고는 거름
+
+
+def test_onclick_board_with_pc_and_mobile_lists(fixture_bytes):
+    # 중구청소년문화의집: 같은 목록이 <div id="only_pc">·<div id="only_mobile"> 에 두 번 → PC 쪽만 (날짜 칸이 있음)
+    rows = rows_of(fixture_bytes, "purun1318_notice", "busan_purun1318_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [("1672", date(2026, 6, 30)), ("1647", date(2026, 4, 7))]

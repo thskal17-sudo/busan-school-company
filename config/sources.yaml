@@ -1058,6 +1058,175 @@ sources:
     verified: false
     blocked: 해외(GitHub 러너)에서 접속 시간 초과 (http·https 모두, 2026-09-29 세 번). 채용 공고는 청소년활동진흥센터 채용정보(busanyouth_hire)에도 올라옴
 
+  # 청소년문화의집 (부산청소년활동진흥센터 '부산 청소년 시설' 현황의 문화의집 10곳). 방과후아카데미 강사 모집·직원 채용이 공지사항에 올라온다
+  - id: gaya_youth_notice
+    name: 부산진구 가야 청소년센터 - 공지사항
+    org_type: 청소년
+    district: 부산진구
+    collector: generic_board
+    # https 는 인증서 이름이 달라 http
+    url: http://gayayouth.or.kr/p41.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산진구 가야 청소년센터
+
+  - id: bujeon_youth_notice
+    name: 부산진구 부전 청소년센터 - 공지사항
+    org_type: 청소년
+    district: 부산진구
+    collector: generic_board
+    # XE 게시판. 부산진구통합방과후학교 개인위탁강사 모집이 자주 올라옴.
+    # 짧은 시간에 여러 번 접속하면 한동안 연결을 받지 않음 (그런 날은 catch-up 에서 다시 받음)
+    url: https://teenstory.kr/xe/sub7_01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 공지 줄은 /xe/sub7_01/24564, 일반 줄은 index.php?…&document_srl=24556 → 글번호만 식별값으로
+      key_pattern: "(?:document_srl=|/)(\\d+)(?:&|$)"
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 부산진구 부전 청소년센터
+
+  - id: gijang_youth_notice
+    name: 기장청소년센터 - 새소식
+    org_type: 청소년
+    district: 기장군
+    collector: generic_board
+    # 기장군도시관리공단 누리집 안의 센터 게시판 (EUC-KR). 직원 채용은 공단 채용정보(gijangcmc_hire)로 받음
+    url: https://www.gijangcmc.or.kr/youthcenter/01_info/01_info.asp?id=Notice&wr_7=%B1%E2%C0%E5%C3%BB%BC%D2%B3%E2%BC%BE%C5%CD
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 기장청소년센터
+
+  - id: jeonpo_youth
+    name: 부산진구 전포 청소년센터 (jinguzzang.com)
+    org_type: 청소년
+    district: 부산진구
+    collector: generic_board
+    url: https://www.jinguzzang.com/
+    keyword_filter: true
+    phase: 3
+    enabled: false
+    verified: false
+    blocked: 해외(GitHub 러너)에서 모든 주소가 403 '접근 권한이 없습니다' (http·https·www 유무, 브라우저 User-Agent 로도 같음, 2026-09-29). 직원 채용은 청소년활동진흥센터 채용정보(busanyouth_hire)에도 올라옴
+
+  - id: bkyouth_notice
+    name: 북구청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 북구
+    collector: generic_board
+    # XE 게시판 (https 는 인증서 체인이 불완전해 http)
+    url: http://bkyouth.or.kr/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 북구청소년문화의집
+
+  - id: sahayouth_notice
+    name: 사하구청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 사하구
+    collector: generic_board
+    # https 는 인증서 이름이 달라 http
+    url: http://sahayouth.or.kr/sb71.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 사하구청소년문화의집
+
+  - id: seoguyouth_notice
+    name: 서구청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 서구
+    collector: generic_board
+    url: https://www.seoguyouth.co.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 서구청소년문화의집
+
+  - id: seeyouth_notice
+    name: 수영구청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 수영구
+    collector: generic_board
+    # https 는 인증서 이름이 달라 http
+    url: http://www.seeyouth.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 수영구청소년문화의집
+
+  - id: purun1318_notice
+    name: 중구청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 중구
+    collector: generic_board
+    url: https://purun1318.org/sb51.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. PC·모바일용 목록이 둘 다 있어 PC 쪽만
+      row_selector: "#only_pc tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 중구청소년문화의집
+
+  - id: haeundae_youth_notice
+    name: 해운대청소년문화의집 - 공지사항
+    org_type: 청소년
+    district: 해운대구
+    collector: generic_board
+    # 해운대구청 CMS (평생학습관과 같은 게시판). '든솔' 방과후아카데미 전문강사 모집이 올라옴
+    url: https://www.haeundae.go.kr/young/board/list.do?boardId=BBS_0000300&menuCd=DOM_000001305001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 해운대청소년문화의집
+
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항
     org_type: 청소년
