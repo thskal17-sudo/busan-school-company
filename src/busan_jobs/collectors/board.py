@@ -166,7 +166,10 @@ def _pick_rows(soup: BeautifulSoup, row_selector: str | None) -> tuple[list[Tag]
         for table in soup.find_all("table"):
             if table.find("table"):  # 레이아웃용 바깥 표는 건너뜀
                 continue
-            rows = [tr for tr in table.find_all("tr") if tr.find("td") and (tr.find("a") or _submit_title(tr))]
+            rows = [
+                tr for tr in table.find_all("tr")
+                if tr.find("td") and (tr.find("a") or _submit_title(tr) or _onclick_cells(tr))
+            ]
             if len(rows) > len(best_rows):
                 best, best_rows = table, rows
         table, rows = best, best_rows
@@ -174,9 +177,23 @@ def _pick_rows(soup: BeautifulSoup, row_selector: str | None) -> tuple[list[Tag]
     if table is not None:
         # 머리글은 th 만 있는 첫 행 ('전체게시물: n개' 같은 요약 행은 건너뜀)
         head_row = next((tr for tr in table.find_all("tr") if tr.find("th") and not tr.find("td")), None)
+        if head_row is None:  # 머리글을 td 로 쓴 옛 게시판 (새올 옛 화면 등): '제목' 칸이 있는 링크 없는 행
+            head_row = next(
+                (
+                    tr for tr in table.find_all("tr")
+                    if not tr.find("a") and not _onclick_cells(tr)
+                    and any(re.fullmatch(r"제\s*목", _clean(td.get_text())) for td in tr.find_all("td"))
+                ),
+                None,
+            )
         if head_row is not None:
             headers = [_clean(th.get_text()) for th in head_row.find_all(["th", "td"])]
     return rows, headers
+
+
+def _onclick_cells(tr: Tag) -> list[Tag]:
+    """링크 없이 칸(td)을 누르면 상세로 가는 행의 칸들 (영도구 새올: <td onclick="searchDetail('36478')">)."""
+    return [td for td in tr.find_all("td", recursive=False) if td.get("onclick")]
 
 
 def _submit_title(tag: Tag) -> Tag | None:
@@ -273,6 +290,12 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             key_param = opts.get("key_param")
             values = parse_qs(urlsplit(url).query).get(key_param) if key_param else None
             key, detail_ok = (values[0] if values else url), True
+        elif anchor is None and _onclick_cells(tr):
+            # 제목 칸(없으면 글자가 가장 긴 칸)의 onclick 으로 상세 주소를 만든다
+            cells = _onclick_cells(tr)
+            cell = title_td if title_td in cells else max(cells, key=lambda td: len(_clean(td.get_text())))
+            title = _clean(cell.get_text(" "))
+            url, key, detail_ok = _resolve_link(soup, cell, tr, base_url, opts)
         elif anchor is not None:
             title = _clean(anchor.get_text())
             if len(title) < 2:
