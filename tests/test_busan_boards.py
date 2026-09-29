@@ -155,3 +155,29 @@ def test_gangseo_gosi_all_notices(fixture_bytes):
     assert [r.key for r in rows] == ["41291", "41289", "41284"]
     assert "not_ancmt_mgt_no=41289" in rows[1].url and urlsplit(rows[1].url).netloc == "eminwon.bsgangseo.go.kr"
     assert rows[1].org == "안전관리과" and rows[1].posted == date(2026, 9, 29)
+
+
+def test_women_center_aspx_board(fixture_bytes):
+    # 부산진·동래·사하 여성인력개발센터 공통 게시판: sub1_view.aspx?b=글번호
+    rows = rows_of(fixture_bytes, "bswoman_notice", "busan_bswoman_notice.html")
+    r = rows[0]
+    assert r.title == "[채용공고] 부산진여성새로일하기센터 취업상담사 모집공고(긴급)"
+    assert r.key == "855" and r.posted == date(2026, 9, 28)
+    assert r.url == "https://www.bswoman.or.kr/sub4/sub1_view.aspx?b=855&p=0&cdt=&txt="
+
+
+def test_women_center_list_board(fixture_bytes):
+    # 해운대여성인력개발센터: <ul class="bbsList"><li> 목록, 날짜는 '26.09.04', 글 주소는 zipEncode 로 감쌈
+    rows = rows_of(fixture_bytes, "hwcenter_notice", "busan_hwcenter_notice.html")
+    assert [r.posted for r in rows] == [date(2026, 9, 4), date(2026, 6, 15), date(2026, 4, 24)]
+    assert rows[0].title == "★교육비 전액 지원★ 홈케어(정리수납2급) 마스터 양성과정 교육생 모집"
+    assert all(r.url.startswith("https://www.hwcenter.or.kr/SW_bbs/notice/view.php?zipEncode=") for r in rows)
+    assert len({r.key for r in rows}) == 3
+
+
+def test_women_center_board_with_private_posts(fixture_bytes, rules):
+    # 동구여성인력개발센터: bbs_uid 글번호, '비밀글 입니다.' 줄은 링크가 없어 강사 공고로 잡히지 않는다
+    rows = rows_of(fixture_bytes, "donggu_woman_notice", "busan_ewoman_notice.html")
+    assert [r.key for r in rows[:2]] == ["199", "187"]
+    assert rows[0].title == "(동구새일) 직업상담사 채용공고(직업상담사, 육아휴직대체근무자)"
+    assert judge(rows[2].title, rules, True) is None
