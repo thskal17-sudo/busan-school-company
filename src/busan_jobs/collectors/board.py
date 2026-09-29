@@ -18,7 +18,7 @@ options (모두 선택)
                     link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
     title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때)
     date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로
-    org_selector    행 안의 기관명 요소
+    org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
 """
 from __future__ import annotations
@@ -368,7 +368,10 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             posted = parse_date(date_text, today) or posted
             if re.search(r"[~∼～]", date_text):
                 deadline = extract_deadline(date_text, today) or deadline
-        org = _org_name(_select_text(tr, opts.get("org_selector")) or cell("org"), title)
+        picked_org = _select_text(tr, opts.get("org_selector"))
+        if picked_org and title.startswith(picked_org + " ") and len(title) > len(picked_org) + 5:
+            title = title[len(picked_org) + 1:]  # 제목 칸 안에 기관 이름이 먼저 나오는 목록 (청소년활동진흥센터 채용정보)
+        org = _org_name(picked_org or cell("org"), title)
         out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), cell("district")))
     return out
 
