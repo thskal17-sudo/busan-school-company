@@ -8,6 +8,8 @@ options (모두 선택)
     row_selector    행 CSS 셀렉터 (자동 판별이 틀릴 때만)
     link_template   제목 링크가 javascript 일 때 onclick 인자로 상세 주소를 만드는 틀 ({0}, {1} …)
     key_param       상세 주소에서 게시글 번호로 쓸 쿼리 파라미터 (예: q_bbsDocNo)
+    key_pattern     상세 주소에서 게시글 번호를 뽑는 정규식 (첫 괄호). 같은 글이 두 가지 주소로
+                    나오는 게시판용 (XE: /xe/sub7_01/24564 와 ?document_srl=24564)
     form_link       true 면 onclick 으로 제출하는 <form> 의 action + hidden 값으로 상세 주소를 만든다
     detail_get      상세 페이지를 GET 으로 열 수 있으면 true (마감일 추출에 사용, 기본 true)
     org_name        기관명 기본값 (작성자 열이 '관리자' 등일 때)
@@ -338,6 +340,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             url, key, detail_ok = _resolve_link(soup, anchor, tr, base_url, opts)
         else:
             continue
+        if opts.get("key_pattern"):
+            m = re.search(opts["key_pattern"], url)
+            key = m.group(1) if m else key
         picked = _select_text(tr, opts.get("title_selector"))
         if picked:
             title = picked

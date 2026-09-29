@@ -1083,7 +1083,8 @@ sources:
     org_type: 청소년
     district: 부산진구
     collector: generic_board
-    # XE 게시판, 글 주소 /xe/글번호
+    # XE 게시판. 부산진구통합방과후학교 개인위탁강사 모집이 자주 올라옴.
+    # 짧은 시간에 여러 번 접속하면 한동안 연결을 받지 않음 (그런 날은 catch-up 에서 다시 받음)
     url: https://teenstory.kr/xe/sub7_01
     pages: 1
     keyword_filter: true
@@ -1091,8 +1092,27 @@ sources:
     enabled: true
     verified: true
     options:
+      # 공지 줄은 /xe/sub7_01/24564, 일반 줄은 index.php?…&document_srl=24556 → 글번호만 식별값으로
+      key_pattern: "(?:document_srl=|/)(\\d+)(?:&|$)"
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 부산진구 부전 청소년센터
+
+  - id: gijang_youth_notice
+    name: 기장청소년센터 - 새소식
+    org_type: 청소년
+    district: 기장군
+    collector: generic_board
+    # 기장군도시관리공단 누리집 안의 센터 게시판 (EUC-KR). 직원 채용은 공단 채용정보(gijangcmc_hire)로 받음
+    url: https://www.gijangcmc.or.kr/youthcenter/01_info/01_info.asp?id=Notice&wr_7=%B1%E2%C0%E5%C3%BB%BC%D2%B3%E2%BC%BE%C5%CD
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 기장청소년센터
 
   - id: jeonpo_youth
     name: 부산진구 전포 청소년센터 (jinguzzang.com)
