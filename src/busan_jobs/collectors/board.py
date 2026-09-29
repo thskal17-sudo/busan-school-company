@@ -50,7 +50,7 @@ _NOT_ORG = re.compile(r"^(관리자|담당자|admin|운영자|홈페이지|-)?$"
 _PERSON = re.compile(r"[가-힣]{2,4}")
 _ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
 # 제목 속 학교·유치원 이름 (작성자가 사람 이름인 교육청 게시판에서 기관명으로 씀)
-_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교|유치원)")
+_SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|학교(?!밖)|유치원)")
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
