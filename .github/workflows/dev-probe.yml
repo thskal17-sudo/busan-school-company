@@ -26,7 +26,7 @@ jobs:
       - run: pip install -r requirements.txt
       - name: 러너 위치
         run: curl -s -m 10 https://ipinfo.io/json | grep -E '"(ip|city|region|country|org)"' || true
-      - run: set -f; bash scripts/dev_probe.sh
+      - run: set -f; mkdir -p probe_out; bash scripts/dev_probe.sh 2>&1 | tee probe_out/_log.txt
       - name: 받은 페이지 보관 (probe-out 브랜치)
         if: always()
         env:
