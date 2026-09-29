@@ -137,3 +137,21 @@ def test_sources_yaml_is_consistent():
         template = src.options.get("link_template")
         if template:
             template.format(*["1"] * 8)  # 틀의 {n} 이 모두 채워지는지
+
+
+def test_bukgu_jobs_board(fixture_bytes):
+    # 북구청 일자리정보: 구청 채용공고 게시판, '접수기간' 칸에서 마감일
+    rows = rows_of(fixture_bytes, "bukgu_hire", "busan_bukgu_jobs.html")
+    r = rows[0]
+    assert r.title == "2027년도 환경관리원 공개채용계획 변경 공고"
+    assert r.key == "1108008" and r.org == "자원순환과"
+    assert (r.posted, r.deadline) == (date(2026, 9, 28), date(2026, 10, 8))
+    assert rows[1].title.endswith("..")  # 목록에서 잘린 제목 → 강사 공고면 상세에서 전체 제목을 받는다
+
+
+def test_gangseo_gosi_all_notices(fixture_bytes):
+    # 강서구 새올 고시공고 전체: 채용공고(05)가 비어 있어 모집 공고가 섞인 고시공고를 키워드로 거른다
+    rows = rows_of(fixture_bytes, "gangseo_gosi", "busan_eminwon_gangseo_gosi.html")
+    assert [r.key for r in rows] == ["41291", "41289", "41284"]
+    assert "not_ancmt_mgt_no=41289" in rows[1].url and urlsplit(rows[1].url).netloc == "eminwon.bsgangseo.go.kr"
+    assert rows[1].org == "안전관리과" and rows[1].posted == date(2026, 9, 29)
