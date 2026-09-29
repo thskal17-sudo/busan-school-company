@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# (임시) 청소년문화의집 1차: 홈페이지 첫 화면 (게시판 주소 찾기)
+f() { python scripts/dev_fetch.py "$@" || true; }
+f gijang_yc "https://www.gijangcmc.or.kr/youthcenter"
+f gaya "http://gayayouth.or.kr/"
+f gaya_s "https://gayayouth.or.kr/"
+f bujeon "http://teenstory.kr/"
+f bujeon_s "https://teenstory.kr/"
+f jeonpo "https://www.jinguzzang.com/"
+f bukgu "http://bkyouth.or.kr/"
+f bukgu_s "https://bkyouth.or.kr/"
+f saha "http://www.sahayouth.or.kr/"
+f saha_s "https://www.sahayouth.or.kr/"
+f seogu "http://seoguyouth.co.kr/"
+f seogu_s "https://seoguyouth.co.kr/"
+f suyeong "http://www.seeyouth.or.kr/"
+f suyeong_s "https://www.seeyouth.or.kr/"
+f junggu "http://purun1318.org/"
+f junggu_s "https://purun1318.org/"
+f haeundae "https://www.haeundae.go.kr/young/index.do"
