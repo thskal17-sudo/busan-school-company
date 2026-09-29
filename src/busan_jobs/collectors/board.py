@@ -54,6 +54,7 @@ _SCHOOL = re.compile(r"[가-힣]{1,20}?(?:초등학교|중학교|고등학교|�
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
+_LOCATION_HREF = re.compile(r"""location\.href\s*=\s*['"]([^'"]+)['"]""")
 
 
 @dataclass
@@ -400,6 +401,12 @@ def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tupl
         value = str(anchor.get(attr)).strip()
         url = template.format(value) if template else urljoin(base_url, value)
         return url, key_from(url, value), True
+
+    # onclick="location.href='/p41.php?md=V&idx=22387'" (금곡·사상·구덕 청소년수련관): 주소를 그대로 쓴다
+    m = _LOCATION_HREF.search(onclick)
+    if m and not (href and not href.lower().startswith("javascript") and not href.startswith("#")):
+        url = urljoin(base_url, m.group(1))
+        return url, key_from(url, stable_key(url)), True
 
     # link_template 이 있고 onclick 에 인자가 있으면 href 보다 우선
     # (남구 평생학습: href="/edu/board/eduBoard/view.do" + onclick="goBoardArticle('534458')")
