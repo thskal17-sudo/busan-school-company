@@ -1302,6 +1302,23 @@ sources:
       key_param: dataSid
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 북구청소년상담복지센터
+  - id: gijang1388_notice
+    name: 기장군청소년상담복지센터 - 공지사항
+    org_type: 청소년
+    district: 기장군
+    collector: generic_board
+    # 기장군도시관리공단 누리집 안의 센터 게시판 (EUC-KR, 기장청소년센터 새소식과 같은 형식)
+    url: https://www.gijangcmc.or.kr/1388/04_notice/notice01.asp?id=Notice&wr_7=%C3%BB%BC%D2%B3%E2%BB%F3%B4%E3%BA%B9%C1%F6
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      org_name: 기장군청소년상담복지센터
+
   - id: saha1388_notice
     name: 사하구청소년상담복지센터 - 공지사항
     org_type: 청소년
@@ -1314,6 +1331,10 @@ sources:
     enabled: true
     verified: true
     options:
+      # 표가 아닌 <li class="gw_tb_tr"> 목록 (그누보드)
+      row_selector: "li.gw_tb_tr"
+      title_selector: ".bo_tit"
+      date_selector: ".date"
       key_param: wr_id
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 사하구청소년상담복지센터
@@ -1395,6 +1416,30 @@ sources:
     options:
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 연제구청소년상담복지센터
+
+  - id: bsdg1388_notice
+    name: 동구·동래구·사상구·중구 청소년상담복지센터 (bsdg1388.kr·1388youth.kr·sasang1388.kr·junggu1388.or.kr)
+    org_type: 청소년
+    district: 부산전체
+    collector: generic_board
+    url: http://bsdg1388.kr/
+    keyword_filter: true
+    phase: 3
+    enabled: false
+    verified: false
+    blocked: 네 곳 모두 첫 화면이 자바스크립트로 쿠키를 만든 뒤 다시 들어오게 하는 자동 접속 확인(cupid.js) 화면. 사이트가 자동 수집을 막는 장치라 우회하지 않음 (2026-09-29)
+
+  - id: flyseogu1388_notice
+    name: 서구청소년상담복지센터 (flyseogu1388.or.kr)
+    org_type: 청소년
+    district: 서구
+    collector: generic_board
+    url: http://www.flyseogu1388.or.kr/
+    keyword_filter: true
+    phase: 3
+    enabled: false
+    verified: false
+    blocked: 해외(GitHub 러너)에서 http 는 403 Forbidden, https 는 인증서 오류 (브라우저 User-Agent 로도 같음, 2026-09-29)
 
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항
