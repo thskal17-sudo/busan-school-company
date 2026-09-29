@@ -1329,6 +1329,8 @@ sources:
     enabled: true
     verified: true
     options:
+      # 제목 링크 javascript:goRead('636') → ?mode=read&dir=read&number=636
+      link_template: "http://meetyou.kr/community/notice/?mode=read&dir=read&number={0}"
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 수영구청소년상담복지센터
   - id: yeongdo1388_notice
@@ -1374,6 +1376,9 @@ sources:
     enabled: true
     verified: true
     options:
+      # 제목 링크 onclick="view('270')" 은 GET 폼(mode=view, uid) 제출
+      link_template: "http://u-dream.or.kr/04/01.php?mode=view&uid={0}"
+      form_link: false
       include: [강사, 코치, 트레이너, 튜터, 활동지도자]
       org_name: 해운대구청소년상담복지센터
   - id: yeonje1388_notice
