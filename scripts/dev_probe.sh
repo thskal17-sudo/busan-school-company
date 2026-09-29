@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
-# (임시) 부산 여성인력개발센터 게시판 조사
+# (임시) 여성인력개발센터: 동구·사하 게시판, 해운대 글 주소가 요청마다 같은지
 f() { python scripts/dev_fetch.py "$@" || true; }
-f dir_center "https://www.busan.go.kr/depart/woman030103"
-f dir_saeil "https://www.busan.go.kr/depart/woman0301"
-f bsj_notice "https://www.bswoman.or.kr/sub4/sub1.aspx"
-f dn_home "https://www.womancenter.or.kr/"
-f dn_sub3_1 "https://www.womancenter.or.kr/sub3/sub1.aspx"
-f dn_sub3_4 "https://www.womancenter.or.kr/sub3/sub4.aspx"
-f dn_sub3_5 "https://www.womancenter.or.kr/sub3/sub5.aspx"
-f hw_notice "https://hwcenter.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME"
-f dg_home "http://www.ewoman.or.kr/"
-f dg_home_s "https://www.ewoman.or.kr/"
+f dg_notice "http://www.ewoman.or.kr/p/?j=41"
+f dg_jobs "http://www.ewoman.or.kr/p/?j=75"
+f saha_home "http://www.sahawcenter.or.kr/"
+f saha_home_s "https://www.sahawcenter.or.kr/"
+f hw_a "https://www.hwcenter.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME"
+sleep 20
+f hw_b "https://www.hwcenter.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME"
+python - <<'PY'
+import re
+a = re.findall(r'notice/view\.php\?zipEncode=[^"]+', open("probe_out/hw_a.html", encoding="utf-8", errors="replace").read())
+b = re.findall(r'notice/view\.php\?zipEncode=[^"]+', open("probe_out/hw_b.html", encoding="utf-8", errors="replace").read())
+print("hw same links:", a == b, len(a), len(b))
+PY
+python -m busan_jobs check-source bswoman_notice dongnae_woman_notice hwcenter_notice 2>&1 | grep -E "^===|목록|오류"

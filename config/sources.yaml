@@ -917,6 +917,67 @@ sources:
       page_param: curPage
       org_name: 부산광역시 여성회관
 
+  # 여성인력개발센터 (부산시 지정 6곳: 해운대·동래·부산진·사상·동구·사하). 공지사항에 직원·강사 채용 공고가 올라온다
+  - id: bswoman_notice
+    name: 부산진여성인력개발센터 - 공지사항
+    org_type: 여성·가족
+    district: 부산진구
+    collector: generic_board
+    url: https://www.bswoman.or.kr/sub4/sub1.aspx
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: b
+      org_name: 부산진여성인력개발센터
+
+  - id: dongnae_woman_notice
+    name: 동래여성인력개발센터 - 공지사항
+    org_type: 여성·가족
+    district: 동래구
+    collector: generic_board
+    url: https://www.womancenter.or.kr/sub3/sub1.aspx
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: b
+      org_name: 동래여성인력개발센터
+
+  - id: hwcenter_notice
+    name: 해운대여성인력개발센터 - 공지사항
+    org_type: 여성·가족
+    district: 해운대구
+    collector: generic_board
+    url: https://www.hwcenter.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 표가 아닌 <ul class="bbsList"><li> 목록. 게시판 번호·글 번호는 zipEncode 로 감싼 주소에 들어 있음
+      row_selector: "ul.bbsList > li"
+      title_selector: ".txt1"
+      date_selector: ".txt2 span"
+      org_name: 해운대여성인력개발센터
+
+  - id: sasang_woman
+    name: 사상여성인력개발센터
+    org_type: 여성·가족
+    district: 사상구
+    collector: generic_board
+    url: http://www.bbwoman.or.kr/
+    keyword_filter: true
+    phase: 3
+    enabled: false
+    verified: false
+    blocked: 첫 화면이 '자동등록방지를 위해 보안절차를 거치고 있습니다' 봇 확인 화면(스크립트로 쿠키를 만들어야 열림). 사이트가 자동 수집을 막는 것이라 우회하지 않음
+
   - id: bgli_hire
     name: 부산여성가족과평생교육진흥원 - 채용
     org_type: 시 산하기관
