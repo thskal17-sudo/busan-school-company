@@ -222,6 +222,12 @@ def test_youth_notice_keywords(rules):
     assert judge("2026 청소년방과후아카데미 신규 청소년 모집", narrow, True) is None
     assert judge("청소년지도사 채용 공고", narrow, True) is None
     assert judge("방과후과정 지원 자원봉사자 모집", rules, True) is None
+    # 멘토: 꿈드림 검정고시 학습멘토처럼 가르치는 사람을 뽑는 글은 남기고, 멘토링에 참가할 청소년 모집은 거름
+    assert judge("[꿈드림] 검정고시대비반 '스마트교실' 멘토 모집", narrow, True) == "모집중"
+    assert judge("수영구학교밖청소년지원센터 검정고시 학습멘토 모집", narrow, True) == "모집중"
+    assert judge("2026년 영도구학교밖청소년지원센터 꿈드림 멘토단 모집(모집완료)", narrow, True) is None
+    assert judge("[홍보] 2026 청소년 방과후 아카데미 통통한 멘토링 참가 신청", narrow, True) is None
+    assert judge("2026 청소년 멘토링 프로그램 참여자 모집", narrow, True) is None
 
 
 def test_xe_board_same_key_for_both_link_forms(fixture_bytes, rules):
