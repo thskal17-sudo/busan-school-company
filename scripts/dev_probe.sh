@@ -1,24 +1,8 @@
 #!/usr/bin/env bash
-# (임시) 도서관 5차: 남은 공지 목록과 상세 링크 확인
+# (임시) 도서관 6차: 새 도서관 게시판 시험 수집
 f() { python scripts/dev_fetch.py "$@" || true; }
-f pen_gupolib "https://home.pen.go.kr/gupolib/na/ntt/selectNttList.do?mi=13330&bbsId=3893"
-f dn_allak "https://dongnae.go.kr/lib/allak/index.php?g_page=community&m_page=community01"
-f bk_dclib "https://www.bsbukgu.go.kr/dclib/index.bsbukgu?menuCd=DOM_000002306001000000"
-f bk_hmlib "https://www.bsbukgu.go.kr/hmlib/index.bsbukgu?menuCd=DOM_000001206001000000"
-f bk_mdlib "https://www.bsbukgu.go.kr/mdlib/index.bsbukgu?menuCd=DOM_000001106001000000"
-f bj_notice "https://www.busanjin.go.kr/library/index.busanjin?menuCd=DOM_000002106001000000"
+python -m busan_jobs check-source lib_bansong lib_english lib_gudeok lib_gupo lib_myeongjang lib_saha lib_seodong lib_yeonsan lib_joongang lib_haeundae lib_dadae lib_hadan lib_gj_gijang lib_gj_jeonggwan lib_gj_jgchild lib_gj_gochon lib_gj_naeri lib_gj_gyori lib_gj_ilgwang lib_gj_igchild lib_dongnae lib_allak lib_gs_miracle lib_gs_gangseo lib_gs_jisa lib_geumsaem lib_geumgok lib_deokcheon lib_hwamyeong lib_mandeok lib_donggu lib_donggu_english lib_busanjin lib_sasang lib_jurye lib_seogu_ami lib_yeongdo lib_yeongdo_namhang lib_yeonje lib_yeonje_manhwa  2>&1 | tail -n 400
+for c in jgchildlib ilgwang igchildlib; do f "gj_$c" "https://library.gijang.go.kr/$c/bbs/list.do?ptIdx=207&mId=0501000000"; done
+f gj_naeri "https://library.gijang.go.kr/naeri/bbs/list.do?ptIdx=207&mId=0401000000"
 f hd_library "https://www.haeundae.go.kr/library/index.do"
-f hd_edu "https://www.haeundae.go.kr/edu/board/list.do?boardId=BBS_0000137&menuCd=DOM_000001104001000000"
-f ss_jrlib "https://www.sasang.go.kr/jrlib/board/list.sasang?boardId=BBS_0000291&menuCd=DOM_000001405001000000"
-f yj_manhwa "https://www.yeonje.go.kr/manhwalib/contents.do?mId=0601000000"
-f gj_root "https://library.gijang.go.kr/"
-f gj_gijang "https://library.gijang.go.kr/gijang/contents.do?mId=0501000000"
-f gj_jglib "https://library.gijang.go.kr/jglib/contents.do?mId=0501000000"
-f v_pen "https://home.pen.go.kr/sahalib/na/ntt/selectNttInfo.do?mi=12293&bbsId=3505&nttSn=1039439"
-f v_gijang "https://library.gijang.go.kr/gochon/bbs/view.do?bIdx=54009&ptIdx=207&mId=0401000000"
-f v_dadae "https://www.saha.go.kr/dadaelib/bbs/view.do?bIdx=154603&ptIdx=660&mId=0509000000"
-f v_seogu "https://www.bsseogu.go.kr/amlib/portal/board/post/view.do?idx=379&bcIdx=500&mid=0801000000"
-f v_yeongdo "https://www.yeongdo.go.kr/library/01349/01352/01354.web?gcode=1136&idx=334085&amode=view"
-f v_dongnae "https://dongnae.go.kr/lib/dongnae/index.php?g_page=community&m_page=community01&bb_code=80ai0ec05z03086&view=read&wd=1"
-f v_gangseo "https://library.bsgangseo.go.kr/gmlib/index.php?g_page=community&m_page=community01&bb_code=70h40mv0n4d5c59&view=read&wd=7"
-f v_yeonje "https://www.yeonje.go.kr/library/bbs/view.do?bIdx=131895&ptIdx=80&mId=0701000000"
+f hd_library_http "http://www.haeundae.go.kr/library"
