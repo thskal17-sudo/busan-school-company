@@ -1917,6 +1917,10 @@ sources:
     verified: true
     options:
       legacy_tls: true
+      # 표가 아닌 <li class="list_body"> 안의 div 칸들 (번호·제목·작성자·날짜·조회)
+      row_selector: "li.list_body"
+      title_selector: "div.list_td_style01 a"
+      date_selector: ":scope > div:nth-of-type(4)"
       key_param: bid
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
       org_name: 북구장애인종합복지관

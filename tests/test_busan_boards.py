@@ -327,3 +327,19 @@ def test_imweb_board_date_attr_and_title_org(fixture_bytes, rules):
     narrow = source_rules(rules, SOURCES["bswin_job"])
     assert all(judge(r.title, narrow, True) is None for r in rows)  # 요양보호사·조리원 등은 거름 ('늘봄'실버요양센터 포함)
     assert judge("[운봉종합사회복지관] 수면요가테라피 강사 모집", narrow, True) == "모집중"
+
+
+def test_sw_bbs_li_list_board(fixture_bytes):
+    # 영도구노인복지관(SW_bbs 의 <li> 목록형): 제목 p.txt1 a, 날짜는 p.txt2 ('25.11.05 | 조회')
+    rows = rows_of(fixture_bytes, "senior_yeongdo_notice", "busan_youngdosenior_notice.html")
+    assert [r.posted for r in rows] == [date(2025, 11, 5), date(2026, 9, 21), date(2026, 9, 11)]
+    assert rows[1].title == "[알림/분관] 2026년 4분기 노년사회화교육사업 사회교육 프로그램 추첨결과 알림"
+    assert all("/SW_bbs/notice/view.php?zipEncode=" in r.url for r in rows) and len({r.key for r in rows}) == 3
+
+
+def test_path_number_key_and_senior_center_keywords(fixture_bytes, rules):
+    # 연제구노인복지관: 글 주소 /board/notice/detail/16177/page/1 → key_pattern 으로 글번호만
+    rows = rows_of(fixture_bytes, "senior_yeonje_notice", "busan_yjsilver_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [("16181", date(2026, 9, 16)), ("16177", date(2026, 6, 1))]
+    narrow = source_rules(rules, SOURCES["senior_yeonje_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]  # '우쿨렐레·밴드운동교실 강사 모집'

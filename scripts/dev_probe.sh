@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# (임시) 복지관 8차: 북구장애인종합복지관 채용게시판 (오래된 TLS)
-f() { python scripts/dev_fetch.py "$@" || true; }
-f bgrc_list "https://bgrc.or.kr/community_05.html" legacy
-f bgrc_list2 "https://bgrc.or.kr/community_05.html?table=LimBo&botype=LIS_B01_05" legacy
-f bgrc_http "http://bgrc.or.kr/community_05.html?table=LimBo&botype=LIS_B01_05"
+# (임시) 복지관 9차: 북구장애인·실버벨·연제 다시
+IDS="bgrc_hire senior_silverbell_hire senior_yeonje_notice"
+python -m busan_jobs check-source $IDS 2>&1 | tee probe_out/_check.txt | grep -E "^===|목록|오류"
