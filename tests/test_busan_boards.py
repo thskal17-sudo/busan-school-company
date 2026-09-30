@@ -123,6 +123,9 @@ def test_list_board_with_selectors(fixture_bytes):
         ("일*과", "", ""),  # 가린 이름
         ("관리자", "부산정관늘봄전용학교 강사 모집", "부산정관늘봄전용학교"),
         ("문화의집관리자", "", ""),  # 관리자 계정 이름
+        ("인사담당자", "", ""),
+        ("분관 과장", "", ""),  # 직위
+        ("체육진흥과", "", "체육진흥과"),  # '…과'(부서)는 기관명
         ("", "[모집] 부산진구통합방과후학교 안전도우미 인력 모집 공고", ""),  # 방과후학교는 사업 이름
         ("", "2026학년도 우암초등학교 방과후학교 강사 모집", "우암초등학교"),
         ("", "2026년 학교 밖 청소년 고등학교 검정고시 합격축하금 지원 사업 안내", ""),  # 이름 없는 '고등학교'
@@ -139,6 +142,7 @@ def test_sources_yaml_is_consistent():
     for src in SOURCES.values():
         assert src.collector in COLLECTORS, src.id
         assert src.enabled or src.options.get("blocked"), f"{src.id}: 끈 소스는 blocked 에 까닭을 적는다"
+        assert not isinstance(src.options.get("key_param", ""), bool), f"{src.id}: key_param 에 no 를 쓰면 따옴표로"
         template = src.options.get("link_template")
         if template:
             template.format(*["1"] * 8)  # 틀의 {n} 이 모두 채워지는지
@@ -309,3 +313,33 @@ def test_child_center_national_board_filtered_to_busan(fixture_bytes, rules):
     assert (r.posted, r.deadline) == (date(2026, 6, 10), date(2026, 6, 19))
     narrow = source_rules(rules, SOURCES["icare_busan_hire"])
     assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, "모집중"]  # 사회복지사 채용은 거름
+
+
+def test_imweb_board_date_attr_and_title_org(fixture_bytes, rules):
+    # 부산광역시사회복지협의회 취업정보(아임웹): 날짜 칸 글자는 '2일전' 이고 title 속성에 '2026-09-28 14:35',
+    # 기관명은 제목 앞 [대괄호] 에서 (title_org_pattern)
+    rows = rows_of(fixture_bytes, "bswin_job", "busan_bswin_job.html")
+    assert [(r.key, r.posted, r.org) for r in rows] == [
+        ("174853397", date(2026, 9, 28), "KRX국민행복재단"),
+        ("174658524", date(2026, 9, 23), "송도사랑요양원"),
+        ("173872331", date(2026, 9, 8), "늘봄실버요양센터"),
+    ]
+    narrow = source_rules(rules, SOURCES["bswin_job"])
+    assert all(judge(r.title, narrow, True) is None for r in rows)  # 요양보호사·조리원 등은 거름 ('늘봄'실버요양센터 포함)
+    assert judge("[운봉종합사회복지관] 수면요가테라피 강사 모집", narrow, True) == "모집중"
+
+
+def test_sw_bbs_li_list_board(fixture_bytes):
+    # 영도구노인복지관(SW_bbs 의 <li> 목록형): 제목 p.txt1 a, 날짜는 p.txt2 ('25.11.05 | 조회')
+    rows = rows_of(fixture_bytes, "senior_yeongdo_notice", "busan_youngdosenior_notice.html")
+    assert [r.posted for r in rows] == [date(2025, 11, 5), date(2026, 9, 21), date(2026, 9, 11)]
+    assert rows[1].title == "[알림/분관] 2026년 4분기 노년사회화교육사업 사회교육 프로그램 추첨결과 알림"
+    assert all("/SW_bbs/notice/view.php?zipEncode=" in r.url for r in rows) and len({r.key for r in rows}) == 3
+
+
+def test_path_number_key_and_senior_center_keywords(fixture_bytes, rules):
+    # 연제구노인복지관: 글 주소 /board/notice/detail/16177/page/1 → key_pattern 으로 글번호만
+    rows = rows_of(fixture_bytes, "senior_yeonje_notice", "busan_yjsilver_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [("16181", date(2026, 9, 16)), ("16177", date(2026, 6, 1))]
+    narrow = source_rules(rules, SOURCES["senior_yeonje_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]  # '우쿨렐레·밴드운동교실 강사 모집'
