@@ -1456,6 +1456,42 @@ sources:
       page_param: curPage
       org_name: 부산광역시 금련산청소년수련원
 
+  # 지역아동센터 (부산 200여 곳은 대부분 누리집이 없어 모음 게시판 두 곳으로 받는다)
+  - id: bro3c_hire
+    name: 지역아동센터 부산지원단 - 인재채용 (부산 지역아동센터·구청 아동복지교사 채용 모음)
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    url: https://www.bro3c.org/5_4
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 작성자 칸이 올린 기관(○○지역아동센터·○○구청)이라 기관명으로 쓴다
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 아동복지교사, 기초학습, 특기적성]  # 생활복지사·센터장·조리사 등 종사자 채용은 거름
+
+  - id: icare_busan_hire
+    name: 아동권리보장원 - 지역아동센터 구인게시판 (부산)
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    # 전국 게시판을 시도 '부산'으로 거른 목록 (GET 으로 됨)
+    url: https://www.icareinfo.go.kr/notice/jobOffer/jobOfferList.do?menuNo=3001110&searchCondition3=%EB%B6%80%EC%82%B0&pageIndex=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 제목 링크 fnDetail('17733') 은 POST 폼이지만 상세도 GET 으로 열림
+      link_template: "https://www.icareinfo.go.kr/notice/jobOffer/jobOfferDetail.do?bbs_no={0}&menuNo=3001110&bbs_section_cd=job"
+      form_link: false
+      row_must_contain: 부산
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 아동복지교사, 기초학습, 특기적성]  # 생활복지사·센터장·조리사 등 종사자 채용은 거름
+      org_name: 부산 지역아동센터
+
   - id: womenhall_notice
     name: 부산광역시 여성회관 - 공지사항
     org_type: 여성·가족
