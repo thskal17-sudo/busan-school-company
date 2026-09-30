@@ -343,3 +343,71 @@ def test_path_number_key_and_senior_center_keywords(fixture_bytes, rules):
     assert [(r.key, r.posted) for r in rows] == [("16181", date(2026, 9, 16)), ("16177", date(2026, 6, 1))]
     narrow = source_rules(rules, SOURCES["senior_yeonje_notice"])
     assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]  # '우쿨렐레·밴드운동교실 강사 모집'
+
+
+class _PageHttp:
+    """목록 한 쪽만 돌려주는 가짜 Http (수집기 단계의 기관명 처리를 보려고)"""
+
+    def __init__(self, content):
+        self.content = content
+
+    def get(self, url, **kw):
+        return type("Resp", (), {"url": url, "content": self.content})()
+
+
+def test_pen_library_notice_org_fixed_and_keywords(fixture_bytes, rules):
+    # 교육청 도서관 공지 (시민도서관과 같은 <a data-id>): 작성자 칸은 '총무과'·'사하도서관' 같은 부서라서
+    # 기관명은 늘 도서관 이름 (org_fixed)
+    from busan_jobs.collectors.board import BoardCollector
+
+    src = SOURCES["lib_saha"]
+    rows = rows_of(fixture_bytes, "lib_saha", "busan_sahalib_notice.html")
+    assert [(r.key, r.posted, r.org) for r in rows] == [
+        ("1039754", date(2026, 9, 29), "총무과"),
+        ("1039439", date(2026, 9, 28), "총무과"),
+        ("1038396", date(2026, 9, 19), "사하도서관"),
+    ]
+    assert rows[1].url == "https://home.pen.go.kr/sahalib/na/ntt/selectNttInfo.do?mi=12293&bbsId=3505&nttSn=1039439"
+    items = BoardCollector(src, _PageHttp(fixture_bytes("busan_sahalib_notice.html")), TODAY).collect()
+    assert {p.org_name for p in items} == {"부산광역시립사하도서관"}
+    narrow = source_rules(rules, src)
+    assert all(judge(r.title, narrow, True) is None for r in rows)  # '계약제교원 및 자원봉사자 인력풀' 은 거름
+    assert judge("2027년 독서문화프로그램 강사 모집 공고", narrow, True) == "모집중"
+    assert judge("2026년 하반기 초등 원어민 영어교실 수강생 모집", narrow, True) is None
+    assert judge("늘봄학교 연계 도서관 프로그램 운영 안내", narrow, True) is None  # 도서관은 '늘봄'·'방과후' 로 받지 않음
+
+
+def test_gijang_library_shared_board(fixture_bytes):
+    # 기장군 도서관 8곳이 나눠 쓰는 게시판: goTo.view('list', 글번호, ptIdx, mId), 분류 칸('공통'·'고촌어울림')은 구분값
+    rows = rows_of(fixture_bytes, "lib_gj_gochon", "busan_gijang_library_notice.html")
+    assert [(r.key, r.label, r.posted) for r in rows] == [
+        ("54022", "공통", date(2026, 9, 28)),
+        ("54009", "고촌어울림", date(2026, 9, 22)),
+        ("53983", "공통", date(2026, 9, 16)),
+    ]
+    assert rows[1].url == "https://library.gijang.go.kr/gochon/bbs/view.do?bIdx=54009&ptIdx=207&mId=0401000000"
+    assert all(r.detail_ok for r in rows)
+
+
+def test_library_boards_with_js_and_masked_writer(fixture_bytes):
+    # 서구아미드림도서관: <a data-req-get-p-idx="379" onclick="yhLib.inline.post(this)">, 날짜 '2026-09-21(월)'
+    rows = rows_of(fixture_bytes, "lib_seogu_ami", "busan_amlib_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("379", date(2026, 9, 21)), ("378", date(2026, 9, 19)), ("377", date(2026, 9, 18)),
+    ]
+    assert rows[0].url == "https://www.bsseogu.go.kr/amlib/portal/board/post/view.do?idx=379&bcIdx=500&mid=0801000000"
+    # 강서기적의도서관 (동래구 도서관과 같은 틀): 글번호는 bb_code, 작성자는 '강*기적의도*관' 처럼 가려짐
+    rows = rows_of(fixture_bytes, "lib_gs_miracle", "busan_gmlib_notice.html")
+    assert [r.key for r in rows] == ["70h40mv0n4d5c59", "70h50670n0213fc", "70h508z0mze43a5"]
+    assert [r.org for r in rows] == ["", "", ""]
+    assert rows[1].title.endswith("서류전형 합격…")  # 목록 제목이 잘려 있음
+
+
+def test_yeongdo_library_li_list(fixture_bytes):
+    # 영도도서관: 표가 아닌 <li> 목록 (제목 strong.t1, 본문 요약 span.t2 는 빼고, 작성일은 첫 span.t3)
+    rows = rows_of(fixture_bytes, "lib_yeongdo", "busan_yeongdo_library_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("334085", date(2026, 9, 27)), ("334017", date(2026, 9, 18)), ("333980", date(2026, 9, 15)),
+    ]
+    assert rows[0].title == "[공지] [영도도서관] 제 38회 영도도서관 인문학 기행 참가신청 안내"
+    assert rows[0].url.startswith("https://www.yeongdo.go.kr/library/01349/01352/01354.web?gcode=1136&idx=334085&amode=view")
