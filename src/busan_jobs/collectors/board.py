@@ -14,6 +14,7 @@ options (모두 선택)
     detail_get      상세 페이지를 GET 으로 열 수 있으면 true (마감일 추출에 사용, 기본 true)
     org_name        기관명 기본값 (작성자 열이 '관리자' 등일 때)
     org_prefix      부서 칸 앞에 붙일 기관 이름 (새올 '체육진흥과' → '부산 서구청 체육진흥과')
+    org_fixed       true 면 작성자·부서 칸을 보지 않고 늘 org_name 을 쓴다 (도서관 공지: 작성자가 '총무과'·'독서문화과')
     link_base       상대 링크를 풀 기준 주소 (페이지 주소와 다를 때. <base href> 가 있으면 자동 적용)
     row_must_contain 이 글자가 있는 행만 (예: 근무지 열이 있는 전국 게시판에서 '부산')
     link_attr       제목 링크의 이 속성 값으로 상세 주소를 만든다 (예: data-id → link_template 의 {0},
@@ -100,7 +101,10 @@ class BoardCollector(Collector):
                         title=r.title,
                         url=r.url,
                         post_key=r.key,
-                        org_name=_with_prefix(opts.get("org_prefix"), r.org) or opts.get("org_name", ""),
+                        org_name=(
+                            opts["org_name"] if opts.get("org_fixed")
+                            else _with_prefix(opts.get("org_prefix"), r.org) or opts.get("org_name", "")
+                        ),
                         org_type=self.source.org_type,
                         district=infer_district(f"{r.district} {r.org}", self.source.district),
                         posted_date=r.posted,

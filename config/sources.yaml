@@ -871,6 +871,743 @@ sources:
       key_param: nttSn
       org_name: 부산광역시립시민도서관
 
+  # ─────────────────────────────── 공공도서관 공지사항 (강사 모집 글만 키워드로 거름)
+  # 공지는 대부분 수강생·참여자 모집이라 '강사'·'튜터'·'멘토' 등이 제목에 있는 글만 받는다.
+  # 작성자 칸이 '총무과'·'독서문화과'·'도서관과' 같은 부서라서 기관명은 도서관 이름으로 고정(org_fixed)
+
+  # 교육청 도서관 (시민도서관과 같은 틀: <a data-id="글번호">). 부전도서관은 재건축 휴관이라 2024-05 뒤로 글이 없어 뺐다
+  - id: lib_bansong
+    name: 부산광역시립반송도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://home.pen.go.kr/bansonglib/na/ntt/selectNttList.do?mi=13041&bbsId=3111
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/bansonglib/na/ntt/selectNttInfo.do?mi=13041&bbsId=3111&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립반송도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_english
+    name: 부산영어도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://home.pen.go.kr/bellib/na/ntt/selectNttList.do?mi=15686&bbsId=4622
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/bellib/na/ntt/selectNttInfo.do?mi=15686&bbsId=4622&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산영어도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gudeok
+    name: 부산광역시립구덕도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 서구
+    collector: generic_board
+    url: https://home.pen.go.kr/guducklib/na/ntt/selectNttList.do?mi=12610&bbsId=3515
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/guducklib/na/ntt/selectNttInfo.do?mi=12610&bbsId=3515&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립구덕도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gupo
+    name: 부산광역시립구포도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: https://home.pen.go.kr/gupolib/na/ntt/selectNttList.do?mi=13330&bbsId=3893
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/gupolib/na/ntt/selectNttInfo.do?mi=13330&bbsId=3893&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립구포도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_myeongjang
+    name: 부산광역시립명장도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: https://home.pen.go.kr/mjlib/na/ntt/selectNttList.do?mi=12511&bbsId=3530
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/mjlib/na/ntt/selectNttInfo.do?mi=12511&bbsId=3530&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립명장도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_saha
+    name: 부산광역시립사하도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사하구
+    collector: generic_board
+    url: https://home.pen.go.kr/sahalib/na/ntt/selectNttList.do?mi=12293&bbsId=3505
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/sahalib/na/ntt/selectNttInfo.do?mi=12293&bbsId=3505&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립사하도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_seodong
+    name: 부산광역시교육청서동도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://home.pen.go.kr/seodonglib/na/ntt/selectNttList.do?mi=13655&bbsId=3718
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/seodonglib/na/ntt/selectNttInfo.do?mi=13655&bbsId=3718&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시교육청서동도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_yeonsan
+    name: 부산광역시립연산도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 연제구
+    collector: generic_board
+    url: https://home.pen.go.kr/yeonsanlib/na/ntt/selectNttList.do?mi=13431&bbsId=3702
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/yeonsanlib/na/ntt/selectNttInfo.do?mi=13431&bbsId=3702&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립연산도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_joongang
+    name: 부산광역시립중앙도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 중구
+    collector: generic_board
+    url: https://home.pen.go.kr/joonganglib/na/ntt/selectNttList.do?mi=11009&bbsId=3690
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/joonganglib/na/ntt/selectNttInfo.do?mi=11009&bbsId=3690&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립중앙도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_haeundae
+    name: 부산광역시립해운대도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://home.pen.go.kr/haeundaelib/na/ntt/selectNttList.do?mi=12022&bbsId=3485
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/haeundaelib/na/ntt/selectNttInfo.do?mi=12022&bbsId=3485&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시립해운대도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 사하구 평생학습관과 같은 틀: boardView('listForm', 작성자, 공개여부, 글번호, ptIdx, mId, 쪽)
+  - id: lib_dadae
+    name: 사하구 다대도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사하구
+    collector: generic_board
+    url: https://www.saha.go.kr/dadaelib/bbs/list.do?ptIdx=660&mId=0509000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://www.saha.go.kr/dadaelib/bbs/view.do?bIdx={3}&ptIdx={4}&mId={5}"
+      key_param: bIdx
+      org_name: 사하구 다대도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_hadan
+    name: 사하구 하단도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사하구
+    collector: generic_board
+    url: https://www.saha.go.kr/hadanlib/bbs/list.do?ptIdx=761&mId=0601000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://www.saha.go.kr/hadanlib/bbs/view.do?bIdx={3}&ptIdx={4}&mId={5}"
+      key_param: bIdx
+      org_name: 사하구 하단도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 기장군 도서관 8곳은 한 게시판(ptIdx=207)을 나눠 쓰고, 도서관마다 자기 글과 '공통' 글만 보여 준다
+  # (모두 보이는 목록이 없음). '공통' 글이 겹치면 다른 게시판 같은 공고로 한 번만 알린다
+  # goTo.view('list', 글번호, ptIdx, mId)
+  - id: lib_gj_gijang
+    name: 기장군 기장도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/gijang/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/gijang/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 기장도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_jeonggwan
+    name: 기장군 정관도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/jglib/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/jglib/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 정관도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_jgchild
+    name: 기장군 정관에듀파크어린이도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/jgchildlib/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/jgchildlib/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 정관에듀파크어린이도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_gochon
+    name: 기장군 고촌어울림도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/gochon/bbs/list.do?ptIdx=207&mId=0401000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/gochon/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 고촌어울림도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_naeri
+    name: 기장군 내리새라도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/naeri/bbs/list.do?ptIdx=207&mId=0401000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/naeri/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 내리새라도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_gyori
+    name: 기장군 교리도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/gyori/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/gyori/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 교리도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_ilgwang
+    name: 기장군 일광도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/ilgwang/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/ilgwang/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 일광도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gj_igchild
+    name: 기장군 일광어린이도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: https://library.gijang.go.kr/igchildlib/bbs/list.do?ptIdx=207&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://library.gijang.go.kr/igchildlib/bbs/view.do?bIdx={1}&ptIdx={2}&mId={3}"
+      key_param: bIdx
+      org_name: 기장군 일광어린이도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 동래구·강서구 도서관 (같은 게시판 프로그램: ...&bb_code=글번호&view=read)
+  - id: lib_dongnae
+    name: 동래구 동래읍성도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: https://dongnae.go.kr/lib/dongnae/index.php?g_page=community&m_page=community01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bb_code
+      org_name: 동래구 동래읍성도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_allak
+    name: 동래구 안락누리도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: https://dongnae.go.kr/lib/allak/index.php?g_page=community&m_page=community01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bb_code
+      org_name: 동래구 안락누리도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gs_miracle
+    name: 강서기적의도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 강서구
+    collector: generic_board
+    url: https://library.bsgangseo.go.kr/gmlib/index.php?g_page=community&m_page=community01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bb_code
+      org_name: 강서기적의도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gs_gangseo
+    name: 강서구 강서도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 강서구
+    collector: generic_board
+    url: https://library.bsgangseo.go.kr/gslib/index.php?g_page=community&m_page=community01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bb_code
+      org_name: 강서구 강서도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_gs_jisa
+    name: 강서구 지사도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 강서구
+    collector: generic_board
+    url: https://library.bsgangseo.go.kr/jslib/index.php?g_page=community&m_page=community01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: bb_code
+      org_name: 강서구 지사도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 구청 누리집 틀 도서관 (글번호 dataSid)
+  # 금정구청 누리집(www.geumjeong.go.kr)은 2026-09-29 해외 접속이 막혔으나 2026-09-30 러너 세 대에서는 열림
+  - id: lib_geumsaem
+    name: 금정구 금샘도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://www.geumjeong.go.kr/gslib/board/list.geumj?boardId=BBS_0000341&menuCd=DOM_000001705001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 금정구 금샘도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_geumgok
+    name: 북구 금곡도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: https://www.bsbukgu.go.kr/bglib/board/list.bsbukgu?boardId=BBS_0000103&menuCd=DOM_000001306001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 북구 금곡도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_deokcheon
+    name: 북구 덕천도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: https://www.bsbukgu.go.kr/dclib/board/list.bsbukgu?boardId=BBS_0000270&menuCd=DOM_000002306001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 북구 덕천도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_hwamyeong
+    name: 북구 화명도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: https://www.bsbukgu.go.kr/hmlib/board/list.bsbukgu?boardId=BBS_0000100&menuCd=DOM_000001206001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 북구 화명도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_mandeok
+    name: 북구 만덕도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: https://www.bsbukgu.go.kr/mdlib/board/list.bsbukgu?boardId=BBS_0000097&menuCd=DOM_000001106001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 북구 만덕도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_donggu
+    name: 동구도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동구
+    collector: generic_board
+    url: https://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000083&menuCd=DOM_000000806001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 동구도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_donggu_english
+    name: 동구어린이영어도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동구
+    collector: generic_board
+    url: https://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000261&menuCd=DOM_000002206001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 동구어린이영어도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 부산진구 도서관(기적의·당감·어린이청소년·작은도서관)이 함께 쓰는 공지
+  - id: lib_busanjin
+    name: 부산진구통합도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://www.busanjin.go.kr/library/board/list.busanjin?boardId=BBS_0000273&menuCd=DOM_000002106001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 부산진구통합도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_sasang
+    name: 사상도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://www.sasang.go.kr/library/board/list.sasang?boardId=BBS_0000125&menuCd=DOM_000000506001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 사상도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_jurye
+    name: 사상구 주례열린도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://www.sasang.go.kr/jrlib/board/list.sasang?boardId=BBS_0000291&menuCd=DOM_000001405001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 사상구 주례열린도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_seogu_ami
+    name: 서구아미드림도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 서구
+    collector: generic_board
+    url: https://www.bsseogu.go.kr/amlib/portal/board/post/list.do?bcIdx=500&mid=0801000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-req-get-p-idx  # <a data-req-get-p-idx="379" onclick="yhLib.inline.post(this)">
+      link_template: "https://www.bsseogu.go.kr/amlib/portal/board/post/view.do?idx={0}&bcIdx=500&mid=0801000000"
+      key_param: idx
+      org_name: 서구아미드림도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 영도구 도서관: 표가 아닌 <li> 목록 (제목 strong.t1, 본문 요약 span.t2, 작성일 span.t3)
+  - id: lib_yeongdo
+    name: 영도도서관 - 알림
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://www.yeongdo.go.kr/library/01349/01352/01354.web
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "ul.lst1 > li.li1"
+      title_selector: "strong.t1"
+      date_selector: "span.t3"  # 첫 번째 t3 가 작성일
+      key_param: idx
+      org_name: 영도구 영도도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_yeongdo_namhang
+    name: 영도도서관 남항분관 - 알림
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://www.yeongdo.go.kr/library/01349/01352/01355.web
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "ul.lst1 > li.li1"
+      title_selector: "strong.t1"
+      date_selector: "span.t3"  # 첫 번째 t3 가 작성일
+      key_param: idx
+      org_name: 영도구 영도도서관 남항분관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  # 연제구 평생학습과 같은 틀: <a data-action="/library/bbs/view.do?bIdx=…&ptIdx=80">
+  - id: lib_yeonje
+    name: 연제구 연제도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 연제구
+    collector: generic_board
+    url: https://www.yeonje.go.kr/library/bbs/list.do?ptIdx=80&mId=0701000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-action
+      link_template: "https://www.yeonje.go.kr{0}&mId=0701000000"
+      key_param: bIdx
+      org_name: 연제구 연제도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: lib_yeonje_manhwa
+    name: 연제구 연제만화도서관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 연제구
+    collector: generic_board
+    url: https://www.yeonje.go.kr/manhwalib/bbs/list.do?ptIdx=251&mId=0601000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-action
+      link_template: "https://www.yeonje.go.kr{0}&mId=0601000000"
+      key_param: bIdx
+      org_name: 연제구 연제만화도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # ─────────────────────────────── 청소년·여성
   - id: busanyouth_notice
     name: 부산청소년활동진흥센터 - 공지사항 (청소년 교육강사 모집 등)
