@@ -282,3 +282,30 @@ def test_gnuboard_li_list(fixture_bytes):
         ("186", date(2026, 7, 24)), ("189", date(2026, 9, 2)), ("188", date(2026, 8, 31)),
     ]
     assert rows[1].title == "2026년 학교 밖 청소년 수학여행 지원사업 수의계약 내역 공개"
+
+
+def test_child_center_hire_board_org_from_writer(fixture_bytes, rules):
+    # 지역아동센터 부산지원단 인재채용: 작성자 칸이 공고를 올린 기관(○○지역아동센터·○○구청)
+    rows = rows_of(fixture_bytes, "bro3c_hire", "busan_bro3c_hire.html")
+    assert [(r.key, r.org) for r in rows] == [
+        ("https://www.bro3c.org/5_4/74004", "부산 영도구"),
+        ("https://www.bro3c.org/5_4/73998", "부곡지역아동센터"),
+        ("https://www.bro3c.org/5_4/73989", "한나래지역아동센터"),
+    ]
+    narrow = source_rules(rules, SOURCES["bro3c_hire"])
+    # 구청 아동복지교사·프로그램 강사는 받고, 돌봄 보조인력은 거름
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, "모집중"]
+    assert judge("[부산 부산진구] 수지역아동센터 생활복지사 채용공고", narrow, True) is None
+
+
+def test_child_center_national_board_filtered_to_busan(fixture_bytes, rules):
+    # 아동권리보장원 구인게시판: 시도 '부산' 으로 거른 목록, fnDetail('17686') → GET 상세, 모집기간 칸에서 마감일
+    rows = rows_of(fixture_bytes, "icare_busan_hire", "busan_icare_hire.html")
+    assert [r.key for r in rows] == ["17686", "17662", "17607"]
+    r = rows[0]
+    assert r.url == (
+        "https://www.icareinfo.go.kr/notice/jobOffer/jobOfferDetail.do?bbs_no=17686&menuNo=3001110&bbs_section_cd=job"
+    )
+    assert (r.posted, r.deadline) == (date(2026, 6, 10), date(2026, 6, 19))
+    narrow = source_rules(rules, SOURCES["icare_busan_hire"])
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, "모집중"]  # 사회복지사 채용은 거름
