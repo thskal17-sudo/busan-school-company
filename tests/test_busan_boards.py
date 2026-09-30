@@ -309,3 +309,17 @@ def test_child_center_national_board_filtered_to_busan(fixture_bytes, rules):
     assert (r.posted, r.deadline) == (date(2026, 6, 10), date(2026, 6, 19))
     narrow = source_rules(rules, SOURCES["icare_busan_hire"])
     assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, "모집중"]  # 사회복지사 채용은 거름
+
+
+def test_imweb_board_date_attr_and_title_org(fixture_bytes, rules):
+    # 부산광역시사회복지협의회 취업정보(아임웹): 날짜 칸 글자는 '2일전' 이고 title 속성에 '2026-09-28 14:35',
+    # 기관명은 제목 앞 [대괄호] 에서 (title_org_pattern)
+    rows = rows_of(fixture_bytes, "bswin_job", "busan_bswin_job.html")
+    assert [(r.key, r.posted, r.org) for r in rows] == [
+        ("174853397", date(2026, 9, 28), "KRX국민행복재단"),
+        ("174658524", date(2026, 9, 23), "송도사랑요양원"),
+        ("173872331", date(2026, 9, 8), "늘봄실버요양센터"),
+    ]
+    narrow = source_rules(rules, SOURCES["bswin_job"])
+    assert all(judge(r.title, narrow, True) is None for r in rows)  # 요양보호사·조리원 등은 거름 ('늘봄'실버요양센터 포함)
+    assert judge("[운봉종합사회복지관] 수면요가테라피 강사 모집", narrow, True) == "모집중"
