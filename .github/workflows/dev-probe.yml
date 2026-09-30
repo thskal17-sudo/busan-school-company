@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        attempt: [1]
+        attempt: [1, 2, 3]
     env:
       PYTHONPATH: src
       PYTHONUNBUFFERED: "1"
@@ -32,8 +32,8 @@ jobs:
       - name: 러너 위치
         run: curl -s -m 10 https://ipinfo.io/json | grep -E '"(ip|city|region|country|org)"' || true
       - run: set -f; mkdir -p probe_out; bash scripts/dev_probe.sh 2>&1 | tee probe_out/_log.txt
-      - name: 받은 페이지 보관 (probe-out 브랜치, 첫 번째 시도만)
-        if: always() && matrix.attempt == 1
+      - name: 받은 페이지 보관 (probe-out-시도번호 브랜치)
+        if: always()
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
@@ -42,5 +42,5 @@ jobs:
             git init -q -b probe-out
             git add -A
             git -c user.name=probe -c user.email=probe@example.invalid commit -qm "probe out ${GITHUB_RUN_ID}"
-            git push -qf "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" probe-out
+            git push -qf "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "probe-out:probe-out-${ATTEMPT}"
           fi
