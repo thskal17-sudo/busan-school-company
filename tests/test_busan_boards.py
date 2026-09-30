@@ -139,6 +139,7 @@ def test_sources_yaml_is_consistent():
     for src in SOURCES.values():
         assert src.collector in COLLECTORS, src.id
         assert src.enabled or src.options.get("blocked"), f"{src.id}: 끈 소스는 blocked 에 까닭을 적는다"
+        assert not isinstance(src.options.get("key_param", ""), bool), f"{src.id}: key_param 에 no 를 쓰면 따옴표로"
         template = src.options.get("link_template")
         if template:
             template.format(*["1"] * 8)  # 틀의 {n} 이 모두 채워지는지

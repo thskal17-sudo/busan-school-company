@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
-# (임시) 복지관 6차: 형식이 불확실한 목록들
-f() { python scripts/dev_fetch.py "$@" || true; }
-f sb_namgu_hire "http://www.ngswc.or.kr/04_notice/notice05.php"
-f sb_bumin "https://www.bmsenior.org/SW_bbs/notice/list.php?zipEncode==etpLrxydrMCH9MyMu2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME"
-f sb_saha_ajax "https://sahasilver.org/07/01.php?mode=list_ok&skind=&skey=&search=&page=1" "post:"
-f sb_saha_view "https://sahasilver.org/07/01.php?mode=view&uid=734"
-f sb_ojin_read "http://ojin.saem.or.kr/community/guest/?mode=read&dir=read&number=22251"
-f dis_rehab_hire "https://www.rehabcenter.or.kr/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME"
-f dis_bgrc_hire "https://bgrc.or.kr/community_05.html"
-f dis_bgrc_main "https://bgrc.or.kr/"
-f dis_dnrc_notice "https://dnrc.kr/notice"
-f dis_busancp "http://www.busancp.or.kr/"
-f dis_bdac "https://bdac.or.kr/"
+# (임시) 복지관 7차: 새 소스 전체 시험 수집
+IDS="baswc_hire bswin_job senior_busanjin_hire senior_city_recruit senior_city_notice senior_dasarang_notice senior_gangseo_notice senior_geumjeong_notice senior_gwangan_notice senior_jasungdae_notice senior_junggu_notice senior_munhyeon_notice senior_myeongji_recruit senior_ojin_recruit senior_sasang_hire senior_sasang_branch_hire senior_silverbell_hire senior_suyeong_hire senior_yeongdo_notice senior_yeonje_notice senior_seogu_notice senior_namgu_hire senior_bumin_notice senior_saha_notice rehab_hire bgrc_hire dnrc_notice busancp_notice"
+python -m busan_jobs check-source $IDS 2>&1 | tee probe_out/_check.txt | grep -E "^===|목록|오류"
+python -m busan_jobs run --no-mail --db probe_out/test.db --out probe_out/out --source $IDS 2>&1 | grep -E "^\[|^신규|WARNING|상세 페이지 실패|^  \["
