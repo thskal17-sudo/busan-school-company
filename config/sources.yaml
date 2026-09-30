@@ -885,7 +885,7 @@ sources:
     verified: true
     options:
       key_param: intnum
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]  # '예비청소년지도자 연수'·'방과후아카데미 청소년 모집' 은 거름
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]  # '예비청소년지도자 연수'·'방과후아카데미 청소년 모집' 은 거름
       org_name: 부산청소년활동진흥센터
 
   - id: busanyouth_hire
@@ -908,7 +908,7 @@ sources:
       org_selector: ".tit > span"
       date_selector: ".date"
       link_template: "{1}"
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]  # '청소년지도사 채용'(직원)은 거름
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]  # '청소년지도사 채용'(직원)은 거름
 
   # 청소년수련관 (부산청소년활동진흥센터 '부산 청소년 시설' 현황의 청소년수련관 9곳). 강사 모집은 각 수련관 공지·채용 게시판에 올라온다.
   # 청소년 기관 게시판에는 '청소년지도사 채용'(직원)·'방과후아카데미 청소년 모집'(학생) 글이 많아 포함 키워드를 강사·코치로 좁힌다
@@ -924,7 +924,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시금정청소년수련관
 
   - id: onnainna_hire
@@ -940,7 +940,7 @@ sources:
     verified: true
     options:
       key_param: "no"
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 동래구청소년센터
 
   - id: onnainna_notice
@@ -956,7 +956,7 @@ sources:
     verified: true
     options:
       key_param: "no"
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 동래구청소년센터
 
   - id: power0924_notice
@@ -971,7 +971,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시양정청소년수련관
 
   - id: kumgok_notice
@@ -989,7 +989,7 @@ sources:
       # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시금곡청소년수련관
 
   - id: yzzang_hire
@@ -1007,7 +1007,7 @@ sources:
       # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 사상구청소년센터
 
   - id: yzzang_notice
@@ -1025,7 +1025,7 @@ sources:
       # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 사상구청소년센터
 
   - id: gudeok_notice
@@ -1043,7 +1043,7 @@ sources:
       # 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. 메뉴 표도 td onclick 이라 행을 지정
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 구덕청소년수련관
 
   - id: ymcahy_notice
@@ -1075,7 +1075,7 @@ sources:
       # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산진구 가야 청소년센터
 
   - id: bujeon_youth_notice
@@ -1094,7 +1094,7 @@ sources:
     options:
       # 공지 줄은 /xe/sub7_01/24564, 일반 줄은 index.php?…&document_srl=24556 → 글번호만 식별값으로
       key_pattern: "(?:document_srl=|/)(\\d+)(?:&|$)"
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산진구 부전 청소년센터
 
   - id: gijang_youth_notice
@@ -1111,7 +1111,7 @@ sources:
     verified: true
     options:
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 기장청소년센터
 
   - id: jeonpo_youth
@@ -1139,7 +1139,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 북구청소년문화의집
 
   - id: sahayouth_notice
@@ -1158,7 +1158,7 @@ sources:
       # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">
       row_selector: "tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 사하구청소년문화의집
 
   - id: seoguyouth_notice
@@ -1173,7 +1173,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 서구청소년문화의집
 
   - id: seeyouth_notice
@@ -1189,7 +1189,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 수영구청소년문화의집
 
   - id: purun1318_notice
@@ -1207,7 +1207,7 @@ sources:
       # 청소년수련관과 같은 제작사 게시판: 제목 칸 <td onclick="location.href='?md=V&idx=글번호'">. PC·모바일용 목록이 둘 다 있어 PC 쪽만
       row_selector: "#only_pc tr:has(> td[onclick*='md=V'])"
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 중구청소년문화의집
 
   - id: haeundae_youth_notice
@@ -1224,7 +1224,7 @@ sources:
     verified: true
     options:
       key_param: dataSid
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 해운대청소년문화의집
 
   # 청소년상담복지센터 (부산광역시청소년상담복지센터 '부산지역 청소년상담복지센터' 목록의 16곳). 집단상담·예방교육 강사 모집과 직원 채용이 공지사항에 올라온다
@@ -1241,7 +1241,7 @@ sources:
     verified: true
     options:
       key_param: wr_id
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시청소년상담복지센터
   - id: cando_recruit
     name: 부산광역시청소년상담복지센터 - 채용정보
@@ -1256,7 +1256,7 @@ sources:
     verified: true
     options:
       key_param: wr_id
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시청소년상담복지센터
   - id: gjyouth1388_notice
     name: 금정구청소년상담복지센터 - 공지사항
@@ -1270,7 +1270,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 금정구청소년상담복지센터
   - id: namgu1388_notice
     name: 남구청소년상담복지센터 - 공지사항
@@ -1284,7 +1284,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 남구청소년상담복지센터
   - id: bukgu1388_notice
     name: 북구청소년상담복지센터 - 공지사항
@@ -1300,7 +1300,7 @@ sources:
     verified: true
     options:
       key_param: dataSid
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 북구청소년상담복지센터
   - id: gijang1388_notice
     name: 기장군청소년상담복지센터 - 공지사항
@@ -1316,7 +1316,7 @@ sources:
     verified: true
     options:
       key_param: idx
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 기장군청소년상담복지센터
 
   - id: saha1388_notice
@@ -1336,7 +1336,7 @@ sources:
       title_selector: ".bo_tit"
       date_selector: ".date"
       key_param: wr_id
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 사하구청소년상담복지센터
   - id: meetyou_notice
     name: 수영구청소년상담복지센터 - 공지사항
@@ -1352,7 +1352,7 @@ sources:
     options:
       # 제목 링크 javascript:goRead('636') → ?mode=read&dir=read&number=636
       link_template: "http://meetyou.kr/community/notice/?mode=read&dir=read&number={0}"
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 수영구청소년상담복지센터
   - id: yeongdo1388_notice
     name: 영도구청소년상담복지센터 - 공지사항
@@ -1368,7 +1368,7 @@ sources:
     verified: true
     options:
       key_param: wr_id
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 영도구청소년상담복지센터
   - id: bsjin1388_notice
     name: 부산진구청소년상담복지센터 - 공지사항
@@ -1382,7 +1382,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산진구청소년상담복지센터
   - id: udream_notice
     name: 해운대구청소년상담복지센터 - 공지사항
@@ -1400,7 +1400,7 @@ sources:
       # 제목 링크 onclick="view('270')" 은 GET 폼(mode=view, uid) 제출
       link_template: "http://u-dream.or.kr/04/01.php?mode=view&uid={0}"
       form_link: false
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 해운대구청소년상담복지센터
   - id: yeonje1388_notice
     name: 연제구청소년상담복지센터 - 공지사항
@@ -1414,7 +1414,7 @@ sources:
     enabled: true
     verified: true
     options:
-      include: [강사, 코치, 트레이너, 튜터, 활동지도자]
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 연제구청소년상담복지센터
 
   - id: bsdg1388_notice
