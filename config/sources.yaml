@@ -1492,6 +1492,42 @@ sources:
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 아동복지교사, 기초학습, 특기적성]  # 생활복지사·센터장·조리사 등 종사자 채용은 거름
       org_name: 부산 지역아동센터
 
+  # 복지관 (사회·노인·장애인복지관 90여 곳 → 협회·협의회의 채용 모음 게시판으로 받는다)
+  - id: baswc_hire
+    name: 부산시사회복지관협회 - 구인게시판 (종합사회복지관 54곳 채용 모음)
+    org_type: 복지관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.baswc.org/SW_bbs/notice/list.php?zipEncode==ixzRj3B391vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 작성자 칸이 올린 복지관이라 기관명으로 쓴다
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]  # 사회복지사·요양보호사·조리원 등 종사자 채용은 거름 ('늘봄실버요양센터' 때문에 늘봄은 뺌)
+
+  - id: bswin_job
+    name: 부산광역시사회복지협의회 - 취업정보 (복지관·요양·아동 시설 채용 모음)
+    org_type: 복지관
+    district: 부산전체
+    collector: generic_board
+    url: https://bswin.net/information_job
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 아임웹 게시판: <ul class="li_body"> 한 줄에 분류·제목·작성자·날짜. 날짜 칸 글자는 '2일전', title 속성에 날짜
+      row_selector: "div.li_board ul.li_body"
+      title_selector: "a.list_text_title"
+      date_selector: "li.time@title"
+      key_param: idx
+      title_org_pattern: '^\[([^\]]+)\]'  # 제목 앞 [기관명]
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]  # 사회복지사·요양보호사·조리원 등 종사자 채용은 거름 ('늘봄실버요양센터' 때문에 늘봄은 뺌)
+
   - id: womenhall_notice
     name: 부산광역시 여성회관 - 공지사항
     org_type: 여성·가족

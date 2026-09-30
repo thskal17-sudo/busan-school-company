@@ -19,8 +19,10 @@ options (모두 선택)
     link_attr       제목 링크의 이 속성 값으로 상세 주소를 만든다 (예: data-id → link_template 의 {0},
                     link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
     title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때)
-    date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로
+    date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로.
+                    'li.time@title' 처럼 쓰면 요소의 속성 값을 읽는다 (셀렉터 옵션 공통)
     org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
+    title_org_pattern 제목에서 기관명을 뽑는 정규식 (첫 괄호). 예: 제목 앞 '[송도사랑요양원]' 의 기관명
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
 """
 from __future__ import annotations
@@ -394,15 +396,22 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         if picked_org and title.startswith(picked_org + " ") and len(title) > len(picked_org) + 5:
             title = title[len(picked_org) + 1:]  # 제목 칸 안에 기관 이름이 먼저 나오는 목록 (청소년활동진흥센터 채용정보)
         org = _org_name(picked_org or cell("org"), title)
+        if opts.get("title_org_pattern") and not picked_org:
+            m = re.search(opts["title_org_pattern"], title)
+            org = m.group(1).strip() if m else org
         out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), cell("district")))
     return out
 
 
 def _select_text(row: Tag, selector: str | None) -> str:
+    """행 안 요소의 글자. 'li.time@title' 처럼 @속성 을 붙이면 그 속성 값 (화면에는 '2일전', 속성에 날짜)."""
     if not selector:
         return ""
+    selector, _, attr = selector.partition("@")
     el = row.select_one(selector)
-    return _clean(el.get_text(" ")) if el is not None else ""
+    if el is None:
+        return ""
+    return _clean(str(el.get(attr) or "")) if attr else _clean(el.get_text(" "))
 
 
 def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tuple[str, str, bool]:
