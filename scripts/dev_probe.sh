@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-# (임시) 지역아동센터 2차: 아동권리보장원 부산 필터·상세 GET, 부산지원단 상세
-f() { python scripts/dev_fetch.py "$@" || true; }
-f icare_busan "https://www.icareinfo.go.kr/notice/jobOffer/jobOfferList.do?menuNo=3001110&searchCondition3=%EB%B6%80%EC%82%B0&pageIndex=1"
-f icare_busan_post "https://www.icareinfo.go.kr/notice/jobOffer/jobOfferList.do" "post:menuNo=3001110&bbs_section_cd=job&pageIndex=1&searchCondition3=부산"
-f icare_detail "https://www.icareinfo.go.kr/notice/jobOffer/jobOfferDetail.do?bbs_no=17733&menuNo=3001110&bbs_section_cd=job"
-f bro3c_detail "https://www.bro3c.org/5_4/73989"
-f bro3c_p2 "https://www.bro3c.org/5_4?page=2"
+# (임시) 지역아동센터 3차: 시험 수집
+IDS="bro3c_hire icare_busan_hire"
+python -m busan_jobs check-source $IDS 2>&1 | tee probe_out/_check.txt | grep -E "^===|목록|오류"
+python -m busan_jobs run --no-mail --db probe_out/test.db --out probe_out/out --source $IDS 2>&1 | grep -E "^\[|^신규|WARNING|상세 페이지 실패|^  \["
