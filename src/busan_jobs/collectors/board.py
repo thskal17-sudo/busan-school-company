@@ -49,7 +49,10 @@ _HEADER_MAP = {
 }
 # 게시글 식별값에서 빼는 쿼리 파라미터 (페이지 번호·검색어·검색 기간(srchBeginDt)·세션 등은 같은 글이라도 달라진다)
 _VOLATILE_PARAMS = re.compile(r"page|currpage|rowperpage|search|srch|sort|_csrf|jsessionid", re.I)
-_NOT_ORG = re.compile(r"^(\S*관리자|담당자|admin|운영자|홈페이지|-)?$", re.I)  # '문화의집관리자' 같은 계정 이름도
+# 작성자 칸의 계정·직위 ('문화의집관리자', '인사담당자', '분관 과장')는 기관명이 아니다
+_NOT_ORG = re.compile(
+    r"^(\S*(관리자|담당자)|담당|admin|운영자|홈페이지|-|\S*\s?(과장|팀장|주임|대리|실장|센터장|관장))?$", re.I
+)
 # 작성자 칸의 사람 이름 (최희상, 김예솔): 한글 2~4자이고 기관 이름처럼 끝나지 않는 것
 _PERSON = re.compile(r"[가-힣]{2,4}")
 _ORG_END = re.compile(r"(청|원|교|관|과|팀|실|단|터|회|소|부|국|처|사|군|구|시)$")
