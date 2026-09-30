@@ -1,25 +1,42 @@
 #!/usr/bin/env bash
-# (임시) 도서관 3차: 공공도서관 누리집 첫 화면
+# (임시) 도서관 4차: 공공도서관 공지사항 목록
 f() { python scripts/dev_fetch.py "$@" || true; }
-for c in bansonglib bellib bujunlib guducklib haeundaelib mjlib sahalib seodonglib yeonsanlib; do
-  f "pen_$c" "https://home.pen.go.kr/$c/main.do"
-done
-f pen_joongang "https://home.pen.go.kr/joonganglib/main.do"
-f gupolib "http://www.gupolib.or.kr/"
-f dadaelib "http://dadaelib.saha.go.kr"
-f hadanlib "https://www.saha.go.kr/hadanlib/main.do"
-f gijang_dlib "https://dlib.gijang.go.kr/gyori/main.do"
-f gijang_lib "https://library.gijang.go.kr/gochon/main.do"
-f dongnae_lib "https://dongnae.go.kr/lib/dongnae/"
-f gangseo_lib "https://library.bsgangseo.go.kr/gmlib/"
-f namgu_lib "http://library.bsnamgu.go.kr/"
+pen() { f "pen_$1" "https://home.pen.go.kr/$1/na/ntt/selectNttList.do?mi=$2&bbsId=$3"; }
+pen bansonglib 13041 3111
+pen bellib 15686 4622
+pen bujunlib 12783 3571
+pen guducklib 12610 3515
+pen guducklib_prog 17947 5418
+pen haeundaelib 12022 3485
+pen joonganglib 11009 3690
+pen mjlib 12511 3530
+pen sahalib 12293 3505
+pen seodonglib 13655 3718
+pen yeonsanlib 13431 3702
+f pen_gupolib "https://home.pen.go.kr/gupolib/main.do"
+f dadaelib "https://www.saha.go.kr/dadaelib/contents.do?mId=0509000000"
+f hadanlib "https://www.saha.go.kr/hadanlib/bbs/list.do?ptIdx=761&mId=0601000000"
+f gj_gyori "https://dlib.gijang.go.kr/gyori/contents.do?mId=0501000000"
+f gj_gochon "https://library.gijang.go.kr/gochon/contents.do?mId=0401000000"
+for c in gijang naeri ilgwang igchildlib jglib jgchildlib; do f "gj_$c" "https://library.gijang.go.kr/$c/main.do"; done
+f dn_dongnae "https://dongnae.go.kr/lib/dongnae/index.php?g_page=community&m_page=community01"
+f dn_allak "https://dongnae.go.kr/lib/allak/"
+for c in gmlib gslib jslib; do f "gs_$c" "https://library.bsgangseo.go.kr/$c/index.php?g_page=community&m_page=community01"; done
+f namgu_http "http://library.bsnamgu.go.kr/Main.do"
 f geumjeong_lib "http://library.geumjeong.go.kr/"
-f geumsaem_lib "https://www.geumjeong.go.kr/gslib/index.geumj"
-f bukgu_lib "https://www.bsbukgu.go.kr/bglib/index.bsbukgu"
-f donggu_lib "http://www.bsdonggu.go.kr/library/index.donggu"
-f seogu_lib "https://www.bsseogu.go.kr/amlib/main.do"
-f busanjin_lib "https://www.busanjin.go.kr/library"
-f haeundae_lib "http://www.haeundae.go.kr/library"
-f sasang_lib "http://www.sasang.go.kr/library"
-f yeongdo_lib "http://www.yeongdo.go.kr/library.web"
-f yeonje_lib "https://www.yeonje.go.kr/library/main.do"
+f geumsaem "https://www.geumjeong.go.kr/gslib/index.geumj?menuCd=DOM_000001705001000000"
+for c in bglib dclib mdlib hmlib; do f "bk_$c" "https://www.bsbukgu.go.kr/$c/index.bsbukgu"; done
+f bk_bglib_notice "https://www.bsbukgu.go.kr/bglib/index.bsbukgu?menuCd=DOM_000001306001000000"
+f dg_lib "http://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000083&menuCd=DOM_000000806001000000"
+f dg_kidseng "http://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000261&menuCd=DOM_000002206001000000"
+f seogu_am "https://www.bsseogu.go.kr/amlib/portal/board/post/list.do?bcIdx=500&mid=0801000000"
+f bj_library "https://www.busanjin.go.kr/library/index.busanjin"
+f bj_cylib "https://www.busanjin.go.kr/cylib/index.busanjin"
+f hd_library "https://www.haeundae.go.kr/library/index.do"
+f ss_notice "https://www.sasang.go.kr/library/index.sasang?menuCd=DOM_000000506001000000"
+f ss_jrlib "https://www.sasang.go.kr/jrlib/index.sasang"
+f yd_notice "https://www.yeongdo.go.kr/01354.web"
+f yd_namhang "https://www.yeongdo.go.kr/01355.web"
+f yj_notice "https://www.yeonje.go.kr/library/contents.do?mId=0701000000"
+f yj_manhwa "https://www.yeonje.go.kr/manhwalib/main.do"
+f portal_news "https://library.busan.go.kr/portal/board/index.do?menu_idx=27&manage_idx=24"
