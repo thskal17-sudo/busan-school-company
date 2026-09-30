@@ -1810,6 +1810,7 @@ sources:
     district: 연제구
     collector: generic_board
     # 글 주소 /board/notice/detail/글번호/page/쪽 → 글번호만 식별값으로
+    # 러너에 따라 접속 시간 초과가 잦음 (2026-09-30 세 번 중 한 번 성공). 안 된 날은 catch-up 에서 다시 받음
     url: http://www.yjsilver.com/board/notice/lists
     pages: 1
     keyword_filter: true
