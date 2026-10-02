@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
-# (임시) 체육센터 3차: 새로 찾은 체육회·체육센터, 남은 채용 게시판
+# (임시) 체육센터 4차: 남은 게시판 목록
 f() { python scripts/dev_fetch.py "$@" || true; }
-curl -s -m 20 -o probe_out/sylink05.js "https://www.sysports.or.kr/js/sylink05.js" || true
-f c_syg_h "https://www.sygsports.co.kr/bbs/board.php?bo_table=05_08"
-f c_gj_h "https://www.gjsports.go.kr/bbs/board.php?bo_table=05_05"
-f m_bbsc "https://bbsc.kr/"
-f m_yd7330 "https://yd7330.com/"
-f m_hud7330 "http://www.hud7330.com/"
-f m_yjsports "https://www.yj-sports.or.kr/"
-f m_bnsc "http://www.bnsc.or.kr/"
-f m_bnsc_s "https://www.bnsc.or.kr/"
-f m_bukgu "https://bukgusports.com/"
-f m_saba "http://www.saba.or.kr/"
-f m_gscsports "http://www.gscsports.or.kr/" ua
-f m_sasangsports "http://sasangsports.com/" ua
+f a_bbsc_n "https://bbsc.kr/board/notice"
+f a_yd_n "https://yd7330.com/board/list/notice"
+f a_yd_h "https://yd7330.com/board/list/employment"
+f a_hud_n "http://www.hud7330.com/bbs/board.php?bo_table=notice"
+f a_hud_h "http://www.hud7330.com/bbs/board.php?bo_table=employment"
+f c_yj_n "https://www.yj-sports.or.kr/bbs/board.php?bo_table=05_01"
+f c_yj_h "https://www.yj-sports.or.kr/bbs/board.php?bo_table=05_03"
+f c_sy_h "https://www.sysports.or.kr/emSolution/board/recru"
+f c_gj_n "https://www.gjsports.go.kr/bbs/board.php?bo_table=05_01"
