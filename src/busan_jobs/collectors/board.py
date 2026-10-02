@@ -19,7 +19,7 @@ options (모두 선택)
     row_must_contain 이 글자가 있는 행만 (예: 근무지 열이 있는 전국 게시판에서 '부산')
     link_attr       제목 링크의 이 속성 값으로 상세 주소를 만든다 (예: data-id → link_template 의 {0},
                     link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
-    title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때)
+    title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때). 링크면 상세 주소도 거기서
     date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로.
                     'li.time@title' 처럼 쓰면 요소의 속성 값을 읽는다 (셀렉터 옵션 공통)
     org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
@@ -345,6 +345,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         title_td = tds[col["title"]] if aligned and "title" in col else None
         anchors = (title_td or tr).find_all("a")
         anchor = max(anchors, key=lambda a: len(_clean(a.get_text())), default=None)
+        titled = tr.select_one(opts["title_selector"].partition("@")[0]) if opts.get("title_selector") else None
+        if titled is not None and (titled.name == "a" or titled.find("a")):
+            anchor = titled if titled.name == "a" else titled.find("a")  # 제목 요소의 링크 (행이 겹쳐 읽히는 깨진 표)
         submit = _submit_title(title_td or tr) if anchor is None or len(_clean(anchor.get_text())) < 2 else None
         if submit is not None and submit.find_parent("form") is not None:
             title = _clean(submit.get("value"))
@@ -375,7 +378,7 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         if picked:
             title = picked
         title = re.sub(r"\s*(새글|NEW|new|첨부파일|파일첨부)$", "", title)
-        if len(title) < 2:
+        if len(title) < 2 or re.fullmatch(r"\[\d+\]", title):  # '[10]': 표 안에 든 쪽 번호 줄
             continue
 
         def cell(role: str) -> str:
