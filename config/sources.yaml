@@ -1230,6 +1230,411 @@ sources:
       key_param: idx
       org_name: 강서구 평생학습관
 
+  - id: busanjin_lifelong
+    name: 부산진구 평생학습관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://www.busanjin.go.kr/board/list.busanjin?boardId=BBS_0000010&menuCd=DOM_000000206001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 부산진구 평생학습관
+      org_fixed: true  # 작성자 칸이 '평생교육과'
+
+  - id: dongnae_lifelong
+    name: 동래구 평생학습관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: https://www.dongnae.go.kr/board/list.dongnae?boardId=BBS_0000087&menuCd=DOM_000000709001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 동래구 평생학습관
+      org_fixed: true  # 작성자 칸이 '인생디자인학교' 같은 사업 이름
+
+  - id: yeongdo_lifelong
+    name: 영도구 평생학습관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://www.yeongdo.go.kr/hll/01419/01420.web
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 영도도서관과 같은 <li> 목록
+      row_selector: "ul.lst1 > li.li1"
+      title_selector: "strong.t1"
+      date_selector: "span.t3"  # 첫 번째 t3 가 작성일
+      key_param: idx
+      org_name: 영도구 평생학습관
+      org_fixed: true
+
+  # 부산평생학습플랫폼: 구·군 평생학습관과 평생교육기관이 함께 올리는 공지 (수영구처럼 누리집이 해외 접속을 막는 곳의 글도 올라옴)
+  - id: lll_busan_notice
+    name: 부산평생학습플랫폼 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산전체
+    collector: generic_board
+    url: https://lll.busan.go.kr/lll/index.do?menu_id=00003220
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # fn_icms_navi_common('view','6271') → 첫 화면 목록과 같은 상세 주소
+      link_template: "https://lll.busan.go.kr/lll/index.do?menu_id=00003220&menu_link=/icms/bbs/selectBoardArticle.do&bbsId=BBS_00029&nttId={1}&bbsTyCode=BBST03&bbsAttrbCode=BBSA03"
+      key_param: nttId
+      org_name: 부산평생학습플랫폼
+      org_fixed: true  # 작성자 칸이 '남구 관리자' (구·군은 제목의 [수영구] 머리말로 보임)
+      include: [강사, 튜터, 코치, 지도자, 인력풀, 개설 희망, 강좌 제안]
+
+  - id: lll_busan_org
+    name: 부산평생학습플랫폼 - 평생교육기관 소식
+    org_type: 평생교육·도서관
+    district: 부산전체
+    collector: generic_board
+    url: https://lll.busan.go.kr/lll/index.do?menu_id=00004673
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://lll.busan.go.kr/lll/index.do?menu_id=00004673&menu_link=/icms/bbs/selectBoardArticle.do&bbsId=BBS_00373&nttId={1}&bbsTyCode=BBST03&bbsAttrbCode=BBSA03"
+      key_param: nttId
+      org_name: 부산평생학습플랫폼
+      org_fixed: true
+      include: [강사, 튜터, 코치, 지도자, 인력풀, 개설 희망, 강좌 제안]
+
+  # ─────────────────────────────── 대학 부설 평생교육원 (수강생 모집이 대부분이라 강사·강좌 개설 희망자 모집만 거름)
+  # 같은 사용자의 다른 저장소(lifelong-education-pyengsang-)도 이 게시판들을 모은다. 셀렉터는 그쪽 검증을 참고했다.
+  - id: univ_pnu_sce
+    name: 부산대학교 미래시민교육원 - 공지 (첫 화면)
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://sce.pusan.ac.kr/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 게시판 화면(/page?menuCD=000000000000561)은 목록을 자바스크립트로 그려서 첫 화면의 최근 글 4건을 읽는다
+      row_selector: "#notice li.notice-item"
+      title_selector: "p.tit"
+      date_selector: "span.date"
+      key_param: seq
+      org_name: 부산대학교 미래시민교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_deu_notice
+    name: 동의대학교 미래교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://lifelong.deu.ac.kr/Board/BoardList.aspx?MENU_ID=146&PAGE_NO=&BoardMstNo=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 표가 아닌 <dl> 목록. 날짜는 '학점은행제 / 2026.10.02'
+      row_selector: "dl:has(a[id*=hlnkTitle])"
+      title_selector: "a[id*=hlnkTitle]"
+      date_selector: "span.summery"
+      key_param: BoardNo
+      org_name: 동의대학교 미래교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_bufs_notice
+    name: 부산외국어대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://lec.bufs.ac.kr/community_notice?page=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 링크 없이 행에 onclick="window.location='/community_notice_detail/35'"
+      row_selector: "tr[onclick]"
+      title_selector: "td.tit"
+      key_pattern: "/community_notice_detail/(\\d+)"
+      org_name: 부산외국어대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_bhu_notice
+    name: 부산보건대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사하구
+    collector: generic_board
+    url: https://cedu.bhu.ac.kr/Board/BoardList.aspx?MENU_ID=146&PAGE_NO=&BoardMstNo=10
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: BoardNo
+      org_name: 부산보건대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_silla_notice
+    name: 신라대학교 평생교육원 - 평교광장
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://soc.silla.ac.kr/Home/Sub04/NoticeBoard01.aspx
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 제목 링크가 __doPostBack('ctl00$CP1$grdList$ctl02$lnkSubject') 라 상세 주소가 없다 → 목록 주소로 안내하고 제목을 식별값으로
+      row_selector: "table#CP1_grdList tr:has(a[id*=lnkSubject])"
+      key_selector: "a[id*=lnkSubject]"
+      org_name: 신라대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_dongseo_notice
+    name: 동서대학교 평생교육원 - 일반과정 공지사항
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://uni.dongseo.ac.kr/continuing/index.php?pCode=MN4000068
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 동서대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_dongseo_50plus
+    name: 동서대학교 평생교육원 - 50+생애재설계대학
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://uni.dongseo.ac.kr/continuing/index.php?pCode=MN4000075
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 동서대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_tu_notice
+    name: 동명대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 남구
+    collector: generic_board
+    url: https://lifedu.tu.ac.kr/LifelongEdu/Board/ANN001U.aspx?page=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      encoding: cp949  # charset=ks_c_5601-1987
+      key_param: seq
+      org_name: 동명대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_cup_notice
+    name: 부산가톨릭대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://edu.cup.ac.kr/organ/edu/front/board/List402.do
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # fn_View('402','374','058000000000000','') 는 POST 로만 열린다 (View402.do?seq= 를 GET 으로 열면 목록).
+      # 글 번호(374)를 식별값으로 쓰고 링크는 목록으로
+      link_template: "https://edu.cup.ac.kr/organ/edu/front/board/List402.do?seq={1}"
+      key_param: seq
+      detail_get: false
+      org_name: 부산가톨릭대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_kit_notice
+    name: 경남정보대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://cei.kit.ac.kr/cei/index.php?pCode=MN0000028
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 경남정보대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_ysu_notice
+    name: 영산대학교 평생교육원 (해운대) - 공지사항
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://ysedu.ysu.ac.kr/board/notice_edu/list.asp?gotopage=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      encoding: cp949
+      # 표 안에 표가 든 옛 게시판. 제목 링크가 있는 줄만, 날짜는 넷째 칸 'YYYY/MM/DD'
+      row_selector: "tr:has(> td a[href*='List2Content'])"
+      title_selector: "a[href*='List2Content']"
+      date_selector: "td:nth-of-type(4)"
+      key_param: board_idx
+      org_name: 영산대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_kosin_notice
+    name: 고신대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://kosinedu.com/sub06_1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # XE 게시판: 같은 글이 /sub06_1/2664 와 ?document_srl=2677&mid=sub06_1 두 가지 주소로 나온다
+      key_pattern: "(?:/sub06_1/|document_srl=)(\\d+)"
+      org_name: 고신대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_kosin_credit
+    name: 고신대학교 평생교육원 - 학점은행제 공지사항
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://kosinedu.com/sub04_1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_pattern: "(?:/sub04_1/|document_srl=)(\\d+)"  # '2022년도 학점은행제 신규 강사모집 안내' 가 올라온 게시판
+      org_name: 고신대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_bwc_notice
+    name: 부산여자대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://sahoi.bwc.ac.kr/04_board/?mcode=0404010000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"
+      org_name: 부산여자대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_bist_notice
+    name: 부산과학기술대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 북구
+    collector: generic_board
+    url: http://life.bist.ac.kr/sub/?mcode=0405010000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"
+      org_name: 부산과학기술대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_daedong_notice
+    name: 대동대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://lifeedu.daedong.ac.kr/lifeedu/CMS/Board/Board.do?mCode=MN046
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: board_seq
+      org_name: 대동대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_bdu_notice
+    name: 부산디지털대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 사상구
+    collector: generic_board
+    url: https://www.bdu.ac.kr/edulife/sub07_01_01.do
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: articleNo
+      org_name: 부산디지털대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
   - id: busan_library
     name: 부산도서관 - 공지사항
     org_type: 평생교육·도서관

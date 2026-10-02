@@ -10,6 +10,8 @@ options (모두 선택)
     key_param       상세 주소에서 게시글 번호로 쓸 쿼리 파라미터 (예: q_bbsDocNo)
     key_pattern     상세 주소에서 게시글 번호를 뽑는 정규식 (첫 괄호). 같은 글이 두 가지 주소로
                     나오는 게시판용 (XE: /xe/sub7_01/24564 와 ?document_srl=24564)
+    key_selector    행 안에서 게시글 식별값으로 쓸 요소. 링크가 __doPostBack('…$ctl02$lnkSubject') 처럼
+                    줄 위치뿐이라 새 글이 올라오면 값이 밀리는 게시판용 (신라대 평생교육원: 제목)
     form_link       true 면 onclick 으로 제출하는 <form> 의 action + hidden 값으로 상세 주소를 만든다
     detail_get      상세 페이지를 GET 으로 열 수 있으면 true (마감일 추출에 사용, 기본 true)
     org_name        기관명 기본값 (작성자 열이 '관리자' 등일 때)
@@ -65,7 +67,7 @@ _GENERIC_SCHOOLS = {"초등학교", "중학교", "고등학교", "대학교"}  #
 _HIDDEN_CHARS = re.compile(r"[\u200b\u200c\u200d\ufeff]")
 _JS_CALL = re.compile(r"([A-Za-z_$][\w$.]*)\s*\(([^)]*)\)")
 _JS_ARG = re.compile(r"""['"]([^'"]*)['"]|(-?\d+)""")
-_LOCATION_HREF = re.compile(r"""location\.href\s*=\s*['"]([^'"]+)['"]""")
+_LOCATION_HREF = re.compile(r"""location(?:\.href)?\s*=\s*['"]([^'"]+)['"]""")
 
 
 @dataclass
@@ -370,8 +372,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
                 # <a href="…"/>제목</a> 처럼 링크가 비고 제목은 칸에만 있는 경우 (잡알리오)
                 title = _clean((title_td or anchor.parent).get_text(" "))
             url, key, detail_ok = _resolve_link(soup, anchor, tr, base_url, opts)
-        elif opts.get("link_attr") and tr.get(opts["link_attr"]):
-            # 링크 없이 행에 주소를 단 목록 (<tr class="clickable-row" data-href="/board/notice/read/68">)
+        elif (opts.get("link_attr") and tr.get(opts["link_attr"])) or _LOCATION_HREF.search(tr.get("onclick") or ""):
+            # 링크 없이 행에 주소를 단 목록 (<tr class="clickable-row" data-href="/board/notice/read/68">,
+            # 부산외대 평생교육원 <tr onclick="window.location='/community_notice_detail/35'">)
             title = _clean((title_td or tr).get_text(" "))
             url, key, detail_ok = _resolve_link(soup, tr, tr, base_url, opts)
         else:
@@ -379,6 +382,7 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         if opts.get("key_pattern"):
             m = re.search(opts["key_pattern"], url)
             key = m.group(1) if m else key
+        key = _select_text(tr, opts.get("key_selector")) or key
         picked = _select_text(tr, opts.get("title_selector"))
         if picked:
             title = picked
