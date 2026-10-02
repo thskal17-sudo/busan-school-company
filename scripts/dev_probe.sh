@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# (임시) 종합사회복지관 2차: 사회복지관 목록
+# (임시) 종합사회복지관 3차: 회원기관 목록 2~6쪽
 f() { python scripts/dev_fetch.py "$@" || true; }
-f city_welpolicy "https://www.busan.go.kr/depart/welpolicy0103"
-f baswc_list_ua "https://www.baswc.org/guide/sub2.php" ua
-curl -s -m 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36" -e "https://www.baswc.org/" -o probe_out/baswc_list_curl.html -w "baswc curl %{http_code} %{size_download} %{url_effective} %{redirect_url}\n" "https://www.baswc.org/guide/sub2.php" || true
-f kaswc_busan "https://kaswc.or.kr/member?area=%EB%B6%80%EC%82%B0"
-f kaswc_main "https://kaswc.or.kr/"
+f baswc_p2 "https://www.baswc.org/guide/sub2.php?zipEncode=90wDoftz0f2yM0tB15uDUvwBM0tB15uDUvwtIv3CM0tzWLhvSvgzM0drjrMCH9MyM0tzWLhv3vwA2zspK9gA0vwtYvgzY9Mj9qNCVnLCLrMCVzsp0nxAm91DLLMvFv2zHbNj9CMBPjxDeH2yYfwzZzspTvNtHrxyKzspTvNtYvgDUv2yM0tDNzspKXwzPzwELTMj9uwBH5wELTMj9yIzSv2CF1dDLDMCHrNjWetpRn2BSj2xYvgCFv2zHbNjWetp0nxAS91DLLMDFv2zHbNjY0tzNfgC39MB" ua
+f baswc_p3 "https://www.baswc.org/guide/sub2.php?zipEncode=90wDoftz0f2yM0tB15uDUvwBM0tB15uDUvwtIv3CM0tzWLhvSvgzM0drjrMCH9MyM0tzWLhv3vwA2zspK9gA0vwtYvgzY9Mj9qNCVnLCLrMCVzsp0nxAm91DLLMvFv2zHbNj9CMBPjxDeH2yYfwzZzspTvNtHrxyKzspTvNtYvgDUv2yM0tDNzspKXwzPzwELTMj9uwBH5wELTMj9yIzSv2CF1dDLDMCHrNjWetpRn2BSj2xYvgCFv2zHbNjWetp0nxAS91DLLMDFv2zHbNjZ0tzNfgC39MB" ua
+f baswc_p4 "https://www.baswc.org/guide/sub2.php?zipEncode=90wDoftz0f2yM0tB15uDUvwBM0tB15uDUvwtIv3CM0tzWLhvSvgzM0drjrMCH9MyM0tzWLhv3vwA2zspK9gA0vwtYvgzY9Mj9qNCVnLCLrMCVzsp0nxAm91DLLMvFv2zHbNj9CMBPjxDeH2yYfwzZzspTvNtHrxyKzspTvNtYvgDUv2yM0tDNzspKXwzPzwELTMj9uwBH5wELTMj9yIzSv2CF1dDLDMCHrNjWetpRn2BSj2xYvgCFv2zHbNjWetp0nxAS91DLLMDFv2zHbNj00tzNfgC39MB" ua
+f baswc_p5 "https://www.baswc.org/guide/sub2.php?zipEncode=90wDoftz0f2yM0tB15uDUvwBM0tB15uDUvwtIv3CM0tzWLhvSvgzM0drjrMCH9MyM0tzWLhv3vwA2zspK9gA0vwtYvgzY9Mj9qNCVnLCLrMCVzsp0nxAm91DLLMvFv2zHbNj9CMBPjxDeH2yYfwzZzspTvNtHrxyKzspTvNtYvgDUv2yM0tDNzspKXwzPzwELTMj9uwBH5wELTMj9yIzSv2CF1dDLDMCHrNjWetpRn2BSj2xYvgCFv2zHbNjWetp0nxAS91DLLMDFv2zHbNj10tzNfgC39MB" ua
+f baswc_p6 "https://www.baswc.org/guide/sub2.php?zipEncode=90wDoftz0f2yM0tB15uDUvwBM0tB15uDUvwtIv3CM0tzWLhvSvgzM0drjrMCH9MyM0tzWLhv3vwA2zspK9gA0vwtYvgzY9Mj9qNCVnLCLrMCVzsp0nxAm91DLLMvFv2zHbNj9CMBPjxDeH2yYfwzZzspTvNtHrxyKzspTvNtYvgDUv2yM0tDNzspKXwzPzwELTMj9uwBH5wELTMj9yIzSv2CF1dDLDMCHrNjWetpRn2BSj2xYvgCFv2zHbNjWetp0nxAS91DLLMDFv2zHbNj20tzNfgC39MB" ua
