@@ -549,3 +549,77 @@ def test_div_row_board(fixture_bytes):
     assert [r.posted for r in rows] == [date(2026, 4, 9), date(2025, 12, 9), date(2025, 6, 11)]
     assert rows[0].key == "ff7a23e7c1fd1162512ceb2e19a7b50b"
     assert rows[0].url.endswith("/saha/207?action-value=ff7a23e7c1fd1162512ceb2e19a7b50b&action=read")
+
+
+def test_postback_board_keyed_by_title(fixture_bytes, rules):
+    # 신라대 평생교육원: 제목 링크가 __doPostBack('…$ctl02$lnkSubject') 라 줄 위치만 담겨 새 글이 오면 밀린다
+    # → 제목을 식별값으로 (key_selector), 링크는 목록. 맨 아래 쪽 번호 줄은 빠진다
+    rows = rows_of(fixture_bytes, "univ_silla_notice", "busan_silla_lifelong.html")
+    assert [(r.key, r.posted, r.detail_ok) for r in rows] == [
+        ("2026년 4분기 각종변경신청 및 학습자등록·학점인정 신청 안내", date(2026, 9, 30), False),
+        ("2026학년도 2학기 평생교육부 강좌 개설 희망자 모집 및 서류 제출 안내", date(2026, 8, 3), False),
+    ]
+    assert {r.url for r in rows} == {"https://soc.silla.ac.kr/Home/Sub04/NoticeBoard01.aspx"}
+    narrow = source_rules(rules, SOURCES["univ_silla_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]
+
+
+def test_row_onclick_window_location(fixture_bytes):
+    # 부산외대 평생교육원: 행에 링크 없이 <tr onclick="window.location='/community_notice_detail/35'">
+    rows = rows_of(fixture_bytes, "univ_bufs_notice", "busan_bufs_lifelong.html")
+    assert [(r.key, r.posted) for r in rows] == [("35", date(2026, 9, 22)), ("34", date(2026, 7, 27))]
+    assert rows[0].url == "https://lec.bufs.ac.kr/community_notice_detail/35" and rows[0].detail_ok
+    assert rows[0].title == "[일반] 2026학년도 2학기 초등 통합방과후학교 프로그램 수강 안내"
+
+
+def test_post_only_detail_uses_list_link(fixture_bytes):
+    # 부산가톨릭대 평생교육원: fn_View('402','374','058000000000000','') 는 POST 로만 열려서 글 번호만 식별값으로 쓰고
+    # 상세는 열지 않는다 (detail_get: false). 셋째 인자는 모든 글이 같은 값이라 식별값이 될 수 없다
+    from busan_jobs.collectors.board import BoardCollector
+
+    src = SOURCES["univ_cup_notice"]
+    rows = rows_of(fixture_bytes, "univ_cup_notice", "busan_cup_lifelong.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("374", date(2026, 6, 22)), ("368", date(2026, 1, 27)), ("367", date(2026, 1, 23)),
+    ]
+    assert rows[0].url == "https://edu.cup.ac.kr/organ/edu/front/board/List402.do?seq=374"
+    items = BoardCollector(src, _PageHttp(fixture_bytes("busan_cup_lifelong.html")), TODAY).collect()
+    assert [p.detail_url for p in items] == [None, None, None]
+    assert {p.org_name for p in items} == {"부산가톨릭대학교 평생교육원"}
+
+
+def test_dl_list_board_and_lifelong_keywords(fixture_bytes, rules):
+    # 동의대 미래교육원: 표가 아닌 <dl> 목록, 날짜는 '학점은행제 / 2026.10.02'
+    rows = rows_of(fixture_bytes, "univ_deu_notice", "busan_deu_lifelong.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("191388", date(2026, 10, 2)), ("191380", date(2026, 8, 6)), ("191233", date(2025, 1, 14)),
+    ]
+    narrow = source_rules(rules, SOURCES["univ_deu_notice"])
+    # '파크골프 2급지도자(강사) 양성과정 모집안내(3기)' 는 강사가 될 사람을 모으는 과정
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None, None]
+    assert judge("2026학년도 2학기 평생교육부 강좌 개설 희망자 모집", narrow, True) == "모집중"
+    assert judge("2027학년도 1학기 신규 강좌 및 강사 모집", narrow, True) == "모집중"
+    assert judge("[평생교육지원센터] 2025학년도 중독 예방 강사 양성 과정 모집", narrow, True) is None
+    assert judge("2026년 하반기 시니어아카데미 교육생 모집", narrow, True) is None
+    assert judge("파크골프 기초·실전 및 지도자 양성과정(오후반, 저녁반)", narrow, True) is None  # 대학은 '지도자' 로 받지 않음
+    # 전체 규칙: '강사 양성' 과정 모집은 거르지만 양성과정 강사를 뽑는 글은 남긴다
+    assert judge('부산형 영어교육 "영유아 영어강사 양성" 초급과정 모집 안내', rules, True) is None
+    assert judge("요양보호사 양성과정 강사 모집", rules, True) == "모집중"
+
+
+def test_list_page_sent_with_404_status():
+    # 해양대 평생교육원: 목록을 다 보내면서 상태 코드만 404 → ok_status 에 있으면 그대로 읽는다
+    import requests
+
+    from busan_jobs.collectors.board import BoardCollector
+
+    class _Http404:
+        def get(self, url, **kw):
+            resp = requests.Response()
+            resp.status_code, resp.url, resp._content = 404, url, b"<table></table>"
+            raise requests.exceptions.HTTPError("404", response=resp)
+
+    src = SOURCES["univ_kmou_notice"]
+    assert BoardCollector(src, _Http404(), TODAY).fetch_page(1).status_code == 404
+    with pytest.raises(requests.exceptions.HTTPError):
+        BoardCollector(SOURCES["univ_bdu_notice"], _Http404(), TODAY).fetch_page(1)
