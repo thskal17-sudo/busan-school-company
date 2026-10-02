@@ -1589,7 +1589,7 @@ sources:
     org_type: 평생교육·도서관
     district: 북구
     collector: generic_board
-    url: http://life.bist.ac.kr/sub/?mcode=0405010000
+    url: https://life.bist.ac.kr/sub/?mcode=0405010000
     pages: 1
     keyword_filter: true
     phase: 3
@@ -1632,6 +1632,24 @@ sources:
     options:
       key_param: articleNo
       org_name: 부산디지털대학교 평생교육원
+      org_fixed: true
+      include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
+
+  - id: univ_kmou_notice
+    name: 국립한국해양대학교 평생교육원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 영도구
+    collector: generic_board
+    url: https://www.kmou.ac.kr/edu/na/ntt/selectNttList.do?mi=426&bbsId=10304
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      ok_status: [404]  # 목록을 다 보내면서 상태 코드만 404 (GET·POST·브라우저 UA 모두 같음. 상세는 200)
+      key_param: nttSn
+      org_name: 국립한국해양대학교 평생교육원
       org_fixed: true
       include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
 

@@ -29,6 +29,7 @@ options (모두 선택)
     title_org_pattern 제목에서 기관명을 뽑는 정규식 (첫 괄호). 예: 제목 앞 '[송도사랑요양원]' 의 기관명
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
     encoding        페이지가 선언한 문자셋이 틀릴 때 실제 문자셋 (예: utf-8 이라 적고 EUC-KR 로 보내는 그누보드 → cp949)
+    ok_status       목록 응답이 이 상태 코드여도 그대로 읽는다 (해양대 평생교육원: 목록을 다 보내고 404)
 """
 from __future__ import annotations
 
@@ -37,6 +38,7 @@ from dataclasses import dataclass
 from datetime import date
 from urllib.parse import parse_qs, parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
+import requests
 from bs4 import BeautifulSoup, Tag
 
 from ..classify import infer_district
@@ -123,7 +125,15 @@ class BoardCollector(Collector):
 
     def fetch_page(self, page: int):
         url = self.page_url(page)
-        return None if url is None else self.http.get(url)
+        if url is None:
+            return None
+        try:
+            return self.http.get(url)
+        except requests.exceptions.HTTPError as exc:
+            # 목록은 제대로 보내면서 상태 코드만 404 인 서버 (해양대 평생교육원)
+            if exc.response is not None and exc.response.status_code in self.source.options.get("ok_status", ()):
+                return exc.response
+            raise
 
     def page_url(self, page: int) -> str | None:
         url = self.source.url or ""
