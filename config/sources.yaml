@@ -2265,6 +2265,931 @@ sources:
       title_org_pattern: '^\[([^\]]+)\]'  # 제목 앞 [기관명]
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]  # 사회복지사·요양보호사·조리원 등 종사자 채용은 거름 ('늘봄실버요양센터' 때문에 늘봄은 뺌)
 
+  # 종합사회복지관 55곳 (부산시사회복지관협회 회원기관 목록의 누리집). 협회 구인게시판에 안 올리고 자기 누리집에만 올리는
+  # 프로그램 강사 모집('웰빙댄스 강사', '웃음치료 강사', '스마트폰 교육 강사')이 있어 공지·채용 게시판을 함께 받는다.
+  # 작성자 칸은 '관리자'·'복지관 관리자' 같은 계정이라 기관명은 복지관 이름으로 고정(org_fixed)
+  # SW_bbs: 표 목록(기본)과 <li> 목록형(li:has(> div.info)) 두 가지. zipEncode 값은 누리집 메뉴 링크 그대로
+  # 넣지 않은 곳: 동래·몰운대·연산(자동 접속 확인 cupid.js, 우회하지 않음), 금곡·백양·다대·두송·반송·성지(해외 접속 403),
+  #   동구·부산종합(수영)(접속한 쪽 IP 로 되돌려 보냄), 부산기독교(연결을 끊음), 화정(목록이 빈 응답), 남구(네이버 블로그만)
+
+  - id: cw_gangseo_notice
+    name: 강서구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 강서구
+    collector: generic_board
+    url: https://www.gangseosw.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 강서구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_gangseo_hire
+    name: 강서구종합사회복지관 - 인재채용
+    org_type: 복지관
+    district: 강서구
+    collector: generic_board
+    url: https://www.gangseosw.or.kr/SW_bbs/notice/list.php?zipEncode=ZDxzU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 강서구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 목록을 자바스크립트로 불러오는 게시판: 첫 화면(/06/01.php)은 빈 틀이고 mode=list_ok 주소가 목록. 글은 view('번호') → mode=view&uid=
+  - id: cw_nakdong_notice
+    name: 낙동종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 강서구
+    collector: generic_board
+    url: https://www.ndswc.or.kr/06/01.php?mode=list_ok&skind=&skey=&search=&page=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://www.ndswc.or.kr/06/01.php?mode=view&uid={0}"
+      key_param: uid
+      org_name: 낙동종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_geumjeong_notice
+    name: 금정종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 금정구
+    collector: generic_board
+    url: https://www.kumjungswc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 금정종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_namgwang_notice
+    name: 남광종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 금정구
+    collector: generic_board
+    url: https://www.nk.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 남광종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_gamman_notice
+    name: 감만종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 남구
+    collector: generic_board
+    url: http://www.gamman.or.kr/05_Community/01_impartation.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 감만종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_yongho_notice
+    name: 용호종합사회복지관 - 공고/모집 안내
+    org_type: 복지관
+    district: 남구
+    collector: generic_board
+    url: https://www.yongho.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 용호종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_chorogusan_notice
+    name: 초록우산 부산종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 동구
+    collector: generic_board
+    url: https://www.chorogusan-busan.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 초록우산 부산종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # '=etpLrxydr…u2yPr3BU' 메뉴는 채용 글이 빠진 공지라 채용까지 나오는 '=u2yPr3BU' 를 받는다
+  - id: cw_sajik_notice
+    name: 사직종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 동래구
+    collector: generic_board
+    url: https://www.sjcwc.org/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 사직종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_busanjin_notice
+    name: 부산진구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    url: http://www.yjingu.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 부산진구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 두 공지 메뉴 중 채용 글까지 나오는 쪽
+  - id: cw_gaegeum_notice
+    name: 개금종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    url: https://anguk.gaegeum.org/SW_bbs/notice/list.php?zipEncode===azUv3BZ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 개금종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_danggam_notice
+    name: 당감종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    url: https://www.danggam.or.kr/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 당감종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_danggam_hire
+    name: 당감종합사회복지관 - 채용정보
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    url: https://www.danggam.or.kr/recruit
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 당감종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_jeonpo_notice
+    name: 전포종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    url: https://www.jpswc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 전포종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_jangseon_notice
+    name: 장선종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://www.jsswc.or.kr/html/index.php?pageNum=002001000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: number
+      org_name: 장선종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # '교육문화사업-강사 채용 공고(웰빙댄스)' 처럼 프로그램 강사 채용이 자주 올라옴.
+  # www.jsswc.or.kr 은 2026-10-02 러너 네 번 중 두 번만 열림 (나머지는 접속 시간 초과)
+  - id: cw_jangseon_hire
+    name: 장선종합사회복지관 - 채용공고
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://www.jsswc.or.kr/html/index.php?pageNum=002012000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: number
+      org_name: 장선종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_deokcheon_notice
+    name: 덕천종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: http://www.duc1000.co.kr/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 덕천종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_gongchang_notice
+    name: 공창종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: http://www.gongchang.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 공창종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_dongwon_notice
+    name: 동원종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: http://www.ymcadw.org/03_dongwon/list.asp?data_id=0
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: number
+      org_name: 동원종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_namsanjeong_notice
+    name: 남산정종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://www.nsjswc.co.kr/bbs/sub4_1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 남산정종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_hwamyeong_notice
+    name: 화명종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: http://www.hmswc2233.or.kr/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 화명종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_hwamyeong_hire
+    name: 화명종합사회복지관 - 예결산/채용/입찰공고
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: http://www.hmswc2233.or.kr/bulletin
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 화명종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 워드프레스 KBoard (?mod=document&uid=글번호)
+  - id: cw_mandeok_notice
+    name: 만덕종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://mandeok07.org/%EC%B0%B8%EC%97%AC%EB%A7%88%EB%8B%B9/%EA%B3%B5%EC%A7%80%EC%82%AC%ED%95%AD/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: uid
+      org_name: 만덕종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_mandeok_hire
+    name: 만덕종합사회복지관 - 채용 공고
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://mandeok07.org/%EC%B0%B8%EC%97%AC%EB%A7%88%EB%8B%B9/%EC%B1%84%EC%9A%A9-%EA%B3%B5%EA%B3%A0/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: uid
+      org_name: 만덕종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_mora_notice
+    name: 모라종합사회복지관 - 공고/모집안내
+    org_type: 복지관
+    district: 사상구
+    collector: generic_board
+    url: https://www.moraswc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 모라종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_sasang_notice
+    name: 사상구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 사상구
+    collector: generic_board
+    url: https://www.swc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 사상구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_hakjang_notice
+    name: 학장종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 사상구
+    collector: generic_board
+    url: http://www.hakjang.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 학장종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_hakjang_hire
+    name: 학장종합사회복지관 - 채용/모집
+    org_type: 복지관
+    district: 사상구
+    collector: generic_board
+    url: http://www.hakjang.or.kr/SW_bbs/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 학장종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 낙동과 같은 게시판 프로그램 (mode=list_ok 목록, view('번호'))
+  - id: cw_saha_notice
+    name: 사하구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 사하구
+    collector: generic_board
+    url: https://www.sahabokji.or.kr/05/01.php?mode=list_ok&skind=&skey=&search=&page=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://www.sahabokji.or.kr/05/01.php?mode=view&uid={0}"
+      key_param: uid
+      org_name: 사하구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_gupyung_notice
+    name: 구평종합사회복지관 - 구평알림이
+    org_type: 복지관
+    district: 사하구
+    collector: generic_board
+    url: https://www.gupyung.or.kr/bbs/board.php?bo_table=news
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 구평종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_seogu_notice
+    name: 서구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 서구
+    collector: generic_board
+    url: https://www.pseogu.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 서구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_holtsy_notice
+    name: 홀트수영종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 수영구
+    collector: generic_board
+    url: https://www.holtsy.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 홀트수영종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_holtsy_hire
+    name: 홀트수영종합사회복지관 - 채용정보
+    org_type: 복지관
+    district: 수영구
+    collector: generic_board
+    url: https://www.holtsy.or.kr/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 홀트수영종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_yeongdo_notice
+    name: 영도구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: http://www.youngdogu.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 영도구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_yeongdo_hire
+    name: 영도구종합사회복지관 - 예결산/채용/입찰공고
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: http://www.youngdogu.or.kr/SW_bbs/notice/list.php?zipEncode==0MCVzMBP91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 영도구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_dongsam_notice
+    name: 동삼종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: https://www.dscwc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 동삼종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_jeolyeong_notice
+    name: 절영종합사회복지관 - 절영소식
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: https://www.jy.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 절영종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_sangli_notice
+    name: 상리종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: https://www.sangli.org/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 상리종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 행이 <td> 가 아니라 <th class="board_title"> 등으로 된 표 (공지·인재채용이 함께 나옴)
+  - id: cw_wachi_notice
+    name: 와치종합사회복지관 - 공지사항 및 소식
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: https://www.wachi.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "tr:has(> th.board_title a)"
+      title_selector: "th.board_title a"
+      date_selector: "th.board_date"
+      org_name: 와치종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_junggu_notice
+    name: 중구종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 중구
+    collector: generic_board
+    url: http://www.jungbok.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info)"
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      org_name: 중구종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_yeongjin_notice
+    name: 영진종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.yjswc.or.kr/renewal/toktok/toktok01.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 영진종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 모집이 끝나면 제목 앞에 '(완료)' 를 붙임 (keywords.yaml 결과공고)
+  - id: cw_yeongjin_hire
+    name: 영진종합사회복지관 - 채용정보
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.yjswc.or.kr/renewal/toktok/toktok05.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 영진종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 목록 행 태그가 <tr> 가 아니라 <trf> 이고 닫히지 않아 행이 겹쳐 읽힌다 → 행 바로 아래 칸만 본다
+  - id: cw_haeundae_notice
+    name: 해운대종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: http://haeundae.saem.or.kr/community/news1.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: trf
+      title_selector: ":scope > td.title a"
+      date_selector: ":scope > td:nth-of-type(4)"
+      key_param: number
+      org_name: 해운대종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_unbong_notice
+    name: 운봉종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.woon-bong.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 운봉종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # '통합돌봄사업 돌봄건강교실 강사 공개 모집' 등이 올라옴
+  - id: cw_unbong_hire
+    name: 운봉종합사회복지관 - 직원채용
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.woon-bong.or.kr/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 운봉종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_banseok_notice
+    name: 반석종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: http://www.banseok1995.or.kr/SW_bbs/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 반석종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_parangsae_notice
+    name: 파랑새종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: http://www.sungsil.or.kr/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 파랑새종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_parangsae_hire
+    name: 파랑새종합사회복지관 - 채용공고
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: http://www.sungsil.or.kr/bbs/board.php?bo_table=reqruit
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 파랑새종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 그누보드인데 utf-8 이라고 적고 EUC-KR 로 보냄 → encoding
+  - id: cw_banyeo_notice
+    name: 반여종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.ebanyeo.com/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      encoding: cp949
+      date_selector: "td.datetime"  # '09-29'
+      key_param: wr_id
+      org_name: 반여종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # 기장군도시관리공단이 운영 (기장청소년센터와 같은 공단 누리집 게시판, EUC-KR). 직원 채용은 공단 채용정보(gijangcmc_hire)로 받음
+  - id: cw_gijang_notice
+    name: 기장종합사회복지관 - 새소식
+    org_type: 복지관
+    district: 기장군
+    collector: generic_board
+    url: https://www.gijangcmc.or.kr/welfare/01_info/01_info.asp?id=Notice&wr_7=%C1%BE%C7%D5%BB%E7%C8%B8%BA%B9%C1%F6%B0%FC
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 기장종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_dahaengbok_notice
+    name: 다행복한종합사회복지관 - 새소식
+    org_type: 복지관
+    district: 기장군
+    collector: generic_board
+    url: https://www.gijangcmc.or.kr/happycenter/04_community/01_community.asp?id=Notice&wr_7=%B4%D9%C7%E0%BA%B9%C7%D1%C1%BE%C7%D5%BB%E7%C8%B8%BA%B9%C1%F6%B0%FC
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 다행복한종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  - id: cw_geoje_notice
+    name: 연제구거제종합사회복지관 - 공지사항
+    org_type: 복지관
+    district: 연제구
+    collector: generic_board
+    url: https://www.bgjswc.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 연제구거제종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
+  # '한국무용 프로그램 강사 모집' 등이 올라옴
+  - id: cw_geoje_hire
+    name: 연제구거제종합사회복지관 - 채용공고
+    org_type: 복지관
+    district: 연제구
+    collector: generic_board
+    url: https://www.bgjswc.or.kr/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 연제구거제종합사회복지관
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+
   # 노인복지관 (부산시 '노인복지관 현황'의 누리집 25곳 중 게시판을 받을 수 있는 곳). 노년사회화교육·평생교육 프로그램 강사 채용이 올라온다
   - id: senior_busanjin_hire
     name: 부산진구노인복지관 - 채용공고

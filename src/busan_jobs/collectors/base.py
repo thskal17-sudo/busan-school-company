@@ -28,7 +28,9 @@ class Collector(ABC):
             return None
         from ..detail import page_soup
 
-        return page_soup(self.http.get(posting.detail_url).content)
+        content = self.http.get(posting.detail_url).content
+        encoding = self.source.options.get("encoding")  # 선언한 문자셋이 틀린 사이트
+        return page_soup(content.decode(encoding, errors="replace") if encoding else content)
 
     def fetch_detail_text(self, posting: Posting) -> str | None:
         """마감일 추출용 상세 본문."""
