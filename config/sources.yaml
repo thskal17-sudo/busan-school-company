@@ -989,6 +989,62 @@ sources:
       org_fixed: true
       include: [강사, 지도자, 코치, 트레이너, 강습]
 
+  # 수영장 (구 국민체육센터 밖의 공공 수영장: 스포원, 사상·삼락, 명지). 수영·아쿠아 강사, 수영 지도자 채용.
+  # 이용자 공지('수영강습 접수 안내')가 섞여 '강습' 은 빼고 강사·지도자·코치·트레이너 글만
+  # 넣지 않은 곳: 동구국민체육문예센터(채용 게시판에 글 없음), 동구국민체육센터(자동 접속 확인 cupid.js),
+  #   영도국민체육센터(ydsports.org)·강서구국민체육센터(gssports.or.kr)는 접속 시간 초과 (2026-10-02 러너 두 대)
+  - id: pool_spo1_notice
+    name: 부산시설공단 스포원 - 공지사항 (스포츠센터 수영강사 채용 등)
+    org_type: 공단(체육시설)
+    district: 금정구
+    collector: generic_board
+    # 스포원은 부산시설공단(bisco.or.kr, 해외 차단) 소속이지만 이 누리집은 열림. 채용공고 목록(CT_ID=RECRUIT)은 404 라 공지사항
+    url: https://www.spo1.or.kr/bbs/list.do?cmd=list&CT_ID=NOTICE&NOGUBUN=S
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: BOARD_SEQ  # 암호화된 글번호지만 실행마다 같음 (2026-10-02 두 번 비교)
+      org_name: 부산시설공단 스포원
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너]
+
+  - id: pool_sasang_hire
+    name: 사상국민체육센터 - 채용공고 (삼락복합문화체육센터 수영·아쿠아 강사 등)
+    org_type: 공단(체육시설)
+    district: 사상구
+    collector: generic_board
+    url: https://www.ssnsc.or.kr/DyBoard/Board_list.asp?BGubun=0007
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: ident
+      org_name: 사상국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너]
+
+  - id: pool_myeongji_hire
+    name: 명지레포츠센터 - 채용공지 (수영강사·헬스지도자)
+    org_type: 공단(체육시설)
+    district: 강서구
+    collector: generic_board
+    url: https://www.mjsports.co.kr/bbs/board.php?bo_table=05_05
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 명지레포츠센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너]
+
   # ─────────────────────────────── 평생학습관·도서관 (강사 모집 글만 키워드로 거름)
   - id: haeundae_lifelong
     name: 해운대구 평생학습관 - 공지사항
