@@ -654,6 +654,341 @@ sources:
       truncated_titles: true
       org_name: 동래구국민체육센터
 
+  # 국민체육센터·체육회 (구 국민체육센터 채용 게시판, 시·구 체육회 채용·공지 게시판).
+  # 수영·헬스 시간강사, 생활체육지도자, 생활체육교실 강사 채용이 올라온다. 안전요원·안내데스크 등 다른 직원 채용은 키워드로 거름.
+  # 작성자 칸은 '관리자' 같은 계정이라 기관명은 고정(org_fixed)
+  # 넣지 않은 곳: 부산국민체육센터(bnsc.or.kr)·북구국민체육센터(bukgusports.com)·부산광역시생활체육문화센터(saba.or.kr)는
+  #   해외 접속 시간 초과(2026-10-02 러너 두 대), 금정구·사상구체육회는 해외 접속 403, 금정국민체육센터 채용공고는 글이 없음,
+  #   해운대생활체육센터는 공지 3건뿐, 동래·연제·동구·기장군체육회는 누리집을 찾지 못함 (동래·연제는 국민체육센터 채용 게시판으로 받음)
+  - id: sports_busanjin_hire
+    name: 부산진구국민체육센터 - 채용공고 (헬스 트레이너·수영 지도자 등)
+    org_type: 공단(체육시설)
+    district: 부산진구
+    collector: generic_board
+    url: https://www.jsports.or.kr/bbs/board.php?bo_table=05_02
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산진구국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: sports_yeonje_hire
+    name: 연제구국민체육센터 - 채용공고 (수영 시간강사 등)
+    org_type: 공단(체육시설)
+    district: 연제구
+    collector: generic_board
+    url: https://sports.yeonje.go.kr/subpage/index/89
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      truncated_titles: true  # 동래구국민체육센터와 같은 틀. 목록 제목이 '...' 로 잘림 → 상세 페이지에서 전체 제목
+      org_name: 연제구국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: sports_geoje_hire
+    name: 연제구 거제국민체육센터 - 채용공고 (체육지도자·시간강사)
+    org_type: 공단(체육시설)
+    district: 연제구
+    collector: generic_board
+    url: https://www.yj-sports.or.kr/bbs/board.php?bo_table=05_03
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 연제구 거제국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: sports_suyeong_hire
+    name: 수영구 국민체육센터 - 채용공고 (수영·헬스 파트강사 등)
+    org_type: 공단(체육시설)
+    district: 수영구
+    collector: generic_board
+    url: https://www.sysports.or.kr/emSolution/board/recru
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      # 부트스트랩 <li class="row board-row"> 목록. 날짜 칸은 '09-16' (연도 없음)
+      row_selector: "li.row.board-row"
+      title_selector: "div.col-xs-12 > a"
+      date_selector: ":scope > div:nth-of-type(4)"
+      key_pattern: "/post/(\\d+)"
+      org_name: 수영구 국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: sports_suyeong_club_hire
+    name: 수영구스포츠클럽 - 채용공고 (파워로빅 강사·종목 지도자)
+    org_type: 공단(체육시설)
+    district: 수영구
+    collector: generic_board
+    url: https://www.sygsports.co.kr/bbs/board.php?bo_table=05_08
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 수영구스포츠클럽
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: sports_saha_notice
+    name: 사하구 국민체육센터 - 공지사항
+    org_type: 공단(체육시설)
+    district: 사하구
+    collector: generic_board
+    url: https://www.sahaksports.or.kr/saha/207
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      # 채용공지 게시판(/saha/211)은 글이 없어 공지사항을 받는다. <div class="boardList"><a href="?action-value=…&action=read">
+      row_selector: "div.boardList:has(> a)"
+      title_selector: "span.title"
+      date_selector: "span.date"
+      key_pattern: "action-value=([0-9a-f]+)"
+      org_name: 사하구 국민체육센터
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_city_notice
+    name: 부산광역시체육회 - 공지사항 (체육회 운영 체육센터 직원·강사 모집 포함)
+    org_type: 공단(체육시설)
+    district: 부산전체
+    collector: generic_board
+    url: http://www.sports.busan.kr/contents/05_notice/board.html?board_id=board_notice
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"  # YAML 에서 따옴표 없는 no 는 false
+      org_name: 부산광역시체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_busanjin_hire
+    name: 부산진구체육회 - 채용공고 (생활체육지도자·주말체육학교 강사)
+    org_type: 공단(체육시설)
+    district: 부산진구
+    collector: generic_board
+    url: http://www.busanjingu-sports.or.kr/bbs/board.php?bo_table=recruit
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산진구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_namgu_hire
+    name: 남구체육회 - 채용공고 (생활체육지도자)
+    org_type: 공단(체육시설)
+    district: 남구
+    collector: generic_board
+    url: http://www.bngsports.or.kr/bbs/board.php?bo_table=recruit
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시남구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_gangseo_hire
+    name: 강서구체육회 - 채용공고 (생활체육지도자·생활체육교실 지도자)
+    org_type: 공단(체육시설)
+    district: 강서구
+    collector: generic_board
+    url: https://www.gs7330.com/bbs/board.php?bo_table=employment
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시강서구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_junggu_notice
+    name: 중구체육회 - 공지사항 (생활체육지도자 채용이 여기에 올라옴)
+    org_type: 공단(체육시설)
+    district: 중구
+    collector: generic_board
+    url: http://www.bsjgsc7330.co.kr/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      # 그누보드 <ul class="bo_list_ul"><li> 목록형. 날짜는 보이는 span.bo_date
+      row_selector: "ul.bo_list_ul > li"
+      title_selector: "div.bo_subject a"
+      date_selector: "span.bo_date"
+      key_param: wr_id
+      org_name: 부산광역시중구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_junggu_hire
+    name: 중구체육회 - 채용공고 (생활체육교실 강사)
+    org_type: 공단(체육시설)
+    district: 중구
+    collector: generic_board
+    url: http://www.bsjgsc7330.co.kr/bbs/board.php?bo_table=job
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      row_selector: "ul.bo_list_ul > li"
+      title_selector: "div.bo_subject a"
+      date_selector: "span.bo_date"
+      key_param: wr_id
+      org_name: 부산광역시중구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_saha_hire
+    name: 사하구체육회 - 채용공고 (어르신 전담 생활체육지도자 등)
+    org_type: 공단(체육시설)
+    district: 사하구
+    collector: generic_board
+    url: http://sahasports.or.kr/bbs/board.php?bo_table=recruit
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시사하구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_suyeong_hire
+    name: 수영구체육회 - 채용공고 (생활체육교실 강사·생활체육지도자)
+    org_type: 공단(체육시설)
+    district: 수영구
+    collector: generic_board
+    url: http://www.sportssy.or.kr/bbs/board.php?bo_table=recruit
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시수영구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_seogu_notice
+    name: 서구체육회 - 공지사항 (채용 게시판이 따로 없음)
+    org_type: 공단(체육시설)
+    district: 서구
+    collector: generic_board
+    url: http://bsseogusports.or.kr/bbs/board.php?bo_table=sub4_1
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시서구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_haeundae_hire
+    name: 해운대구체육회 - 채용공고 (생활체육지도자)
+    org_type: 공단(체육시설)
+    district: 해운대구
+    collector: generic_board
+    url: http://www.hud7330.com/bbs/board.php?bo_table=employment
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 부산광역시해운대구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_yeongdo_hire
+    name: 영도구체육회 - 채용공고 (생활체육지도자)
+    org_type: 공단(체육시설)
+    district: 영도구
+    collector: generic_board
+    url: https://yd7330.com/board/list/employment
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      # <li> 목록형 (div.col.subject · div.col.date). 글번호 idx
+      row_selector: "li:has(> div.col.subject)"
+      title_selector: "div.subject a"
+      date_selector: "div.date"
+      key_param: idx
+      org_name: 영도구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
+  - id: assoc_bukgu_notice
+    name: 북구체육회 - 공지사항 (채용 게시판이 따로 없음)
+    org_type: 공단(체육시설)
+    district: 북구
+    collector: generic_board
+    url: https://bbsc.kr/board/notice
+    pages: 1
+    keyword_filter: true
+    phase: 2
+    enabled: true
+    verified: true
+    options:
+      # 행에 링크가 없고 <tr class="clickable-row" data-href="/board/notice/read/68"> 로 연다
+      row_selector: "tr.clickable-row"
+      title_selector: "td.td_title"
+      link_attr: data-href
+      key_pattern: "/read/(\\d+)"
+      org_name: 부산광역시북구체육회
+      org_fixed: true
+      include: [강사, 지도자, 코치, 트레이너, 강습]
+
   # ─────────────────────────────── 평생학습관·도서관 (강사 모집 글만 키워드로 거름)
   - id: haeundae_lifelong
     name: 해운대구 평생학습관 - 공지사항

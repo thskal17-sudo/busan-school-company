@@ -18,7 +18,8 @@ options (모두 선택)
     link_base       상대 링크를 풀 기준 주소 (페이지 주소와 다를 때. <base href> 가 있으면 자동 적용)
     row_must_contain 이 글자가 있는 행만 (예: 근무지 열이 있는 전국 게시판에서 '부산')
     link_attr       제목 링크의 이 속성 값으로 상세 주소를 만든다 (예: data-id → link_template 의 {0},
-                    link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">)
+                    link_template 이 없으면 값 자체를 주소로. 부산교육청 게시판 <a data-id="1180893">).
+                    행에 링크가 없으면 행(row_selector)의 이 속성 (<tr data-href="/board/notice/read/68">)
     title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때). 링크면 상세 주소도 거기서
     date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로.
                     'li.time@title' 처럼 쓰면 요소의 속성 값을 읽는다 (셀렉터 옵션 공통)
@@ -369,6 +370,10 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
                 # <a href="…"/>제목</a> 처럼 링크가 비고 제목은 칸에만 있는 경우 (잡알리오)
                 title = _clean((title_td or anchor.parent).get_text(" "))
             url, key, detail_ok = _resolve_link(soup, anchor, tr, base_url, opts)
+        elif opts.get("link_attr") and tr.get(opts["link_attr"]):
+            # 링크 없이 행에 주소를 단 목록 (<tr class="clickable-row" data-href="/board/notice/read/68">)
+            title = _clean((title_td or tr).get_text(" "))
+            url, key, detail_ok = _resolve_link(soup, tr, tr, base_url, opts)
         else:
             continue
         if opts.get("key_pattern"):
@@ -402,7 +407,7 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         deadline = deadline or extract_deadline(title, today)
         date_text = _select_text(tr, opts.get("date_selector"))
         if date_text:
-            posted = parse_date(date_text, today) or posted
+            posted = _list_date(date_text, today) or posted  # '09-16' 처럼 연도 없는 날짜도
             if re.search(r"[~∼～]", date_text):
                 deadline = extract_deadline(date_text, today) or deadline
         picked_org = _select_text(tr, opts.get("org_selector"))
