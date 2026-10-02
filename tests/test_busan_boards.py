@@ -522,6 +522,27 @@ def test_swimming_pool_boards(fixture_bytes, rules):
     assert rows[0].url.startswith("https://www.spo1.or.kr/bbs/list.do?cmd=view&CT_ID=NOTICE")
 
 
+def test_cultural_center_row_attribute_with_dummy_link(fixture_bytes, rules):
+    # 부산진문화원 공지: <tr class="data-cont" data-idx="195"> 안의 <a class="act_view" href="#"> → 행의 data-idx 로 상세 주소
+    rows = rows_of(fixture_bytes, "culture_busanjin_notice", "busan_busanjin_cc_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("195", date(2026, 5, 18)), ("194", date(2026, 5, 6)), ("202", date(2026, 9, 14)),
+    ]
+    assert rows[0].url == "http://busanjin.kccf.or.kr/board/notice.php?mode=view&idx=195"
+    narrow = source_rules(rules, SOURCES["culture_busanjin_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", "모집중", None]
+
+
+def test_cultural_center_list_inside_layout_table(fixture_bytes):
+    # 부산동구문화원 공지: 메뉴용 레이아웃 표가 목록보다 행이 많아서 row_selector 로 목록 줄만
+    # (제목 칸 onclick="location.href='/sb51.php?md=V&idx=323…'")
+    rows = rows_of(fixture_bytes, "culture_donggu_notice", "busan_bdgcc_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("323", date(2026, 1, 2)), ("321", date(2025, 12, 5)), ("337", date(2026, 9, 1)),
+    ]
+    assert rows[0].title == "2026. 퓨전난타 강사모집"
+
+
 def test_div_row_board(fixture_bytes):
     # 사하구 국민체육센터 공지: 표가 아닌 <div class="boardList"><a href="?action-value=…&action=read"> (머리글 줄은 링크가 없어 빠짐)
     rows = rows_of(fixture_bytes, "sports_saha_notice", "busan_sahaksports_notice.html")

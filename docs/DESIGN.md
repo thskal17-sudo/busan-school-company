@@ -28,7 +28,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 238곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
+    S[sources.yaml<br/>게시판·API 253곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -63,7 +63,7 @@ flowchart LR
 | `include` | 체육시설관리사업소 공지 | '수영강습 접수 안내' 같은 이용자 공지가 '강습'으로 걸려서 이 게시판만 `강사·지도자·코치·트레이너` 로 좁힘 |
 | `encoding` | 반여종합사회복지관 | 그누보드가 `charset=utf-8` 이라고 적고 EUC-KR 로 보냄 → 목록·상세를 `cp949` 로 읽음 |
 | `title_selector` 의 링크 | 해운대종합사회복지관 | 행 태그가 `<trf>` 이고 닫히지 않아 뒤 행이 앞 행 안에 겹쳐 읽힘 → 제목 요소가 링크면 그 링크로 상세 주소 |
-| `link_attr` 의 행 속성 | 북구체육회 | 행에 `<a>` 가 없고 `<tr class="clickable-row" data-href="/board/notice/read/68">` 로 엶 → 링크가 없으면 행의 속성 |
+| `link_attr` 의 행 속성 | 북구체육회, 부산진문화원 | 행에 `<a>` 가 없거나(`<tr class="clickable-row" data-href="/board/notice/read/68">`) 링크가 `href="#"` 이고 글번호가 행에만 있음(`<tr class="data-cont" data-idx="202">`) → 링크에 속성이 없으면 행의 속성 |
 | `date_selector` 의 'MM-DD' | 수영구 국민체육센터 | 날짜 칸이 연도 없는 '09-16' → 표 날짜 칸과 같이 오늘 이전의 가장 가까운 날 |
 | (자동) 쪽 번호 줄 | 옛 SW_bbs(`/SW_bbs/list.php`) | 표 안 마지막 줄의 `[10]` 쪽 링크를 글로 읽지 않음 |
 | `short_headers` | 남구·사상구 새올 | 첫 진단에서 `400 Bad Request (Request header field is missing ':' separator. o;q=0.9)` — 서버가 머리글 줄을 중간에서 자름. Accept-Language 를 빼면 됐고, 다음 진단에서는 기본 머리글도 돼서 간헐적인 것으로 보고 그 호스트만 빼고 보냄 |
@@ -280,6 +280,24 @@ flowchart LR
 영도국민체육센터·강서구국민체육센터(러너 두 대에서 접속 시간 초과), '서구국민체육센터'(sgsport.co.kr)는 대전 서구라 제외.
 해운대교육지원청 스포츠교육센터 수영장은 교육지원청 누리집 안에 있어 따로 넣지 않았다.
 
+문화원·문화회관 (2026-10-02, 부산문화포털 '다봄' 지방문화원 목록과 웹 검색으로 구 문화원 16곳·문화회관 누리집을 모음):
+
+구 문화원은 분기마다 문화강좌·문화교실을 열고 '강사모집'·'강사 채용 공고'를 공지사항에 올린다.
+시험 수집에서 부산진·동래·남구·사하·동구·기장 문화원 공지에 강사 모집 글 10건이 있었다 (지난 글 포함).
+공지 대부분이 수강생 모집이라 도서관과 같은 키워드(`강사·튜터·멘토·코치·지도자·인력풀`)로 거른다.
+
+| 게시판 | 기관 | 처리 |
+|---|---|---|
+| 청소년활동진흥센터와 같은 `template.php?midx=` 틀 | 중구·금정 문화원, 금정문화재단, 금정문화회관(`template.asp`) | 글번호 `intnum` |
+| 그누보드 `<li>` 목록 | 서구문화원 | `li:has(a.list-subject)`, 날짜 '09.23' |
+| 레이아웃 표 안의 목록 | 동구문화원 | 메뉴 표가 목록보다 행이 많아 `row_selector` 로 목록 줄(제목 칸 `onclick`)만 |
+| `href="#"` + 행의 `data-idx` | 부산진문화원 | 스크립트가 `?mode=view&idx=` 로 연다 → `link_attr` 를 행에서 |
+| 한국문화원연합회 옛 누리집 | 동래문화원 | EUC-KR 이라고 적지만 cp949 글자가 섞여 `encoding: cp949` |
+| 그 밖 | 남구(글 주소가 제목 슬러그), 해운대(`<li>` 목록, `num`), 사하(`vid`), 기장(`no`), 부산문화회관 새소식(`no`), 동래문화회관(구청 CMS `dataSid`) | |
+
+넣지 않은 곳: 영도(ydculture.com)·수영(suyeongcc.or.kr)·북구낙동(nakdong.or.kr) 문화원은 해외 접속 403, 사상문화원은 자동 접속 확인(cupid.js),
+강서문화원(bsgangseo.com)과 연제문화원(bsyjculture.or.kr)은 목록을 스크립트로 그려 받은 화면에 글이 없음, 해운대문화회관은 www.haeundae.go.kr 이 러너에서 DNS 실패.
+
 공공도서관 (2026-09-30, 부산광역시 공공도서관 포털 '도서관 안내'의 공공도서관 58곳 → 누리집 약 30개):
 
 | 누리집 | 게시판 | 처리 |
@@ -326,6 +344,8 @@ flowchart LR
 | 금정국민체육센터 채용공고, 동구국민체육문예센터 채용공고 | 글이 없는 게시판 |
 | 영도국민체육센터·강서구국민체육센터 | 해외 접속 시간 초과 |
 | 동구국민체육센터 | 자동 접속 확인 화면 (cupid.js) |
+| 영도·수영·북구낙동 문화원 / 사상문화원 | 해외 접속 403 / 자동 접속 확인 화면 (cupid.js) |
+| 강서·연제 문화원 | 목록을 스크립트로 그림 |
 
 ### 4.5 남은 일
 
