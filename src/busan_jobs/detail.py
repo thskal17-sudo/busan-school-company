@@ -27,7 +27,7 @@ def extends(full: str, short: str) -> bool:
     return _squash(full).startswith(_squash(_ELLIPSIS.sub("", short or "")))
 
 
-def page_soup(content: bytes) -> BeautifulSoup:
+def page_soup(content: bytes | str) -> BeautifulSoup:
     soup = BeautifulSoup(content, "lxml")
     for tag in soup(["script", "style", "nav", "header", "footer"]):
         tag.decompose()

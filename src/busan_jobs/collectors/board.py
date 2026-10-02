@@ -25,6 +25,7 @@ options (모두 선택)
     org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
     title_org_pattern 제목에서 기관명을 뽑는 정규식 (첫 괄호). 예: 제목 앞 '[송도사랑요양원]' 의 기관명
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
+    encoding        페이지가 선언한 문자셋이 틀릴 때 실제 문자셋 (예: utf-8 이라 적고 EUC-KR 로 보내는 그누보드 → cp949)
 """
 from __future__ import annotations
 
@@ -324,6 +325,8 @@ def _form_url(soup: BeautifulSoup, onclick: str, base_url: str) -> tuple[str, st
 
 
 def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> list[BoardRow]:
+    if opts.get("encoding") and isinstance(html, bytes):
+        html = html.decode(opts["encoding"], errors="replace")
     soup = BeautifulSoup(html, "lxml")
     base_tag = soup.find("base", href=True)
     if opts.get("link_base"):
