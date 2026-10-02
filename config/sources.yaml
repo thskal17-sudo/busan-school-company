@@ -10,7 +10,7 @@
 #
 # 새 소스를 추가할 때는 먼저 진단 도구로 구조를 확인한다:
 #   GitHub Actions > 사이트 진단 (probe) > Run workflow > args: --no-reach --parse --url <목록 주소>
-# 대학 부설 평생교육원은 다른 저장소(lifelong-education-pyengsang-)가 맡으므로 넣지 않는다.
+# 대학 부설 평생교육원은 다른 저장소(lifelong-education-pyengsang-)도 모으지만, 부산 강사 공고를 한 메일로 받도록 여기에도 넣었다.
 
 max_phase: 3
 
