@@ -1999,6 +1999,283 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  # ─────────────────────────────── 문화원·문화회관 (문화강좌 강사 모집)
+  # 구 문화원은 분기마다 문화강좌를 열고 '강사모집'·'강사 채용 공고'를 공지사항에 올린다 (동래·부산진·남구·사하 시험 수집에서 확인).
+  # 공지 대부분이 수강생 모집이라 도서관과 같은 키워드로 거르고, 기관명은 고정(org_fixed)
+  # 넣지 않은 곳: 영도(ydculture.com)·수영(suyeongcc.or.kr)·북구낙동(nakdong.or.kr) 문화원은 해외 접속 403,
+  #   사상문화원(sasangculture.or.kr)은 자동 접속 확인(cupid.js), 강서·연제 문화원은 목록을 스크립트로 그림,
+  #   해운대문화회관은 www.haeundae.go.kr 이 러너에서 DNS 실패 (2026-09-30~10-02)
+  - id: culture_junggu_notice
+    name: 부산광역시중구문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 중구
+    collector: generic_board
+    url: https://www.bsjunggucc.com/sub/template.php?midx=50
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: intnum  # template.php?midx=50&mode=view&intnum=457 (청소년활동진흥센터와 같은 틀)
+      org_name: 부산광역시중구문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_seogu_notice
+    name: 부산서구문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 서구
+    collector: generic_board
+    url: https://www.seogucc.or.kr/bbs/board.php?bo_table=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 그누보드 <li> 목록 (div.fz-subject · div.fz-date '09.23')
+      row_selector: "li:has(a.list-subject)"
+      title_selector: "a.list-subject"
+      date_selector: "div.fz-date"
+      key_param: wr_id
+      org_name: 부산서구문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_donggu_notice
+    name: 부산동구문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동구
+    collector: generic_board
+    url: http://bdgcc.or.kr/sb51.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 레이아웃 표 안의 목록. 제목 칸 onclick="location.href='/sb51.php?md=V&idx=337…'"
+      row_selector: "tr:has(> td[onclick*='md=V'])"
+      key_param: idx
+      org_name: 부산동구문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_busanjin_notice
+    name: 부산진문화원 - 공지사항 (강사모집)
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: http://busanjin.kccf.or.kr/board/notice.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # <tr class="data-cont" data-idx="202"><a class="act_view" href="#"> → 스크립트가 ?mode=view&idx= 로 연다
+      row_selector: "tr.data-cont"
+      link_attr: data-idx
+      link_template: "http://busanjin.kccf.or.kr/board/notice.php?mode=view&idx={0}"
+      key_param: idx
+      org_name: 부산진문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_dongnae_notice
+    name: 동래문화원 - 공지사항 (강사모집)
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: http://dongnae.kccf.or.kr/home/main/madang.php?menuinfo_code=notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 한국문화원연합회 옛 누리집 (EUC-KR 이라고 적지만 cp949 글자가 섞여 cp949 로 읽어야 함)
+      encoding: cp949
+      row_selector: "tr:has(> td > a[href*='content_idx'])"
+      key_param: content_idx
+      org_name: 동래문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_namgu_notice
+    name: 부산남구문화원 - 공지사항 (강사 채용 공고)
+    org_type: 평생교육·도서관
+    district: 남구
+    collector: generic_board
+    url: http://www.bsnamgucc.or.kr/app/notice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 부산남구문화원  # 글 주소가 /app/notice/제목-슬러그 라서 주소 전체를 식별값으로
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_haeundae_notice
+    name: 해운대문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: http://www.hudcc.or.kr/board/bbs.asp?code=news
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # <li> 목록 (a.cell_cont 안 strong 제목, span.date)
+      row_selector: "li:has(> a.cell_cont)"
+      title_selector: "a.cell_cont"
+      date_selector: "span.date"
+      key_param: num
+      org_name: 해운대문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_saha_notice
+    name: 사하문화원 - 공지사항 (노래교실 강사 채용 등)
+    org_type: 평생교육·도서관
+    district: 사하구
+    collector: generic_board
+    url: http://sahacc.kr/notice/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: vid
+      org_name: 사하문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_geumjeong_notice
+    name: 금정문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: http://www.kumjung.or.kr/sub/template.php?midx=50
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: intnum
+      org_name: 금정문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: culture_gijang_notice
+    name: 기장문화원 - 공지사항
+    org_type: 평생교육·도서관
+    district: 기장군
+    collector: generic_board
+    url: http://gijangcc.or.kr/yard_2/01.php
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"  # YAML 에서 따옴표 없는 no 는 false
+      org_name: 기장문화원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_bscc_news
+    name: 부산문화회관 - 새소식 (공지·채용공고)
+    org_type: 평생교육·도서관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.bscc.or.kr/05_community/?mcode=0405010000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: "no"
+      org_name: 부산문화회관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_dongnae_notice
+    name: 동래문화회관 - 공지사항
+    org_type: 평생교육·도서관
+    district: 동래구
+    collector: generic_board
+    url: https://www.dongnae.go.kr/culture/board/list.dongnae?boardId=BBS_0000226&menuCd=DOM_000000606001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 동래문화회관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_geumjeong_notice
+    name: 금정문화회관 - 공지사항 (문화예술아카데미)
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://art.geumjeong.go.kr/sub/template.asp?midx=63
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: intnum
+      org_name: 금정문화회관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_gjfac_notice
+    name: 금정문화재단 - 공지사항
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://www.gjfac.org/gjfac/template.php?midx=347
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: intnum
+      org_name: 금정문화재단
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_gjfac_hire
+    name: 금정문화재단 - 채용공고
+    org_type: 평생교육·도서관
+    district: 금정구
+    collector: generic_board
+    url: https://www.gjfac.org/gjfac/template.php?midx=349
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: intnum
+      org_name: 금정문화재단
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # ─────────────────────────────── 청소년·여성
   - id: busanyouth_notice
     name: 부산청소년활동진흥센터 - 공지사항 (청소년 교육강사 모집 등)
