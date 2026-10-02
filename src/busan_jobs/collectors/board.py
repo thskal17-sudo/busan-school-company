@@ -445,8 +445,9 @@ def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tupl
         return fallback
 
     attr = opts.get("link_attr")
-    if attr and anchor.get(attr):
-        value = str(anchor.get(attr)).strip()
+    if attr and (anchor.get(attr) or tr.get(attr)):
+        # 링크에 없으면 행의 속성 (<tr class="data-cont" data-idx="202"><a class="act_view" href="#">)
+        value = str(anchor.get(attr) or tr.get(attr)).strip()
         url = template.format(value) if template else urljoin(base_url, value)
         return url, key_from(url, value), True
 
