@@ -507,6 +507,21 @@ def test_rows_linked_by_row_attribute(fixture_bytes):
     assert rows[0].url == "https://bbsc.kr/board/notice/read/68" and all(r.detail_ok for r in rows)
 
 
+def test_swimming_pool_boards(fixture_bytes, rules):
+    # 사상국민체육센터 채용공고 (삼락복합문화체육센터 포함): 글번호 ident, 강사 채용만 받고 행정직원 채용은 거름
+    rows = rows_of(fixture_bytes, "pool_sasang_hire", "busan_ssnsc_hire.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("6264", date(2026, 9, 22)), ("6256", date(2026, 9, 16)), ("6186", date(2026, 8, 19)),
+    ]
+    narrow = source_rules(rules, SOURCES["pool_sasang_hire"])
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, "모집중"]
+    assert judge("사직실내수영장 수영강습 접수 안내", narrow, True) is None  # 수영장 게시판은 '강습' 으로 받지 않음
+    # 스포원 공지: 글번호 BOARD_SEQ 는 암호화된 값이지만 실행마다 같다
+    rows = rows_of(fixture_bytes, "pool_spo1_notice", "busan_spo1_notice.html")
+    assert [r.key for r in rows] == ["v4TQNyGcRoKZRf+TgKSThQ==", "W+QMlFZ_8XHN6CXb_4tKsQ==", "LYeEuZzlCKdnDP144p495g=="]
+    assert rows[0].url.startswith("https://www.spo1.or.kr/bbs/list.do?cmd=view&CT_ID=NOTICE")
+
+
 def test_div_row_board(fixture_bytes):
     # 사하구 국민체육센터 공지: 표가 아닌 <div class="boardList"><a href="?action-value=…&action=read"> (머리글 줄은 링크가 없어 빠짐)
     rows = rows_of(fixture_bytes, "sports_saha_notice", "busan_sahaksports_notice.html")
