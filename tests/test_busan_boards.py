@@ -411,3 +411,66 @@ def test_yeongdo_library_li_list(fixture_bytes):
     ]
     assert rows[0].title == "[공지] [영도도서관] 제 38회 영도도서관 인문학 기행 참가신청 안내"
     assert rows[0].url.startswith("https://www.yeongdo.go.kr/library/01349/01352/01354.web?gcode=1136&idx=334085&amode=view")
+
+
+def test_welfare_center_hire_board_org_fixed_and_results(fixture_bytes, rules):
+    # 운봉종합사회복지관 직원채용 (SW_bbs 표): 프로그램 강사 모집과 그 합격자 발표가 함께 올라옴
+    from busan_jobs.collectors.board import BoardCollector
+
+    src = SOURCES["cw_unbong_hire"]
+    rows = rows_of(fixture_bytes, "cw_unbong_hire", "busan_woonbong_hire.html")
+    assert [r.posted for r in rows] == [date(2026, 9, 22), date(2026, 9, 21), date(2026, 9, 3), date(2026, 9, 3)]
+    assert len({r.key for r in rows}) == 4 and all(r.detail_ok for r in rows)
+    narrow = source_rules(rules, src)
+    assert [judge(r.title, narrow, True, keep_results=True) for r in rows] == ["결과공고", None, "모집중", "모집중"]
+    items = BoardCollector(src, _PageHttp(fixture_bytes("busan_woonbong_hire.html")), TODAY).collect()
+    assert {p.org_name for p in items} == {"운봉종합사회복지관"}  # 작성자 칸은 '관리자'
+    # 영진종합사회복지관은 모집이 끝나면 제목 앞에 '(완료)' 를 붙임
+    assert judge("(완료)장수대학 노래교실 강사 구인 공고", narrow, True, keep_results=True) == "결과공고"
+    assert judge("[완료]겟잇뷰티 강사 구인 공고", narrow, True, keep_results=True) == "결과공고"
+
+
+def test_ajax_list_url_with_view_onclick(fixture_bytes):
+    # 낙동종합사회복지관: 첫 화면은 빈 틀이고 목록은 /06/01.php?mode=list_ok (머리글이 td 인 표), 글은 view('1437')
+    rows = rows_of(fixture_bytes, "cw_nakdong_notice", "busan_ndswc_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("1437", date(2026, 1, 21)), ("1435", date(2026, 1, 8)), ("1161", date(2023, 6, 9)),
+    ]
+    assert rows[0].url == "https://www.ndswc.or.kr/06/01.php?mode=view&uid=1437"
+
+
+def test_board_rows_made_of_th_cells(fixture_bytes, rules):
+    # 와치종합사회복지관: 행의 칸이 <td> 가 아니라 <th class="board_title"> 등, 날짜 '26.04.09'
+    rows = rows_of(fixture_bytes, "cw_wachi_notice", "busan_wachi_notice.html")
+    assert [r.posted for r in rows] == [date(2026, 8, 5), date(2026, 7, 23), date(2026, 4, 9)]
+    assert rows[2].title == "2026년 BMC행복나눔사업 스마트폰 교육 강사 채용 공고"
+    assert all("/SW_bbs/view.php?zipEncode=" in r.url for r in rows) and len({r.key for r in rows}) == 3
+    narrow = source_rules(rules, SOURCES["cw_wachi_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None, "모집중"]
+
+
+def test_broken_table_rows_use_title_link(fixture_bytes):
+    # 해운대종합사회복지관: 행 태그가 <trf> 이고 닫히지 않아 뒤 행이 앞 행 안에 겹쳐 읽힘
+    # → 행 바로 아래 칸만 보고, 링크도 제목 칸(title_selector)의 것을 쓴다
+    rows = rows_of(fixture_bytes, "cw_haeundae_notice", "busan_haeundae_saem_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("2869", date(2026, 9, 29)), ("2868", date(2026, 9, 23)), ("2855", date(2026, 9, 4)),
+    ]
+    assert rows[1].title == "[안내] 2026 대상자 욕구 및 만족도조사 진행"
+
+
+def test_wrongly_declared_charset(fixture_bytes):
+    # 반여종합사회복지관: utf-8 이라고 적고 EUC-KR 로 보내는 그누보드 → encoding: cp949, 날짜 칸은 '09-29'
+    rows = rows_of(fixture_bytes, "cw_banyeo_notice", "busan_banyeo_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("716", date(2026, 9, 29)), ("713", date(2026, 7, 28)), ("712", date(2026, 7, 10)),
+    ]
+    assert rows[2].title == "[채용] 정규직 선임사회복지사/사회복지사 채용 결과 공고"
+
+
+def test_page_number_row_is_not_a_post():
+    html = """<table><tr><th>번호</th><th>제목</th><th>작성일</th></tr>
+    <tr><td>1</td><td><a href="view.php?no=1">한글 교실 강사 모집</a></td><td>26.09.01</td></tr>
+    <tr><td colspan="3"><a href="list.php?page=10">[10]</a></td></tr></table>"""
+    rows = parse_board(html, "https://example.or.kr/list.php", {}, TODAY)
+    assert [r.title for r in rows] == ["한글 교실 강사 모집"]
