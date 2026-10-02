@@ -474,3 +474,42 @@ def test_page_number_row_is_not_a_post():
     <tr><td colspan="3"><a href="list.php?page=10">[10]</a></td></tr></table>"""
     rows = parse_board(html, "https://example.or.kr/list.php", {}, TODAY)
     assert [r.title for r in rows] == ["한글 교실 강사 모집"]
+
+
+def test_sports_center_li_board_with_month_day_dates(fixture_bytes, rules):
+    # 수영구 국민체육센터 채용공고: <li class="row board-row"> 목록, 날짜 칸은 연도 없는 '09-16'
+    rows = rows_of(fixture_bytes, "sports_suyeong_hire", "busan_sysports_recru.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("4343", date(2026, 9, 16)), ("4341", date(2026, 9, 15)), ("4333", date(2026, 9, 9)),
+    ]
+    assert rows[1].url == "https://sysports.or.kr/emSolution/post/4341"
+    narrow = source_rules(rules, SOURCES["sports_suyeong_hire"])
+    # 수영 지도자는 받고 안전요원 채용은 거름
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중", None]
+
+
+def test_sports_association_keywords(rules):
+    narrow = source_rules(rules, SOURCES["assoc_saha_hire"])
+    assert judge("2026년 부산광역시사하구체육회 신규(어르신(전담)생활체육지도자) 채용공고", narrow, True) == "모집중"
+    assert judge("2026년 부산광역시수영구체육회 해달맞이생활체육교실 강사 채용 공고", narrow, True) == "모집중"
+    assert judge("2025년도 부산광역시사하구체육회 생활체육지도자 대체근무자 서류 합격 공고", narrow, True,
+                 keep_results=True) == "결과공고"
+    assert judge("◎ 수영구 국민체육센터 안내데스크 기간제 채용공고", narrow, True) is None
+
+
+def test_rows_linked_by_row_attribute(fixture_bytes):
+    # 북구체육회 공지: 행에 <a> 가 없고 <tr class="clickable-row" data-href="/board/notice/read/68"> 로 연다
+    rows = rows_of(fixture_bytes, "assoc_bukgu_notice", "busan_bbsc_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("68", date(2026, 9, 21)), ("67", date(2026, 8, 26)), ("60", date(2026, 5, 7)),
+    ]
+    assert rows[0].title == "지방체육회장선거 제한 금지행위 등 안내"
+    assert rows[0].url == "https://bbsc.kr/board/notice/read/68" and all(r.detail_ok for r in rows)
+
+
+def test_div_row_board(fixture_bytes):
+    # 사하구 국민체육센터 공지: 표가 아닌 <div class="boardList"><a href="?action-value=…&action=read"> (머리글 줄은 링크가 없어 빠짐)
+    rows = rows_of(fixture_bytes, "sports_saha_notice", "busan_sahaksports_notice.html")
+    assert [r.posted for r in rows] == [date(2026, 4, 9), date(2025, 12, 9), date(2025, 6, 11)]
+    assert rows[0].key == "ff7a23e7c1fd1162512ceb2e19a7b50b"
+    assert rows[0].url.endswith("/saha/207?action-value=ff7a23e7c1fd1162512ceb2e19a7b50b&action=read")
