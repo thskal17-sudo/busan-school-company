@@ -4779,6 +4779,179 @@ sources:
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
       org_name: 부산뇌병변복지관
 
+  # 부산시 '장애인 지역사회재활시설' 현황의 장애인복지관 17곳 가운데 위 4곳 말고 누리집을 받을 수 있는 곳 (2026-10-03).
+  # 강사 채용(예비학교 프로그램 전담 강사·바우처강사·정보화강사 등)은 대부분 '채용안내' 게시판에, 공지사항은 참여자 모집·예산 공고라 채용 게시판을 받는다
+  - id: dis_sigak_notice
+    name: 부산시각장애인복지관 - 공지사항
+    org_type: 복지관
+    district: 북구
+    collector: generic_board
+    url: https://www.newwhite.or.kr/boardList.do?BNUM=201512011&leftMenuNum=1&parentMenuNum=3&reqPage=1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 채용 공고도 공지사항에 올림. 제목 링크 boardViewDo1(게시판, 글번호, …) → GET 폼(/boardView.do)
+      link_template: "https://www.newwhite.or.kr/boardView.do?BNUM={0}&SEQ={1}&leftMenuNum=1&parentMenuNum=3&reqPage=1&imgNum=1"
+      key_param: SEQ
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 부산시각장애인복지관
+      org_fixed: true  # 작성자 칸이 '기획운영지원팀' 같은 부서
+
+  - id: dis_seogu_hire
+    name: 서구장애인복지관 - 채용공고
+    org_type: 복지관
+    district: 서구
+    collector: generic_board
+    url: http://www.seogurc.or.kr/bbs/board.php?bo_table=sub04_08&me_code=4090
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 서구장애인복지관
+
+  - id: dis_yeongdo_hire
+    name: 영도구장애인복지관 - 채용공고
+    org_type: 복지관
+    district: 영도구
+    collector: generic_board
+    url: https://www.yeongdorc.or.kr/SW_bbs/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 영도구장애인복지관
+
+  - id: dis_busanjin_hire
+    name: 부산진구장애인복지관 - 채용안내
+    org_type: 복지관
+    district: 부산진구
+    collector: generic_board
+    # 부산진구노인·장애인복지관의 장애인 쪽 누리집 (노인복지관 www.chambokji.org 와 따로)
+    url: https://bokji.chambokji.org/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 부산진구장애인복지관
+
+  - id: dis_namgu_notice
+    name: 남구장애인복지관 - 공지사항
+    org_type: 복지관
+    district: 남구
+    collector: generic_board
+    url: http://www.namgurc.or.kr/SW_bbs/list.php?zipEncode==etpLrxydrMCH9MyMu2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 머리글 줄 없는 표 (채용 게시판이 따로 없어 공지사항)
+      row_selector: "tr:has(> td.board_title a)"
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 남구장애인복지관
+      org_fixed: true  # 작성자 칸이 '남구장복'
+
+  - id: dis_nasaham_hire
+    name: 나사함발달장애인복지관 - 채용안내
+    org_type: 복지관
+    district: 남구
+    collector: generic_board
+    url: https://www.nasaham.or.kr/SW_bbs/notice/list.php?zipEncode=LTwy091vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info):not(:has(.notice_txt))"  # 위에 한 번 더 나오는 고정글(주소가 달라 같은 글로 못 묶음)은 뺌
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 나사함발달장애인복지관
+      org_fixed: true
+
+  - id: dis_saha_hire
+    name: 사하구장애인종합복지관 - 채용안내
+    org_type: 복지관
+    district: 사하구
+    collector: generic_board
+    url: http://saharc.or.kr/board_recruit01/list.php?tn=board_recruit01&G_state=Y
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: uid
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 사하구장애인종합복지관
+
+  - id: dis_geumjeong_hire
+    name: 금정구장애인복지관 - 채용안내
+    org_type: 복지관
+    district: 금정구
+    collector: generic_board
+    url: https://www.gjrc.or.kr/SW_bbs/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 금정구장애인복지관
+      org_fixed: true  # 작성자 칸에 '예비학교' 같은 사업 이름
+
+  - id: dis_gijang_hire
+    name: 기장장애인복지관 - 채용안내
+    org_type: 복지관
+    district: 기장군
+    collector: generic_board
+    url: https://www.gijangbok.or.kr/SW_bbs/notice/list.php?zipEncode==i2BQ91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      row_selector: "li:has(> div.info):not(:has(.notice_txt))"  # 위에 한 번 더 나오는 고정글(주소가 달라 같은 글로 못 묶음)은 뺌
+      title_selector: "p.txt1 a"
+      date_selector: "p.txt2"
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 기장장애인복지관
+      org_fixed: true
+
+  - id: dis_sasang_notice
+    name: 사상구장애인복지관 - 공지사항
+    org_type: 복지관
+    district: 사상구
+    collector: generic_board
+    # 사하구장애인종합복지관과 같은 게시판 프로그램. 채용 공고도 공지사항에 올림
+    url: http://www.sasangrc.or.kr/board_notice01/list.php?tn=board_notice01&G_state=Y
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: uid
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 사상구장애인복지관
+
   - id: womenhall_notice
     name: 부산광역시 여성회관 - 공지사항
     org_type: 여성·가족
