@@ -623,3 +623,17 @@ def test_list_page_sent_with_404_status():
     assert BoardCollector(src, _Http404(), TODAY).fetch_page(1).status_code == 404
     with pytest.raises(requests.exceptions.HTTPError):
         BoardCollector(SOURCES["univ_bdu_notice"], _Http404(), TODAY).fetch_page(1)
+
+
+def test_youth_support_center_board_title_without_icon_text(fixture_bytes, rules):
+    # 청소년종합지원센터·청소년성문화센터 (bbs_shop): 제목 뒤 <i class="sp-ico file">file</i> 아이콘 글자를 빼고 <span> 만
+    rows = rows_of(fixture_bytes, "youth_onestop_notice", "busan_onestop_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("57134", date(2026, 1, 30)), ("57074", date(2026, 1, 29)), ("56254", date(2026, 1, 12)),
+    ]
+    assert rows[0].title == "[채용공고] 시간제상담원 회복조정단"
+    assert rows[1].title == "부산광역시청소년종합지원센터 20주년 청소년 목소리 포럼 {청지개관}"
+    assert rows[0].url.startswith("http://www.busanonestop.or.kr/bbs_shop/read.htm?") and rows[0].url.endswith("&idx=57134")
+    narrow = source_rules(rules, SOURCES["youth_onestop_notice"])
+    assert all(judge(r.title, narrow, True) is None for r in rows)  # 직원·상담원 채용은 거름
+    assert judge("2027년 청소년 성교육 외부강사 모집 공고", narrow, True) == "모집중"
