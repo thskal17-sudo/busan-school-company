@@ -25,7 +25,8 @@ options (모두 선택)
     title_selector  행 안에서 제목만 담긴 요소 (표가 아닌 <li> 목록에서 링크에 날짜·기관이 섞일 때). 링크면 상세 주소도 거기서
     date_selector   행 안의 날짜 요소. '시작 ~ 끝' 이면 시작을 게시일, 끝을 마감일로.
                     'li.time@title' 처럼 쓰면 요소의 속성 값을 읽는다 (셀렉터 옵션 공통)
-    org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다)
+    org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다).
+                    짚어 준 칸이라 사람 이름 검사는 건너뛴다 (동 공지 작성자 칸 '괘법동')
     title_org_pattern 제목에서 기관명을 뽑는 정규식 (첫 괄호). 예: 제목 앞 '[송도사랑요양원]' 의 기관명
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
     encoding        페이지가 선언한 문자셋이 틀릴 때 실제 문자셋 (예: utf-8 이라 적고 EUC-KR 로 보내는 그누보드 → cp949)
@@ -219,10 +220,13 @@ def _list_date(text: str, today: date) -> date | None:
     return None
 
 
-def _org_name(raw: str, title: str) -> str:
-    """작성자·부서 칸의 값을 기관명으로. 사람 이름·관리자·가린 이름(일*과)이면 제목 속 학교 이름, 그것도 없으면 빈 값."""
+def _org_name(raw: str, title: str, maybe_person: bool = True) -> str:
+    """작성자·부서 칸의 값을 기관명으로. 사람 이름·관리자·가린 이름(일*과)이면 제목 속 학교 이름, 그것도 없으면 빈 값.
+
+    org_selector 로 기관 칸을 짚어 준 값은 사람 이름 검사를 하지 않는다 (동 이름 '괘법동'·'금곡동'이 이름처럼 보임)."""
     org = re.sub(r"^ou=", "", raw)
-    if _NOT_ORG.match(org) or "*" in org or (_PERSON.fullmatch(org) and not _ORG_END.search(org)):
+    person = maybe_person and _PERSON.fullmatch(org) and not _ORG_END.search(org)
+    if _NOT_ORG.match(org) or "*" in org or person:
         org = ""
     if not org:
         m = _SCHOOL.search(re.sub(r"(19|20)\d{2}\s*(학년도|년도|년)", " ", title))
@@ -376,8 +380,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
             url, key, detail_ok = _resolve_link(soup, cell, tr, base_url, opts)
         elif anchor is not None:
             title = _clean(anchor.get_text())
-            if len(title) < 2:
-                title = _clean(anchor.get("title"))
+            full = _clean(anchor.get("title"))
+            if len(title) < 2 or (title.endswith(("..", "…")) and full.startswith(title.rstrip(".… "))):
+                title = full  # 목록 제목이 '..' 로 잘리고 title 속성에 전체 제목 (남구 동 공지)
             if len(title) < 2:
                 # <a href="…"/>제목</a> 처럼 링크가 비고 제목은 칸에만 있는 경우 (잡알리오)
                 title = _clean((title_td or anchor.parent).get_text(" "))
@@ -427,7 +432,7 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         picked_org = _select_text(tr, opts.get("org_selector"))
         if picked_org and title.startswith(picked_org + " ") and len(title) > len(picked_org) + 5:
             title = title[len(picked_org) + 1:]  # 제목 칸 안에 기관 이름이 먼저 나오는 목록 (청소년활동진흥센터 채용정보)
-        org = _org_name(picked_org or cell("org"), title)
+        org = _org_name(picked_org or cell("org"), title, maybe_person=not picked_org)
         if opts.get("title_org_pattern") and not picked_org:
             m = re.search(opts["title_org_pattern"], title)
             org = m.group(1).strip() if m else org
