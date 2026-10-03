@@ -1,18 +1,12 @@
 #!/usr/bin/env bash
-# (임시) 청소년 기관 게시판 조사
+# (임시) 청소년 기관 게시판 조사 2차
 f() { python scripts/dev_fetch.py "$@" || true; }
 
-f say_busan "http://www.bsycsay.or.kr/"
-f say_busan_s "https://www.bsycsay.or.kr/"
-f say_2008 "http://2008say.or.kr/"
-f onestop "http://www.busanonestop.or.kr/"
-f bsyc "http://www.bsyc.or.kr/"
-f bsdi "http://bsdi.or.kr/"
-f jarip "http://www.bsyjarip.or.kr/"
-f shelter "http://www.shelter1004.org/"
-f bsyouth_assoc "http://bsyouth.or.kr/"
-f bsyouth_assoc_list "http://bsyouth.or.kr/sub14.php"
-f bomul "http://bomulsangja.com/"
-f sangsang "https://www.busanyouth.net/sub/template.php?midx=168"
-f yeje "http://www.gijangcmc.or.kr/gcdyc/main/main.asp"
-f arpina "http://www.arpina.co.kr/"
+f say_notice "http://www.bsycsay.or.kr/bbs/board"
+f onestop_notice "http://www.busanonestop.or.kr/bbs/rwdboard"
+f jarip_notice "http://www.bsyjarip.or.kr/bbs/notice"
+f bsyc_notice "http://www.bsyc.or.kr/sub06/sub06_01.php"
+f assoc_hire "http://bsyouth.or.kr/sub31.php"
+f assoc_notice "http://bsyouth.or.kr/sub41.php"
+f bomul_news "http://bomulsangja.com/ntbd1"
+f say_s_robots "http://www.bsycsay.or.kr/robots.txt"
