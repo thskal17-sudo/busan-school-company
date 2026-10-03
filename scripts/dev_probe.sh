@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-# (임시) 청소년 기관 게시판 조사 2차
-f() { python scripts/dev_fetch.py "$@" || true; }
-
-f say_notice "http://www.bsycsay.or.kr/bbs/board"
-f onestop_notice "http://www.busanonestop.or.kr/bbs/rwdboard"
-f jarip_notice "http://www.bsyjarip.or.kr/bbs/notice"
-f bsyc_notice "http://www.bsyc.or.kr/sub06/sub06_01.php"
-f assoc_hire "http://bsyouth.or.kr/sub31.php"
-f assoc_notice "http://bsyouth.or.kr/sub41.php"
-f bomul_news "http://bomulsangja.com/ntbd1"
-f say_s_robots "http://www.bsycsay.or.kr/robots.txt"
+# (임시) 청소년 기관 게시판 시험 수집
+python -m busan_jobs check-source youth_assoc_hire youth_say_notice youth_onestop_notice > probe_out/check.txt 2>&1 || true
+curl -s -o /dev/null -m 20 -w "busan.go.kr https %{http_code} %{time_total}s\n" https://www.busan.go.kr/ > probe_out/city.txt 2>&1 || echo "busan.go.kr 실패" >> probe_out/city.txt
