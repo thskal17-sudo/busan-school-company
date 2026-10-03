@@ -4793,8 +4793,9 @@ sources:
     enabled: true
     verified: true
     options:
-      # 채용 공고도 공지사항에 올림. 제목 링크 boardViewDo1(게시판, 글번호, …) → GET 폼(/boardView.do)
-      link_template: "https://www.newwhite.or.kr/boardView.do?BNUM={0}&SEQ={1}&leftMenuNum=1&parentMenuNum=3&reqPage=1&imgNum=1"
+      # 채용 공고도 공지사항에 올림. 제목 링크 boardViewDo1(게시판, 글번호, …) → GET 폼(/boardView.do).
+      # 폼의 숨은 값 leftMenuTitle·BTYPE 이 빠지면 500 오류라 함께 붙인다
+      link_template: "https://www.newwhite.or.kr/boardView.do?BNUM={0}&SEQ={1}&leftMenuNum=1&leftMenuTitle=%EB%B3%B5%EC%A7%80%EA%B4%80%EC%86%8C%EC%8B%9D&parentMenuNum=3&BTYPE=&reqPage=1&imgNum=1"
       key_param: SEQ
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
       org_name: 부산시각장애인복지관

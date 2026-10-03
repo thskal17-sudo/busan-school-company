@@ -637,3 +637,29 @@ def test_youth_support_center_board_title_without_icon_text(fixture_bytes, rules
     narrow = source_rules(rules, SOURCES["youth_onestop_notice"])
     assert all(judge(r.title, narrow, True) is None for r in rows)  # 직원·상담원 채용은 거름
     assert judge("2027년 청소년 성교육 외부강사 모집 공고", narrow, True) == "모집중"
+
+
+def test_disabled_center_js_view_form_link(fixture_bytes, rules):
+    # 부산시각장애인복지관: 제목 링크 boardViewDo1(201512011, 20261001155552, 1, 1) → GET 폼 /boardView.do.
+    # 폼의 숨은 값(leftMenuTitle·BTYPE)이 없으면 500 이라 상세 주소에 함께 붙는다
+    rows = rows_of(fixture_bytes, "dis_sigak_notice", "busan_newwhite_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [
+        ("20261001155552", date(2026, 10, 1)), ("20260921165143", date(2026, 9, 21)), ("20260915171859", date(2026, 9, 15)),
+    ]
+    assert rows[0].url == (
+        "https://www.newwhite.or.kr/boardView.do?BNUM=201512011&SEQ=20261001155552&leftMenuNum=1"
+        "&leftMenuTitle=%EB%B3%B5%EC%A7%80%EA%B4%80%EC%86%8C%EC%8B%9D&parentMenuNum=3&BTYPE=&reqPage=1&imgNum=1"
+    )
+    narrow = source_rules(rules, SOURCES["dis_sigak_notice"])
+    assert all(judge(r.title, narrow, True) is None for r in rows)  # 직원 채용은 거름
+
+
+def test_li_board_skips_pinned_copy(fixture_bytes, rules):
+    # 기장장애인복지관 채용안내 (SW_bbs <li> 목록): 위에 한 번 더 나오는 고정글은 주소(zipEncode)가 달라 같은 글로 못 묶어서 뺀다
+    rows = rows_of(fixture_bytes, "dis_gijang_hire", "busan_gijangbok_hire.html")
+    assert [(r.title, r.posted) for r in rows] == [
+        ("직원채용(언어재활사) 재공고", date(2026, 9, 18)),
+        ("[강사모집] 장애아동 예비학교 보조강사 모집", date(2026, 7, 1)),
+    ]
+    narrow = source_rules(rules, SOURCES["dis_gijang_hire"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]
