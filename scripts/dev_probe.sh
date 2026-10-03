@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-# (임시) 문화센터 게시판 조사
+# (임시) 문화센터 게시판 조사 2차
 f() { python scripts/dev_fetch.py "$@" || true; }
 
-f bsarte_home "https://bsarte.bscf.or.kr/"
-f bsarte_notice "https://bsarte.bscf.or.kr/board/list/1"
-f bscf_news "https://www.bscf.or.kr/portal/bbs/list.do?ptIdx=113&mId=0401000000"
-f bscc_notice "https://www.bscc.or.kr/05_community/?mcode=0405010000"
-f bacs_home "https://home.pen.go.kr/bacs/main.do"
-f bsec_home "https://home.pen.go.kr/bsec/main.do"
-f bjlife "http://busanjinlifeculture.quv.kr/5"
-f hd_culture "https://www.haeundae.go.kr/culture/index.do"
-f bukgu_culture "https://www.bsbukgu.go.kr/index.bsbukgu?menuCd=DOM_000000402003001002"
-f yeongdo_art "https://www.yeongdo.go.kr/art.web"
+f bsarte_notice "https://bsarte.bscf.or.kr/board/lists/1"
+f bsarte_local "https://bsarte.bscf.or.kr/board/lists/15"
+f bacs_notice "https://home.pen.go.kr/bacs/na/ntt/selectNttList.do?mi=10447&bbsId=3402"
+f bacs_5515 "https://home.pen.go.kr/bacs/na/ntt/selectNttList.do?mi=18261&bbsId=5515"
+f bacs_3396 "https://home.pen.go.kr/bacs/na/ntt/selectNttList.do?mi=10421&bbsId=3396"
+f bacs_3392 "https://home.pen.go.kr/bacs/na/ntt/selectNttList.do?mi=10416&bbsId=3392"
+f bsec_notice "https://home.pen.go.kr/bsec/na/ntt/selectNttList.do?mi=10652&bbsId=3244"
+f bukgu_tour "https://www.bsbukgu.go.kr/tour/index.bsbukgu?menuCd=DOM_000000407001000000"
+f bscf_home "https://www.bscf.or.kr/"
