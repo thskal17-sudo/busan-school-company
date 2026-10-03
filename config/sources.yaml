@@ -4445,6 +4445,22 @@ sources:
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
       org_name: 광안노인복지관
 
+  - id: senior_dongnae_notice
+    name: 동래구노인복지관 - 공지사항
+    org_type: 복지관
+    district: 동래구
+    collector: generic_board
+    # 시청 현황의 옛 주소는 도메인이 만료됐고 새 누리집(dnswc.or.kr)으로 옮김. '노인맞춤돌봄서비스 강사 채용' 이 올라옴
+    url: https://www.dnswc.or.kr/SW_bbs/notice/list.php?zipEncode==etpLrxydrMCH9MyMu2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
+      org_name: 동래구노인복지관
+
   - id: senior_jasungdae_notice
     name: 자성대노인종합복지관 - 공지사항
     org_type: 복지관
