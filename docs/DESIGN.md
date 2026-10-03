@@ -28,7 +28,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 290곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
+    S[sources.yaml<br/>게시판·API 294곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -339,6 +339,16 @@ flowchart LR
 
 넣지 않은 곳: 영도(ydculture.com)·수영(suyeongcc.or.kr)·북구낙동(nakdong.or.kr) 문화원은 해외 접속 403, 사상문화원은 자동 접속 확인(cupid.js),
 강서문화원(bsgangseo.com)과 연제문화원(bsyjculture.or.kr)은 목록을 스크립트로 그려 받은 화면에 글이 없음, 해운대문화회관은 www.haeundae.go.kr 이 러너에서 DNS 실패.
+
+문화센터 다시 찾기 (2026-10-03): 구 문화원·문화회관 말고 '문화센터' 성격의 기관을 더 찾아 문화예술교육 기관 4곳의 공지사항을 넣었다 (도서관과 같은 좁은 키워드).
+
+| 기관 | 게시판 | 처리 |
+|---|---|---|
+| 부산문화재단 부산문화예술교육지원센터 (bsarte.bscf.or.kr) | 공지사항 `/board/lists/1` → `/board/view/1/글번호` | `key_pattern`. 참여자 모집이 대부분 |
+| 교육청 학생예술문화회관(`bacs`)·학생교육문화회관(`becs`)·학생인성교육원(`bsec`) | 교육청 게시판과 같은 `na/ntt` (`<a data-id>`) | 시험 수집에서 '1일 체험학습 및 문화교실 지도강사 채용', '예술영재교육원 학급담임 및 강사 모집', '윈드오케스트라 보조강사', '학생인성교육원 외부강사 선발' 이 잡힘. 학생교육문화회관은 공지 게시판이 여럿이라 알림마당 공지(`bbsId=3146`) |
+
+넣지 않은 곳: 해운대문화회관(www.haeundae.go.kr 여전히 DNS 실패), 북구문화예술회관(구청 문화관광 공지에 대관 안내뿐), 부산진구생활문화센터(사이트 빌더 게시판이 스크립트로 그려짐),
+구 생활문화센터·문화재단은 따로 누리집이 없거나(블로그·구청 안내) 찾지 못함, 을숙도문화회관·여성문화회관은 www.busan.go.kr 이 러너에서 시간 초과.
 
 공공도서관 (2026-09-30, 부산광역시 공공도서관 포털 '도서관 안내'의 공공도서관 58곳 → 누리집 약 30개):
 

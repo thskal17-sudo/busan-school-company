@@ -2614,6 +2614,83 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  # 문화예술교육 기관 (2026-10-03): 부산문화재단 부산문화예술교육지원센터, 교육청 직속 학생예술문화회관·학생교육문화회관·학생인성교육원
+  - id: culture_bsarte_notice
+    name: 부산문화예술교육지원센터 (부산문화재단) - 공지사항
+    org_type: 평생교육·도서관
+    district: 부산전체
+    collector: generic_board
+    url: https://bsarte.bscf.or.kr/board/lists/1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_pattern: "/board/view/1/(\\d+)"
+      org_name: 부산문화예술교육지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]  # 참여자 모집이 대부분
+
+  - id: pen_bacs_notice
+    name: 부산광역시교육청학생예술문화회관 - 공지사항
+    org_type: 교육청·학교
+    district: 부산전체
+    collector: generic_board
+    url: https://home.pen.go.kr/bacs/na/ntt/selectNttList.do?mi=10447&bbsId=3402
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 교육청 게시판과 같은 <a data-id>
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/bacs/na/ntt/selectNttInfo.do?mi=10447&bbsId=3402&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시교육청학생예술문화회관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: pen_becs_notice
+    name: 부산광역시교육청학생교육문화회관 - 공지사항
+    org_type: 교육청·학교
+    district: 부산진구
+    collector: generic_board
+    url: https://home.pen.go.kr/becs/na/ntt/selectNttList.do?mi=10400&bbsId=3146
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/becs/na/ntt/selectNttInfo.do?mi=10400&bbsId=3146&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시교육청학생교육문화회관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: pen_bsec_notice
+    name: 부산광역시교육청학생인성교육원 - 공지사항
+    org_type: 교육청·학교
+    district: 부산전체
+    collector: generic_board
+    url: https://home.pen.go.kr/bsec/na/ntt/selectNttList.do?mi=10652&bbsId=3244
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # '외부강사 추가선발' 공고가 올라옴
+      link_attr: data-id
+      link_template: "https://home.pen.go.kr/bsec/na/ntt/selectNttInfo.do?mi=10652&bbsId=3244&nttSn={0}"
+      key_param: nttSn
+      org_name: 부산광역시교육청학생인성교육원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   - id: hall_bscc_news
     name: 부산문화회관 - 새소식 (공지·채용공고)
     org_type: 평생교육·도서관
