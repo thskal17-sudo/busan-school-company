@@ -3641,6 +3641,65 @@ sources:
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 아동복지교사, 기초학습, 특기적성]  # 생활복지사·센터장·조리사 등 종사자 채용은 거름
       org_name: 부산 지역아동센터
 
+  # 아동보호전문기관 (2026-10-04): 상담원·행정보조 채용이 대부분이고 아동학대 예방교육 강사 모집이 이따금 올라올 곳.
+  # 넣지 않은 곳: 부산광역시 아동보호종합센터(www.busan.go.kr/adong, 러너에서 시간 초과), 부산진구아동보호전문기관(bsjin1391.or.kr, 해외 접속 403),
+  # 부산남부아동보호전문기관(bnc1391.or.kr·nchild.wavework.kr 모두 DNS 없음)
+  - id: cpa_bukbusan_notice
+    name: 북부산(부산서부)아동보호전문기관 - 공지사항
+    org_type: 아동
+    district: 북구
+    collector: generic_board
+    url: https://busansb.gcps.or.kr/gnbusansb/board/cd103101100/default  # busansb.goodneighbors.kr 이 넘겨 주는 주소
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_pattern: "/info/(\\d+)"
+      org_name: 북부산아동보호전문기관
+      org_fixed: true  # 작성자 칸이 옛 이름 '부산서부아동보호전문기관' 인 글도 있음
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: cpa_dongbusan_notice
+    name: 동부산아동보호전문기관 - 알림마당
+    org_type: 아동
+    district: 해운대구
+    collector: generic_board
+    # https 는 인증서가 다른 주소 것이라(Hostname mismatch) http 주소로 받는다 (검증을 끄지 않음)
+    url: http://dbchild.saem.or.kr/community/notice-3/
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 워드프레스 게시판: <a href="javascript:goRead('230823')">, 목록에 날짜 칸이 없고 숨긴 본문 미리보기가 있음
+      # (미리보기 속 첨부파일 링크를 제목으로 고르지 않게 제목 칸을 짚음)
+      title_selector: td.pibs_nboard_subject a
+      link_template: "http://dbchild.saem.or.kr/community/notice-3/?lhwb_mode=view&board_id=9&list_id={0}"
+      key_param: list_id
+      org_name: 동부산아동보호전문기관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: cpa_jungbusan_notice
+    name: 중부산아동보호전문기관 - 알림마당
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    url: http://jbusan1391.or.kr/bbs/board.php?bo_table=notice  # https 인증서가 다른 주소 것이라 http
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: wr_id
+      org_name: 중부산아동보호전문기관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # 복지관 (사회·노인·장애인복지관 90여 곳 → 협회·협의회의 채용 모음 게시판으로 받는다)
   - id: baswc_hire
     name: 부산시사회복지관협회 - 구인게시판 (종합사회복지관 54곳 채용 모음)

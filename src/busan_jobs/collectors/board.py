@@ -417,8 +417,9 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         posted = _list_date(cell("posted"), today)
         if posted is None:
             for td in tds:
-                if td is not title_td and has_full_date(td.get_text()):
-                    posted = parse_date(td.get_text(), today)
+                text = _visible_text(td)  # 숨겨 둔 본문 미리보기 속 면접일은 게시일이 아님 (동부산아동보호전문기관)
+                if td is not title_td and has_full_date(text):
+                    posted = parse_date(text, today)
                     break
         deadline_text = cell("deadline")
         deadline = extract_deadline(deadline_text, today) or (
@@ -451,6 +452,18 @@ def _select_text(row: Tag, selector: str | None) -> str:
     if el is None:
         return ""
     return _clean(str(el.get(attr) or "")) if attr else _clean(el.get_text(" "))
+
+
+def _hidden(el: Tag) -> bool:
+    return "display:none" in re.sub(r"\s", "", el.get("style") or "")
+
+
+def _visible_text(cell: Tag) -> str:
+    """칸의 글자 중 style="display:none" 으로 숨긴 요소 안의 글자는 뺀다."""
+    return " ".join(
+        s for s in cell.find_all(string=True)
+        if not any(_hidden(p) for p in s.parents if p is not cell and isinstance(p, Tag))
+    )
 
 
 def _resolve_link(soup, anchor: Tag, tr: Tag, base_url: str, opts: dict) -> tuple[str, str, bool]:
