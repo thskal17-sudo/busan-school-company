@@ -5342,6 +5342,42 @@ sources:
       key_param: board_seq
       org_name: 부산여성가족과평생교육진흥원
 
+  - id: bgli_notice
+    name: 부산여성가족과평생교육진흥원 - 공지사항 (성평등·폭력예방 교육 위촉 강사 모집 등)
+    org_type: 시 산하기관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.bgli.re.kr/kor/CMS/Board/Board.do?mCode=MN083
+    pages: 1  # 한 쪽(10건)이 2주 남짓
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: board_seq
+      org_name: 부산여성가족과평생교육진흥원
+      org_fixed: true  # 작성자 칸이 '여평원'
+      # 평생교육이용권·시민대학 안내가 대부분이라 강사 모집 글만 ('늘봄&돌봄 부스터 강사육성 과정' 은 제외 키워드)
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: bgli_trust
+    name: 부산여성가족과평생교육진흥원 - 여평원 수탁기관 (부산광역시건강가정지원센터 등 채용)
+    org_type: 여성·가족
+    district: 부산전체
+    collector: generic_board
+    # 부산광역시건강가정지원센터 누리집(bsfc.familynet.or.kr)은 러너 접속을 막아서, 위탁 운영하는 진흥원이 대신 올리는 게시판으로 받는다
+    url: https://www.bgli.re.kr/kor/CMS/Board/Board.do?mCode=MN162
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: board_seq
+      title_org_pattern: "(부산(?:광역)?시\\s?(?:건강가정지원센터|아이돌봄광역지원센터|일생활균형지원센터|여성폭력방지종합지원센터))"
+      org_name: 부산여성가족과평생교육진흥원
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   - id: bgli_other
     name: 부산여성가족과평생교육진흥원 - 타기관 소식 (여성인력개발센터 등)
     org_type: 여성·가족

@@ -724,3 +724,16 @@ def test_danuri_job_list_district_and_center(fixture_bytes, rules):
     # 통번역지원사 채용은 강사가 아니고, 서류전형 합격자 발표는 결과 공고
     assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중", "모집중", None]
     assert categorize(rows[1].title, rows[1].org, rules) == "다문화·한국어"
+
+
+def test_bgli_notice_and_trust_boards(fixture_bytes, rules):
+    # 부산여성가족과평생교육진흥원 공지사항: 위촉 강사 모집은 남기고 교육 대상자 공지·강사육성 과정 수료자 공고는 뺌
+    rows = rows_of(fixture_bytes, "bgli_notice", "busan_bgli_notice.html")
+    assert [r.key for r in rows] == ["25379", "24205", "23477"]
+    assert rows[0].posted == date(2026, 2, 13)
+    narrow = source_rules(rules, SOURCES["bgli_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", None, None]
+    # 여평원 수탁기관: 부산광역시건강가정지원센터 채용을 진흥원이 대신 올림. 기관명은 제목 속 센터 이름
+    rows = rows_of(fixture_bytes, "bgli_trust", "busan_bgli_trust.html")
+    assert (rows[0].org, rows[0].key) == ("부산광역시건강가정지원센터", "26175")
+    assert judge(rows[0].title, source_rules(rules, SOURCES["bgli_trust"]), True) is None  # 직원 채용
