@@ -45,6 +45,9 @@ def test_categorize(rules):
     assert categorize("도서관 인문학 강사 모집", "", rules) == "평생교육·문화"
     assert categorize("2026학년도 기간제(시간강사)교원 (화학)채용 공고", "강동고등학교", rules) == "학교 시간강사"
     assert categorize("강사 모집", "", rules) == "기타"
+    # '다문화' 속 '문화' 때문에 평생교육·문화로 가지 않게 다문화·한국어를 앞에 둠
+    assert categorize("2026년도 이중언어직접교육사업 (이중언어 강사) 채용", "부산 가족센터", rules) == "다문화·한국어"
+    assert categorize("한국어 교육 강사 채용 공고", "영도구가족센터", rules) == "다문화·한국어"
 
 
 def test_categorize_negative_terms(rules):
