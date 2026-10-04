@@ -2873,6 +2873,100 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  # 문화센터 다시 찾기 2차 (2026-10-04): 미디어센터·영화관·국악원·미술관처럼 강좌를 여는 공공 문화시설
+  - id: media_kcmf_busan_notice
+    name: 시청자미디어재단 부산시청자미디어센터 - 공지사항 (체험·보조강사 모집)
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://kcmf.or.kr/KCMF/contents/KCMF050107.do
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # <a onclick="fn_goView('CJSONOIHhcctr_ul9r1-R_a9R4N3Cud2xksvkc6Eu58')"> → ?schM=view&id= (값은 러너 세 대에서 같음)
+      link_template: "https://kcmf.or.kr/KCMF/contents/KCMF050107.do?schM=view&id={0}"
+      key_param: id
+      org_name: 부산시청자미디어센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_dureraum_notice
+    name: 영화의전당 - 공지사항 (들락날락·서부산영상미디어센터 강사풀 모집)
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.dureraum.org/bcc/board/list.do?rbsIdx=46
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: idx
+      org_name: 영화의전당
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_gugak_notice
+    name: 국립부산국악원 - 공지사항 (외부강사 모집)
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    url: https://busan.gugak.go.kr/BG/contents/BG0402010000.do
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://busan.gugak.go.kr/BG/contents/BG0402010000.do?schM=view&id={0}"  # fn_goView('20260804110102928264')
+      key_param: id
+      title_selector: td.taL b  # 링크 안 새 글 표시 <em class="new">N</em> 은 뺌
+      org_name: 국립부산국악원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_gugak_hire
+    name: 국립부산국악원 - 채용정보
+    org_type: 평생교육·도서관
+    district: 부산진구
+    collector: generic_board
+    # 2023년까지는 외부강사 모집을 여기에 올림 (2026년은 공지사항)
+    url: https://busan.gugak.go.kr/BG/contents/BG0402020000.do
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://busan.gugak.go.kr/BG/contents/BG0402020000.do?schM=view&id={0}"
+      key_param: id
+      title_selector: td.taL b
+      org_name: 국립부산국악원
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_bma_notice
+    name: 부산시립미술관 - 고시공고 (채용)
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://art.busan.go.kr/anucmt/list.nm
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://art.busan.go.kr/anucmt/view.nm?tta_seq={0}"  # javascript:viewProc('101')
+      key_param: tta_seq
+      org_name: 부산시립미술관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # ─────────────────────────────── 청소년·여성
   - id: busanyouth_notice
     name: 부산청소년활동진흥센터 - 공지사항 (청소년 교육강사 모집 등)
