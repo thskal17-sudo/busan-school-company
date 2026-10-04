@@ -28,7 +28,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 307곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
+    S[sources.yaml<br/>게시판·API 310곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -449,6 +449,18 @@ flowchart LR
 진흥원 공지사항(`MN083`)에는 '거점형 지역양성평등센터 성평등 교육 위촉 강사 모집', '이젠센터 폭력예방교육 강사 공개 모집' 처럼
 진흥원과 수탁기관의 강사 모집이 올라와서 (제목 '강사' 검색 100건) 두 게시판을 넣었다. 둘 다 기존 진흥원 채용·타기관 소식과 같은 틀(`board_seq`).
 수탁기관 게시판의 기관명은 제목 속 센터 이름('부산광역시건강가정지원센터', '부산시 여성폭력방지종합지원센터')을 쓴다. 시험 수집에서 러너 세 대 모두 목록을 읽었다.
+
+아동보호전문기관 (2026-10-04, 부산진구아동보호전문기관의 부산 관할 현황과 웹 검색으로 6곳을 찾음). 상담원·행정보조 채용이 대부분이고
+아동학대 예방교육·부모교육 강사 모집이 이따금 올라올 곳이라 포함 키워드를 `강사·튜터·멘토·코치·지도자·인력풀` 로 좁혔다 (중부산 제목 '강사' 검색은 0건).
+
+| 기관 | 게시판 | 처리 |
+|---|---|---|
+| 북부산(옛 부산서부)아동보호전문기관 | 굿네이버스 누리집 공지사항 (`busansb.goodneighbors.kr` → `busansb.gcps.or.kr/gnbusansb/board/cd103101100/default`) | 글 주소 `/info/58933` 의 번호 (`key_pattern`). 글이 드묾 (2023년 뒤 몇 건) |
+| 동부산아동보호전문기관 | 워드프레스 게시판 `dbchild.saem.or.kr/community/notice-3/` | https 인증서가 다른 주소 것(Hostname mismatch)이라 http. `goRead('230823')` → `?lhwb_mode=view&board_id=9&list_id=` (러너에서 열림 확인). 목록에 날짜 칸이 없고 `display:none` 으로 숨긴 본문 미리보기에 면접일·첨부파일 링크가 있어서, 날짜를 찾을 때 숨긴 글자는 보지 않도록 수집기를 고치고(게시일 없음 → 처음 본 날) 제목 칸을 `title_selector` 로 짚음 |
+| 중부산아동보호전문기관 | 그누보드 `jbusan1391.or.kr/bbs/board.php?bo_table=notice` | https 인증서가 다른 주소 것이라 http |
+
+넣지 않은 곳: 부산광역시 아동보호종합센터(`www.busan.go.kr/adong`, 2026-10-04 에도 러너에서 시간 초과. 아동학대예방 부모교육·아동권리교육 전문강사를 해마다 11월에 모집),
+부산진구아동보호전문기관(bsjin1391.or.kr, robots.txt 까지 403), 부산남부아동보호전문기관(bnc1391.or.kr·nchild.wavework.kr 모두 DNS 없음).
 
 넣지 않은 곳: 다누리의 센터별 게시판(`center/board/mlrc/boardList.do?centerSeq=`)은 센터를 세션으로 골라서 주소만으로는 목록·상세가 열리지 않음 (포털 채용정보와 같은 글),
 국립국어원 한국어교원 구인정보(kteacher.korean.go.kr, 가족센터 한국어 강사 모집도 올라옴)는 robots.txt 가 `/jobsearch/` 를 막음.

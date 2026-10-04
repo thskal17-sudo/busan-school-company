@@ -737,3 +737,17 @@ def test_bgli_notice_and_trust_boards(fixture_bytes, rules):
     rows = rows_of(fixture_bytes, "bgli_trust", "busan_bgli_trust.html")
     assert (rows[0].org, rows[0].key) == ("부산광역시건강가정지원센터", "26175")
     assert judge(rows[0].title, source_rules(rules, SOURCES["bgli_trust"]), True) is None  # 직원 채용
+
+
+def test_child_protection_boards(fixture_bytes):
+    # 동부산아동보호전문기관 (워드프레스 게시판): 날짜 칸이 없고, 숨긴 본문 미리보기 속 면접일·첨부파일 링크는 읽지 않음
+    rows = rows_of(fixture_bytes, "cpa_dongbusan_notice", "busan_dbchild_notice.html")
+    assert [(r.title, r.key, r.posted) for r in rows] == [
+        ("[공고] 2026년 3차 방문똑똑마음톡톡사업 행정보조인력 채용 계획", "230816", None),
+        ("[모집] CHILD 서포터즈 자원봉사자 모집", "230815", None),
+    ]
+    assert rows[0].url == "http://dbchild.saem.or.kr/community/notice-3/?lhwb_mode=view&board_id=9&list_id=230816"
+    # 북부산아동보호전문기관 (굿네이버스 누리집): 글 주소 /info/58933 의 번호가 식별값
+    rows = rows_of(fixture_bytes, "cpa_bukbusan_notice", "busan_bukbusan_cpa_notice.html")
+    assert [(r.key, r.posted) for r in rows] == [("58933", date(2026, 3, 31)), ("46383", date(2023, 8, 22))]
+    assert rows[1].url == "https://busansb.gcps.or.kr/gnbusansb/board/cd103101100/info/46383"
