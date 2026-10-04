@@ -691,3 +691,20 @@ def test_dong_board_pinned_rows_and_full_title(fixture_bytes, rules):
         "오륙도 인생후반전 지원센터 3월 시범운영 프로그램 및 재능기부 강사모집",
         "부산광역시 남구 소년소녀합창단 지도강사 모집 안내",
     ]
+
+
+def test_manpa_cms_board_js_view_and_new_badge(fixture_bytes, rules):
+    # 국립부산국악원 공지사항: <a onclick="fn_goView('20260211…')"><b>제목</b> <em class="new">N</em></a>
+    rows = rows_of(fixture_bytes, "hall_gugak_notice", "busan_gugak_notice.html")
+    assert rows[0].title == "국립남도국악원 2027 토요상설공연 '국악이 좋다' 출연자 공모"  # 새 글 표시 'N' 은 뺌
+    r = rows[2]
+    assert (r.title, r.key, r.posted) == ("2026년 국립부산국악원 외부강사 모집 공고", "20260211111711194631", date(2026, 2, 11))
+    assert r.url == "https://busan.gugak.go.kr/BG/contents/BG0402010000.do?schM=view&id=20260211111711194631"
+    narrow = source_rules(rules, SOURCES["hall_gugak_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None, "모집중", None]  # 합격자 공고는 결과
+    # 시청자미디어재단 부산센터: 같은 틀이고 공지 줄은 fn_goView('값', 'busanTTTnotice') 로 인자가 하나 더 붙음
+    rows = rows_of(fixture_bytes, "media_kcmf_busan_notice", "busan_kcmf_notice.html")
+    assert rows[0].url.endswith("schM=view&id=fuFoONisUcoNIeqlKdRA4UrAdYRrJ0w-XbqJJMVNTpg")
+    assert rows[1].key == "CJSONOIHhcctr_ul9r1-R_a9R4N3Cud2xksvkc6Eu58"
+    narrow = source_rules(rules, SOURCES["media_kcmf_busan_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]
