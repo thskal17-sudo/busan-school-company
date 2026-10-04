@@ -3876,6 +3876,58 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  - id: childcare_bukgu_notice
+    name: 북구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 북구
+    collector: generic_board
+    url: https://www.bbgscc.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      encoding: cp949
+      org_name: 북구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_dongnae_notice
+    name: 동래구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 동래구
+    collector: generic_board
+    url: https://www.bdscc.or.kr/board/list.asp?BoardID=0003
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 동래구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_gangseo_notice
+    name: 강서구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 강서구
+    collector: generic_board
+    url: https://www.bgscc.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 강서구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # 복지관 (사회·노인·장애인복지관 90여 곳 → 협회·협의회의 채용 모음 게시판으로 받는다)
   - id: baswc_hire
     name: 부산시사회복지관협회 - 구인게시판 (종합사회복지관 54곳 채용 모음)

@@ -751,3 +751,18 @@ def test_child_protection_boards(fixture_bytes):
     rows = rows_of(fixture_bytes, "cpa_bukbusan_notice", "busan_bukbusan_cpa_notice.html")
     assert [(r.key, r.posted) for r in rows] == [("58933", date(2026, 3, 31)), ("46383", date(2023, 8, 22))]
     assert rows[1].url == "https://busansb.gcps.or.kr/gnbusansb/board/cd103101100/info/46383"
+
+
+def test_childcare_center_boards(fixture_bytes, rules):
+    # 부산육아종합지원센터 구·군 센터 채용공고: 목록 제목이 '...' 로 잘리고 title 속성에 전체 제목, 기관명은 제목 앞 [센터 이름]
+    rows = rows_of(fixture_bytes, "childcare_busan_gu_hire", "busan_childcare_gu_hire.html")
+    assert [(r.org, r.key) for r in rows] == [("영도구육아종합지원센터", "219014"), ("사상구육아종합지원센터", "218822")]
+    assert rows[1].title == "[사상구육아종합지원센터] 2026년 시간제대체교사 채용 공고"
+    narrow = source_rules(rules, SOURCES["childcare_busan_gu_hire"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None]  # 행정원·대체교사 채용은 강사가 아님
+    # 기장군육아종합지원센터: charset=euc-kr 이라 적고 응답 머리글에 문자셋이 없는 ASP 게시판 → encoding: cp949
+    rows = rows_of(fixture_bytes, "childcare_gijang_notice", "busan_gijangchild_notice.html")
+    assert [(r.title, r.key, r.posted) for r in rows] == [
+        ("[센터소식] 기장군 보육교직원 힐링캠프 안내", "3486", date(2026, 10, 2)),
+        ("★ 제10회 「현장은 나의 경험학교」 사진공모전 수상작 발표 ★", "3475", date(2026, 9, 17)),
+    ]
