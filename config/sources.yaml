@@ -3700,6 +3700,234 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  # 육아종합지원센터 (2026-10-04): 부산시 센터(부산대 위탁, busan.childcare.go.kr)가 구·군 센터 채용 공고를 한 게시판에 모아 올리고,
+  # 구·군 센터는 공지사항에 부모교육·보육교직원 교육 강사진 모집을 이따금 올린다 (사상 2016~2020년 5건, 수영 2019~2023년 7건).
+  # 프로그램·휴관 안내와 시간제 대체교사·운영요원 채용이 대부분이라 강사 모집 글만. 어린이집 구인(보육교사)은 강사가 아니라 넣지 않음.
+  # 넣지 않은 곳: 연제구(yjscfc.or.kr, 자동 접속 확인 cupid.js), 해운대구(ecohud.or.kr, 공지 목록을 스크립트로 그림), 남구(시 센터 현황에 아직 없고 누리집을 찾지 못함, 채용은 시 센터 모음에 올라옴)·동구·중구(센터 없음)
+  - id: childcare_busan_notice
+    name: 부산육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    url: https://busan.childcare.go.kr/ccef/community/notice/NoticeSlPL.jsp?BBSGB=47
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: BID  # <a href="NoticeSl.jsp?flag=Sl&BBSGB=47&BID=219052"> (목록 제목이 '...' 로 잘려 title 속성의 전체 제목)
+      org_name: 부산광역시육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_busan_gu_hire
+    name: 부산육아종합지원센터 - 구·군 센터 채용공고 (구·군 육아종합지원센터 채용 모음)
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    url: https://busan.childcare.go.kr/ccef/community/notice/NoticeSlPL.jsp?BBSGB=1233
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: BID
+      title_org_pattern: "^\\[([^\\]]+센터)\\]"  # '[영도구육아종합지원센터] 행정원 채용 공고'
+      org_name: 부산광역시육아종합지원센터
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_sasang_notice
+    name: 사상구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 사상구
+    collector: generic_board
+    url: https://www.sasangicare.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 사상구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_suyeong_notice
+    name: 수영구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 수영구
+    collector: generic_board
+    url: https://www.bsyscc.or.kr/new/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 수영구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_seogu_notice
+    name: 서구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 서구
+    collector: generic_board
+    url: https://www.bsscc.or.kr/community/board_list.asp?BoardID=0003
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 서구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_geumjeong_notice
+    name: 금정구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 금정구
+    collector: generic_board
+    url: https://www.gjscc.or.kr/community/board_list.asp?BoardID=0004
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 금정구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_saha_notice
+    name: 사하구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 사하구
+    collector: generic_board
+    url: https://www.sahascc.or.kr/community/board_list.asp?BoardID=0004
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 사하구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_yeongdo_notice
+    name: 영도구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 영도구
+    collector: generic_board
+    url: https://www.ydgscc.or.kr/community/board_list.asp?BoardID=0003
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 영도구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_gijang_notice
+    name: 기장군육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 기장군
+    collector: generic_board
+    url: https://gijangchild.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      encoding: cp949  # charset=euc-kr 이라 적고 응답 머리글에는 문자셋이 없음
+      org_name: 기장군육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_busanjin_notice
+    name: 부산진구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 부산진구
+    collector: generic_board
+    url: https://www.bjscfc.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      encoding: cp949  # charset=euc-kr 이라 적고 응답 머리글에는 문자셋이 없음
+      org_name: 부산진구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_bukgu_notice
+    name: 북구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 북구
+    collector: generic_board
+    url: https://www.bbgscc.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      encoding: cp949
+      org_name: 북구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_dongnae_notice
+    name: 동래구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 동래구
+    collector: generic_board
+    url: https://www.bdscc.or.kr/board/list.asp?BoardID=0003
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 동래구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: childcare_gangseo_notice
+    name: 강서구육아종합지원센터 - 공지사항
+    org_type: 아동
+    district: 강서구
+    collector: generic_board
+    url: https://www.bgscc.or.kr/board/list.asp?BoardID=0001
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 강서구육아종합지원센터
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   # 복지관 (사회·노인·장애인복지관 90여 곳 → 협회·협의회의 채용 모음 게시판으로 받는다)
   - id: baswc_hire
     name: 부산시사회복지관협회 - 구인게시판 (종합사회복지관 54곳 채용 모음)
