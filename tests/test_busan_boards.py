@@ -7,7 +7,7 @@ from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
-from busan_jobs.classify import judge
+from busan_jobs.classify import categorize, infer_district, judge
 from busan_jobs.collectors.board import _list_date, _org_name, parse_board, stable_key
 from busan_jobs.config import load_settings, source_rules
 
@@ -708,3 +708,19 @@ def test_manpa_cms_board_js_view_and_new_badge(fixture_bytes, rules):
     assert rows[1].key == "CJSONOIHhcctr_ul9r1-R_a9R4N3Cud2xksvkc6Eu58"
     narrow = source_rules(rules, SOURCES["media_kcmf_busan_notice"])
     assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]
+
+
+def test_danuri_job_list_district_and_center(fixture_bytes, rules):
+    # 다누리 채용정보 (부산): <dl> 목록, 지역 '[ 부산 부산진구 ]', 채용기간 '시작 ~ 끝', 기관명은 제목 속 센터 이름
+    rows = rows_of(fixture_bytes, "family_danuri_hire", "busan_danuri_hire.html")
+    assert [(r.key, r.posted, r.deadline) for r in rows[:2]] == [
+        ("169574", date(2026, 10, 2), date(2026, 10, 18)),
+        ("165525", date(2026, 2, 27), date(2026, 12, 11)),
+    ]
+    assert [infer_district(f"{r.district} {r.org}", "부산전체") for r in rows] == ["동래구", "부산진구", "북구", "사상구"]
+    assert [r.org for r in rows] == ["동래구가족센터", "부산진구다문화가족지원센터", "", "사상구가족센터"]
+    assert rows[1].url.startswith("https://www.liveinkorea.kr/web/lay1/bbs/S1T10C29/A/6/view.do?article_seq=165525")
+    narrow = source_rules(rules, SOURCES["family_danuri_hire"])
+    # 통번역지원사 채용은 강사가 아니고, 서류전형 합격자 발표는 결과 공고
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중", "모집중", None]
+    assert categorize(rows[1].title, rows[1].org, rules) == "다문화·한국어"

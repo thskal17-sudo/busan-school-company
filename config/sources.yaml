@@ -5356,6 +5356,32 @@ sources:
     options:
       key_param: board_seq
 
+  # 가족센터·다문화가족지원센터: 구·군 센터 누리집(*.familynet.or.kr)은 러너 접속을 '400 Request Blocked' 로 막아서(robots.txt 까지)
+  # 센터 채용 공고가 모이는 다누리(다문화가족지원포털) 채용정보를 부산(area=A002)으로 걸러 받는다
+  - id: family_danuri_hire
+    name: 다누리 채용정보 - 부산 가족센터·다문화가족지원센터 (이중언어·한국어 강사 등)
+    org_type: 여성·가족
+    district: 부산전체
+    collector: generic_board
+    url: https://www.liveinkorea.kr/web/lay1/bbs/S1T10C29/A/6/list.do?area=A002
+    pages: 1  # 한 쪽(10건)이 두세 달
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # <dl class="tbl_list_type1"><dt><span class="icon_zone">[ 부산 부산진구 ]</span><a href="view.do?article_seq=…">
+      #   <span class="title">…</span></a></dt><dd><ul class="date_search"><li>채용기간</li><li>2026-02-27 ~ 2026-12-11</li>
+      row_selector: dl.tbl_list_type1
+      title_selector: span.title
+      date_selector: "ul.date_search li:nth-of-type(2)"
+      district_selector: span.icon_zone
+      title_org_pattern: "([가-힣]{1,4}(?:구|군)(?:다문화)?가족(?:지원)?센터)"
+      key_param: article_seq
+      org_name: 부산 가족센터
+      # 사회복지사·아이돌봄·통번역 인력 채용이 많아 강사·지도사(언어발달·방문교육) 글만
+      include: [강사, 지도사, 튜터, 멘토, 코치, 인력풀]
+
   # ─────────────────────────────── 시 출자·출연기관, 부산 일자리 사이트
   - id: bepa_hire
     name: 부산경제진흥원 - 채용정보

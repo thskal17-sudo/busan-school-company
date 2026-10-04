@@ -28,6 +28,7 @@ options (모두 선택)
     org_selector    행 안의 기관명 요소 (제목이 기관명으로 시작하면 제목에서는 뺀다).
                     짚어 준 칸이라 사람 이름 검사는 건너뛴다 (동 공지 작성자 칸 '괘법동')
     title_org_pattern 제목에서 기관명을 뽑는 정규식 (첫 괄호). 예: 제목 앞 '[송도사랑요양원]' 의 기관명
+    district_selector 행 안의 지역 요소 (다누리 채용정보 '[ 부산 부산진구 ]' → 구를 정함)
     include         이 게시판에만 쓸 강사 공고 포함 키워드 (keywords.yaml 의 include 대신)
     encoding        페이지가 선언한 문자셋이 틀릴 때 실제 문자셋 (예: utf-8 이라 적고 EUC-KR 로 보내는 그누보드 → cp949)
     ok_status       목록 응답이 이 상태 코드여도 그대로 읽는다 (해양대 평생교육원: 목록을 다 보내고 404)
@@ -436,7 +437,8 @@ def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> li
         if opts.get("title_org_pattern") and not picked_org:
             m = re.search(opts["title_org_pattern"], title)
             org = m.group(1).strip() if m else org
-        out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), cell("district")))
+        district = _select_text(tr, opts.get("district_selector")) or cell("district")
+        out.append(BoardRow(title, url, key, posted, deadline, org, detail_ok, cell("label"), district))
     return out
 
 
