@@ -1,23 +1,16 @@
 #!/usr/bin/env bash
-# (임시) 문화센터 게시판 조사 2차: 미디어센터·영화의전당·국악원·미술관·렛츠런·시민회관
+# (임시) 문화센터 게시판 조사 2-2차: 상세 주소 확인 + 지난 '강사' 글 검색
 f() { python scripts/dev_fetch.py "$@" || true; }
-r() { curl -s -m 20 -A "Mozilla/5.0" -o "probe_out/robots_$1.txt" -w "[robots_$1] %{http_code} %{size_download}B\n" "$2/robots.txt" || true; }
+K=%EA%B0%95%EC%82%AC  # 강사
 
-r kcmf https://kcmf.or.kr
-r dure https://www.dureraum.org
-r wbusan https://wbusan.dureraum.org
-r gugak https://busan.gugak.go.kr
-r art https://art.busan.go.kr
-r kra https://ccc.kra.co.kr
-r bscc https://www.bscc.or.kr
-
-f kcmf_bs "https://kcmf.or.kr/KCMF/contents/KCMF050107.do"
-f dure_notice "https://www.dureraum.org/bcc/board/list.do?rbsIdx=46"
-f wbusan_main "https://wbusan.dureraum.org/"
-f gugak_rec "https://busan.gugak.go.kr/BG/contents/BG0402020000.do"
-f gugak_notice "https://busan.gugak.go.kr/BG/contents/BG0402010000.do"
-f art_anucmt "https://art.busan.go.kr/anucmt/list.nm"
-f art_main "https://art.busan.go.kr/index.nm"
-f kra_agree "https://ccc.kra.co.kr/ccc/instruction/application/instruction_application_agreement.do"
-f kra_list "https://ccc.kra.co.kr/ccc/instruction/application/instruction_application_list.do"
-f citizen_news "https://www.bscc.or.kr/citizen/05_community/?mcode=1005010000"
+f kcmf_view "https://kcmf.or.kr/KCMF/contents/KCMF050107.do?schM=view&id=CJSONOIHhcctr_ul9r1-R_a9R4N3Cud2xksvkc6Eu58"
+f kcmf_s "https://kcmf.or.kr/KCMF/contents/KCMF050107.do?schFld=1&schStr=$K"
+f art_view "https://art.busan.go.kr/anucmt/view.nm?tta_seq=101"
+f art_s "https://art.busan.go.kr/anucmt/list.nm?searchCnd=0&searchWrd=$K"
+f gugak_view "https://busan.gugak.go.kr/BG/contents/BG0402010000.do?schM=view&id=20260804110102928264"
+f gugak_notice_s "https://busan.gugak.go.kr/BG/contents/BG0402010000.do?schFld=1&schStr=$K"
+f gugak_rec_s "https://busan.gugak.go.kr/BG/contents/BG0402020000.do?schFld=1&schStr=$K"
+f dure_s "https://www.dureraum.org/bcc/board/list.do?rbsIdx=46&keyField=search1&key=$K"
+f bscc_main "https://www.bscc.or.kr/05_community/?mcode=0405010000"
+f citizen_s "https://www.bscc.or.kr/citizen/05_community/?mcode=1005010000&kd=title&kw=$K"
+f bscc_s "https://www.bscc.or.kr/05_community/?mcode=0405010000&kd=title&kw=$K"
