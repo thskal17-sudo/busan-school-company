@@ -18,6 +18,15 @@ def _has_any(text: str, terms: list[str]) -> str | None:
     return None
 
 
+def _without(text: str, terms: list[str]) -> str:
+    """포함 검사 전에 다른 뜻의 낱말을 지운다 ('청년마음건강사업' 속 '강사'). 지운 자리가 붙지 않게 '|' 로."""
+    t = _squash(text)
+    for term in terms:
+        if _squash(term):
+            t = t.replace(_squash(term), "|")
+    return t
+
+
 def judge(
     title: str, rules: Rules, keyword_filter: bool, label: str = "", *, keep_results: bool | None = None
 ) -> str | None:
@@ -30,7 +39,7 @@ def judge(
     keep = rules.keep_result_notices if keep_results is None else keep_results
     if _has_any(title, rules.exclude):
         return None
-    if keyword_filter and not _has_any(f"{title} {label}", rules.include):
+    if keyword_filter and not _has_any(_without(f"{title} {label}", rules.include_ignore), rules.include):
         return None
     if _has_any(title, rules.result_notice):
         return "결과공고" if keep else None

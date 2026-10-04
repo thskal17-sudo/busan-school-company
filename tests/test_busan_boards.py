@@ -155,7 +155,8 @@ def test_bukgu_jobs_board(fixture_bytes):
     assert r.title == "2027년도 환경관리원 공개채용계획 변경 공고"
     assert r.key == "1108008" and r.org == "자원순환과"
     assert (r.posted, r.deadline) == (date(2026, 9, 28), date(2026, 10, 8))
-    assert rows[1].title.endswith("..")  # 목록에서 잘린 제목 → 강사 공고면 상세에서 전체 제목을 받는다
+    # 목록 제목은 '..' 로 잘리지만 링크의 title 속성에 전체 제목이 있다
+    assert rows[1].title == "2026년 제4단계 공공근로사업 민생지킴이 분야 참여자 모집 공고"
 
 
 def test_gangseo_gosi_all_notices(fixture_bytes):
@@ -663,3 +664,30 @@ def test_li_board_skips_pinned_copy(fixture_bytes, rules):
     ]
     narrow = source_rules(rules, SOURCES["dis_gijang_hire"])
     assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중"]
+
+
+def test_dong_board_keeps_dong_name_as_org(fixture_bytes, rules):
+    # 강서구 동 소식 (여러 동 통합): 담당 부서 칸이 동 이름. '신호동'은 사람 이름처럼 보여도 org_selector 칸이라 남긴다
+    rows = rows_of(fixture_bytes, "dong_gangseo_notice", "busan_dong_gangseo.html")
+    assert [(r.org, r.key, r.posted) for r in rows] == [
+        ("대저1동", "408486", date(2026, 6, 10)),
+        ("신호동", "408430", date(2026, 6, 5)),
+    ]
+    assert rows[1].url == "https://www.bsgangseo.go.kr/portal/board/post/view.do?idx=408430&bcIdx=543&mid=0604010200"
+    narrow = source_rules(rules, SOURCES["dong_gangseo_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == ["모집중", "모집중"]
+    assert _org_name("신호동", "") == ""  # 짚어 준 칸이 아니면 여전히 사람 이름으로 본다
+
+
+def test_dong_board_pinned_rows_and_full_title(fixture_bytes, rules):
+    # 북구 동 소식: 맨 위 공지 줄(금곡동 수강생 모집)은 강사 모집이 아니고, 일반 줄의 '구포1동 … 강사 공개모집'만 남는다
+    rows = rows_of(fixture_bytes, "dong_bukgu_notice", "busan_dong_bukgu.html")
+    assert [r.org for r in rows] == ["금곡동", "구포1동", "구포2동"]
+    narrow = source_rules(rules, SOURCES["dong_bukgu_notice"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, "모집중", "모집중"]
+    # 남구 동 소식: 목록 제목은 '지도강..' 처럼 잘리고 링크 title 속성에 전체 제목
+    rows = rows_of(fixture_bytes, "dong_namgu_notice", "busan_dong_namgu.html")
+    assert [r.title for r in rows] == [
+        "오륙도 인생후반전 지원센터 3월 시범운영 프로그램 및 재능기부 강사모집",
+        "부산광역시 남구 소년소녀합창단 지도강사 모집 안내",
+    ]

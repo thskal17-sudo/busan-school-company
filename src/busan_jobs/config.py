@@ -37,6 +37,7 @@ class Rules:
     new_max_age_days: int = 45
     active_max_age_days: int = 30
     closing_soon_days: int = 3
+    include_ignore: list[str] = field(default_factory=list)
 
 
 def source_rules(rules: Rules, src: Source) -> Rules:
@@ -81,4 +82,5 @@ def load_rules(config_dir: Path = DEFAULT_CONFIG_DIR) -> Rules:
         new_max_age_days=int(data.get("new_max_age_days", 45)),
         active_max_age_days=int(data.get("active_max_age_days", 30)),
         closing_soon_days=int(data.get("closing_soon_days", 3)),
+        include_ignore=data.get("include_ignore", []),
     )
