@@ -3738,6 +3738,30 @@ sources:
       org_name: 부산광역시육아종합지원센터
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  - id: childcare_daycare_joboffer
+    name: 부산육아종합지원센터 - 인력뱅크 어린이집 구인 (부산 어린이집 채용 모음)
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    # 어린이집은 누리집이 거의 없고 채용 공고를 이 게시판에 올린다. 하루 20건 안팎이 대부분 보육교사·보조교사·조리원 채용
+    # (2026-10-05 에 올라 있던 290건 중 강사 글 0건) 이라 특별활동·프로그램 강사 글만 거른다
+    url: https://busan.childcare.go.kr/ccef/job/JobOfferSlPL.jsp?flag=SlPL&offset=0
+    pages: 3
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      page_param: offset
+      page_offset: 10
+      # 제목·어린이집명 칸 모두 fnGoBoardSl('2338462') 링크라 제목 칸을 짚는다. 상세는 GET 으로도 열림
+      title_selector: "td:nth-of-type(3) a"
+      org_selector: "td:nth-of-type(4) a"  # 칸 뒤의 '공공형' 표시는 뺌
+      district_selector: "td:nth-of-type(6)"  # '부산광역시 동래구'
+      link_template: "https://busan.childcare.go.kr/ccef/job/JobOfferSl.jsp?flag=Sl&JOSEQ={0}"
+      key_param: JOSEQ
+      include: [강사, 튜터, 코치, 지도자, 인력풀, 특별활동]
+
   - id: childcare_sasang_notice
     name: 사상구육아종합지원센터 - 공지사항
     org_type: 아동
