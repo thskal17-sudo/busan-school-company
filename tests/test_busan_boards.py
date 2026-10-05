@@ -8,7 +8,7 @@ from urllib.parse import parse_qs, urlsplit
 import pytest
 
 from busan_jobs.classify import categorize, infer_district, judge
-from busan_jobs.collectors.board import _list_date, _org_name, parse_board, stable_key
+from busan_jobs.collectors.board import BoardCollector, _list_date, _org_name, parse_board, stable_key
 from busan_jobs.config import load_settings, source_rules
 
 TODAY = date(2026, 9, 29)
@@ -766,3 +766,18 @@ def test_childcare_center_boards(fixture_bytes, rules):
         ("[센터소식] 기장군 보육교직원 힐링캠프 안내", "3486", date(2026, 10, 2)),
         ("★ 제10회 「현장은 나의 경험학교」 사진공모전 수상작 발표 ★", "3475", date(2026, 9, 17)),
     ]
+
+
+def test_daycare_joboffer_board(fixture_bytes, rules):
+    # 부산육아종합지원센터 어린이집 구인: 제목·어린이집명 칸 모두 fnGoBoardSl('…') 링크, 소재지 칸으로 구, 쪽은 offset(0,10,20)
+    rows = rows_of(fixture_bytes, "childcare_daycare_joboffer", "busan_daycare_joboffer.html")
+    assert [(r.title, r.org, r.key, r.deadline) for r in rows] == [
+        ("육아휴직_대체교사 채용공고", "부산경찰청어린이집", "2338462", date(2026, 10, 30)),
+        ("시간연장 교사 모집합니다", "칸타빌어린이집", "2338444", date(2026, 10, 15)),  # 어린이집명 뒤 '공공형' 표시는 뺌
+    ]
+    assert rows[0].url == "https://busan.childcare.go.kr/ccef/job/JobOfferSl.jsp?flag=Sl&JOSEQ=2338462"
+    assert [infer_district(f"{r.district} {r.org}", "부산전체") for r in rows] == ["동래구", "부산진구"]
+    narrow = source_rules(rules, SOURCES["childcare_daycare_joboffer"])
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None]  # 보육교직원 채용은 강사 공고가 아님
+    collector = BoardCollector(SOURCES["childcare_daycare_joboffer"], None, TODAY)
+    assert collector.page_url(3).endswith("offset=20")

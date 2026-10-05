@@ -5,6 +5,7 @@
 
 options (모두 선택)
     page_param      목록 페이지 번호 파라미터 이름 (예: pageIndex). 없으면 1페이지만 본다
+    page_offset     쪽 번호 대신 건너뛸 글 수를 넘기는 게시판의 한 쪽 글 수 (offset=0,10,20 → 10. 부산육아종합지원센터 어린이집 구인)
     row_selector    행 CSS 셀렉터 (자동 판별이 틀릴 때만)
     link_template   제목 링크가 javascript 일 때 onclick 인자로 상세 주소를 만드는 틀 ({0}, {1} …)
     key_param       상세 주소에서 게시글 번호로 쓸 쿼리 파라미터 (예: q_bbsDocNo)
@@ -144,7 +145,8 @@ class BoardCollector(Collector):
         param = self.source.options.get("page_param")
         if not param:
             return None
-        return set_query(url, **{param: page})
+        step = self.source.options.get("page_offset")
+        return set_query(url, **{param: (page - 1) * step if step else page})
 
 
 def _with_prefix(prefix: str | None, org: str) -> str:
