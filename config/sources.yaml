@@ -3911,6 +3911,26 @@ sources:
       org_fixed: true
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
 
+  # 장난감도서관 (2026-10-05, 복지뱅크 '장난감도서관' 부산 29곳): 대부분 육아종합지원센터·종합사회복지관이 운영해서 그 공지 게시판으로 받는다.
+  # 따로 게시판이 있는 곳은 동래구육아종합지원센터 맘쓰허그 장난감도서관뿐. 부산시 센터의 그린나래 장난감도서관(bcsc.kr)은 해외 접속 403,
+  # 강서구·사하구(감천·하단 공동육아나눔터)·반송 베베하우스는 네이버·다음 카페, 해운대 희망장난감도서관은 www.haeundae.go.kr DNS 실패
+  - id: toy_dongnae_momshug_notice
+    name: 동래구 맘쓰허그 장난감도서관 - 공지사항
+    org_type: 아동
+    district: 동래구
+    collector: generic_board
+    url: https://www.bdscc.or.kr/toy/board/list.asp?BoardID=0011
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: sn
+      org_name: 동래구 맘쓰허그 장난감도서관
+      org_fixed: true  # 작성자 칸이 '동래구육아종합지원센터'
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
   - id: childcare_gangseo_notice
     name: 강서구육아종합지원센터 - 공지사항
     org_type: 아동
