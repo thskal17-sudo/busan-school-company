@@ -6,6 +6,7 @@ from datetime import date
 from urllib.parse import parse_qs, urlsplit
 
 import pytest
+import soupsieve
 
 from busan_jobs.classify import categorize, infer_district, judge
 from busan_jobs.collectors.board import BoardCollector, _list_date, _org_name, parse_board, stable_key
@@ -18,6 +19,20 @@ SOURCES = {s.id: s for s in load_settings().sources}
 def rows_of(fixture_bytes, source_id, fixture, page_url=None):
     src = SOURCES[source_id]
     return parse_board(fixture_bytes(fixture), page_url or src.url, src.options, TODAY)
+
+
+def test_all_selectors_compile():
+    # sources.yaml 의 *_selector 가 설치된 soupsieve 로 모두 해석되는가.
+    # soupsieve 3.0 은 :has() 안의 'td a' 같은 선택자를 거부해서 하루 동안 4곳이 오류였다 (requirements.txt 에서 3 미만으로 고정)
+    bad = {}
+    for src in SOURCES.values():
+        for key, selector in src.options.items():
+            if key.endswith("_selector"):
+                try:
+                    soupsieve.compile(selector.partition("@")[0])  # 'li.time@title' = 그 요소의 title 속성
+                except soupsieve.SelectorSyntaxError as exc:
+                    bad[f"{src.id}.{key}"] = str(exc).splitlines()[0]
+    assert not bad
 
 
 def test_pen_board_data_id_links_and_hidden_labels(fixture_bytes):
