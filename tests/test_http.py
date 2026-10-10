@@ -77,12 +77,13 @@ def test_dropped_response_does_not_mark_host(http):
 
 
 def test_connect_wait_is_bounded(http):
-    # 연결 대기 10초, 연결 실패는 한 번만 다시 시도 (사이트당 최대 약 20초)
+    # 연결 대기 5초 한 번만 (접속 안 되는 사이트당 5초). 응답 오류(503 등) 재시도는 그대로
     client, calls, _ = http
     client.get("https://up.example/")
-    assert calls[0][1] == (10.0, 20.0)
+    assert calls[0][1] == (5.0, 20.0)
     retry = client.session.get_adapter("https://up.example/").max_retries
-    assert retry.connect == 1
+    assert retry.connect == 0
+    assert retry.total == 2 and 503 in retry.status_forcelist
 
 
 def test_short_headers_drop_accept_language(monkeypatch):

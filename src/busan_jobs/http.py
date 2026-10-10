@@ -13,8 +13,12 @@ Access) 항목에서 중간 인증서를 내려받아 신뢰 목록(certifi)에 
 sources.yaml 에서 short_headers: true 로 지정한 호스트에는 Accept-Language 머리글을 빼고 보낸다.
 
 접속 자체가 안 되는 서버(해외 접속 차단·장애)는 기다리는 시간이 전체 실행 시간을 잡아먹는다.
-연결 대기는 10초씩 두 번까지만 하고, 한 번 접속에 실패한 서버는 같은 실행 안에서 다시 기다리지
+연결 대기는 5초 한 번만 하고, 한 번 접속에 실패한 서버는 같은 실행 안에서 다시 기다리지
 않고 바로 실패시킨다 (같은 서버의 다른 게시판들). 실행 끝의 재시도 전에 forget_unreachable() 로 잊는다.
+전에는 10초씩 두 번 기다렸는데, 수집 서버가 관공서 41곳에 접속 못 한 날(2026-10-10) 그 대기만 14분이
+걸려 수집 제한 20분을 넘겼고, 그 자리에서 다시 기다려 살아난 연결은 한 번도 없었다.
+수집 서버 3곳에서 226개 서버에 세 번씩 연결해 보니(같은 날) 99%가 2.5초 안에 붙었고 5초를 넘긴 건
+1,990번 중 3번(같은 서버의 다른 시도는 1초 안)이었다. 그렇게 늦게 붙는 경우는 실행 끝 재시도·보충 수집이 받는다.
 """
 from __future__ import annotations
 
@@ -54,8 +58,8 @@ class Http:
         retries: int = 2,
         max_seconds: float = 60.0,
         max_bytes: int = 10_000_000,
-        connect_timeout: float = 10.0,
-        connect_retries: int = 1,
+        connect_timeout: float = 5.0,
+        connect_retries: int = 0,
     ):
         self.min_interval = min_interval
         self.timeout = timeout
