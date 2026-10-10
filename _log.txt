@@ -1,0 +1,2 @@
+<stdin>:17: DeprecationWarning: ssl.TLSVersion.TLSv1 is deprecated
+hosts 226
