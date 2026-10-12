@@ -1,8 +1,10 @@
 from .afschool import AfschoolCollector
+from .alio_api import AlioJobCollector
 from .base import Collector, NotConfigured
 from .board import BoardCollector, FormBoardCollector
 from .cleaneye_api import CleaneyeCollector
 from .json_board import JsonBoardCollector
+from .mpm_api import MpmJobCollector
 from .work24_api import Work24Collector
 
 # sources.yaml 의 collector 이름 → 수집기
@@ -14,6 +16,8 @@ COLLECTORS: dict[str, type[Collector]] = {
     "json_board": JsonBoardCollector,
     "work24_api": Work24Collector,
     "cleaneye_api": CleaneyeCollector,
+    "mpm_api": MpmJobCollector,
+    "alio_api": AlioJobCollector,
 }
 
 __all__ = ["COLLECTORS", "Collector", "NotConfigured"]
