@@ -22,13 +22,16 @@
 
 ## 2. 전체 구조 (울산판과 같음)
 
-수집기는 울산판 것을 모두 유지한다. 부산 게시판은 대부분 `generic_board`(표·목록 게시판)로 읽고, 잡알리오는 `form_board`,
-고용24는 `work24_api` 를 쓴다. `json_board`(AJAX 목록)와 `afschool`(울산 방과후학교 온라인지원시스템 형식)은 지금 부산 소스에는
-쓰지 않지만 같은 형식의 게시판이 생기면 쓸 수 있게 남겨 두었다.
+수집기는 울산판 것을 모두 유지한다. 부산 게시판은 대부분 `generic_board`(표·목록 게시판)로 읽는다.
+나라일터·잡알리오·클린아이는 공공데이터포털 Open API(`mpm_api`·`alio_api`·`cleaneye_api`, 인증키 `DATA_GO_KR_KEY`)로,
+고용24는 `work24_api` 로 읽는다. 나라일터·잡알리오는 원래 사이트 게시판을 읽었지만(`generic_board`·`form_board`) 해외 접속이
+자주 막혀 2026-10-12 API 로 바꿨다. 소스 id 와 글번호(나라일터 empmnsn = API idx, 잡알리오 idx = API recrutPblntSn)는 그대로라
+전에 저장한 공고와 이어진다. `form_board`(검색 폼 POST), `json_board`(AJAX 목록), `afschool`(울산 방과후학교 온라인지원시스템
+형식)은 지금 부산 소스에는 쓰지 않지만 같은 형식의 게시판이 생기면 쓸 수 있게 남겨 두었다.
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 325곳] --> C[수집기<br/>generic_board · form_board<br/>json_board · afschool · work24_api]
+    S[sources.yaml<br/>게시판·API 325곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -48,7 +51,8 @@ flowchart LR
 | 패키지·문구 | `ulsan_jobs` → `busan_jobs`. 메일 제목·본문, 첨부 파일명(`강사잇다_부산_…`), 보고서(`부산_강사구인_…`), User-Agent |
 | 구·군 판별 | 부산 16개 구·군. 글자로 찾으므로 `강서구` 를 `서구` 보다 먼저 본다 |
 | 고용24 | 지역 코드 `26000` (부산) |
-| 잡알리오 | 근무지 코드 `R3014` (부산광역시, 검색 폼에서 확인) |
+| 잡알리오 | 근무지 코드 `R3014` (부산광역시, 검색 폼에서 확인). Open API 의 `workRgnLst` 도 같은 코드 |
+| 나라일터 | Open API 응답의 시군구 지역코드가 `26…`(부산)인 공고. 키워드·정렬 조건은 API 가 무시해서 최근 14일 등록분을 받아 거름 |
 | 예약 시각 | 매일 06:37 KST (`37 21 * * *`). 무료 예약 실행은 정각 무렵에 몰려 몇 시간씩 밀리기도 해서 정각·30분을 피하고, 울산판(07:00)·캠프(07:40)와 겹치지 않게 |
 | 캠프 수주 | `camp.py`, `camp.yml`, `config/camp.yaml` 는 가져오지 않음 |
 
