@@ -5,10 +5,15 @@
 #
 # 강사잇다 양식 엑셀(out/강사잇다_부산_*.xlsx, 마감 전 공고 전부)도 gangsaitda_latest.xlsx 로 같이 보관한다.
 # 울산 저장소의 '오늘의 브리핑'이 이 파일을 읽어 부울경 합본에 넣고 강사잇다 사이트에 자동 등록한다.
+#
+# last_scheduled_run: 예약 수집을 마친 날짜(KST). 하루 세 번 건 예약 중 먼저 끝난 것이 적고, 나머지는 보고 건너뛴다.
+# save 때 SCHEDULED_DONE=true 면 오늘 날짜로 바꾸고, 아니면 전 값을 그대로 둔다.
 set -euo pipefail
 db=data/postings.db
 xlsx_name=gangsaitda_latest.xlsx
 xlsx_keep=data/$xlsx_name
+mark_name=last_scheduled_run
+mark=data/$mark_name
 
 case "${1:-}" in
   restore)
@@ -18,6 +23,7 @@ case "${1:-}" in
       echo "기존 수집 기록 복원 ($(stat -c %s "$db") bytes)"
       # 지난 양식 엑셀도 가져와 둔다 (이번 실행이 엑셀을 못 만들면 지난 것을 그대로 보관)
       git show "FETCH_HEAD:$xlsx_name" > "$xlsx_keep" 2>/dev/null || rm -f "$xlsx_keep"
+      git show "FETCH_HEAD:$mark_name" > "$mark" 2>/dev/null || rm -f "$mark"
     else
       echo "state 브랜치 없음: 첫 실행"
     fi
@@ -32,10 +38,16 @@ case "${1:-}" in
     elif [ -f "$xlsx_keep" ]; then
       cp "$xlsx_keep" "$tmp/$xlsx_name"
     fi
+    if [ "${SCHEDULED_DONE:-}" = "true" ]; then
+      TZ=Asia/Seoul date +%F > "$tmp/$mark_name"
+    elif [ -f "$mark" ]; then
+      cp "$mark" "$tmp/$mark_name"
+    fi
     cd "$tmp"
     git init -q -b state
     git add postings.db
     [ -f "$xlsx_name" ] && git add "$xlsx_name"
+    [ -f "$mark_name" ] && git add "$mark_name"
     git -c user.name="github-actions[bot]" \
         -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
         commit -q -m "수집 기록 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
