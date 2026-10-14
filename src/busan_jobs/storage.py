@@ -160,6 +160,17 @@ class Store:
     def set_title(self, uid: str, title: str) -> None:
         self.conn.execute("UPDATE postings SET title = ? WHERE uid = ?", (title, uid))
 
+    def fix_deadlines(self, fixes: dict[str, date]) -> int:
+        """원문 주소가 같은 공고의 마감일을 손으로 고친 값으로 바꾼다. 바뀐 공고 수."""
+        changed = 0
+        for url, deadline in fixes.items():
+            cur = self.conn.execute(
+                "UPDATE postings SET deadline = ? WHERE url = ? AND (deadline IS NULL OR deadline != ?)",
+                (_iso(deadline), url, _iso(deadline)),
+            )
+            changed += cur.rowcount
+        return changed
+
     def set_deadline(self, uid: str, deadline: date) -> None:
         self.conn.execute("UPDATE postings SET deadline = ? WHERE uid = ?", (_iso(deadline), uid))
 

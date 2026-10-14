@@ -15,7 +15,7 @@ GitHub Actions 에서 무료로 돌아갑니다.
 
 ## 받게 되는 것
 
-매일 06:37(KST) 무렵 이런 메일이 옵니다. (GitHub 무료 예약 실행은 늦어질 수 있어 정각을 피한 시각으로 잡았습니다)
+매일 새벽 이런 메일이 옵니다. GitHub 무료 예약 실행은 몇 시간씩 밀릴 수 있어 00:47·02:07·03:47(KST) 세 번 예약해 두고, 먼저 시작한 실행만 메일을 보냅니다.
 
 - 제목: `[부산 강사구인] 9/30(수) 신규 12건 · 마감임박 5건`
 - 본문: 신규 공고 표(마감 D-day, 분야, 기관, 제목 링크), 수집 상태 안내
@@ -186,6 +186,8 @@ sources.yaml 의 게시판·API ──▶ 수집 ──▶ 강사 공고 판별�
 - **강사 공고로 볼 단어·뺄 단어**: `config/keywords.yaml` 의 `include` / `exclude` / `result_notice`
 - **포함 단어가 들어 있지만 다른 뜻인 낱말**: `config/keywords.yaml` 의 `include_ignore` (예: '건강사업' 속 '강사')
 - **게시판 하나만 포함 단어를 좁히기**: `sources.yaml` 의 그 게시판 `options.include` (예: 체육시설관리사업소 공지)
+- **마감일 손으로 고치기**: `config/deadlines.yaml` 에 원문 주소(`url`)와 `deadline` 을 적으면 다음 수집부터 그 공고의 마감일을 덮어씀
+  (마감일이 첨부 공고문에만 있어 '보류'로 나온 공고 등)
 - **합격자 발표 같은 결과공고도 받기**: `keep_result_notices: true`
 - **분야 분류**: `config/keywords.yaml` 의 `categories` (위에서부터 먼저 맞는 분야, `!단어` 가 있으면 그 분야는 건너뜀)
 - **게시판 추가**: `config/sources.yaml` 에 항목 추가. 구조를 모르면

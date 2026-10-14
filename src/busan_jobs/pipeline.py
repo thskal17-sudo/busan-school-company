@@ -13,7 +13,7 @@ import requests
 from .attachments import extract_text, find_attachments
 from .classify import categorize, judge
 from .collectors import COLLECTORS, NotConfigured
-from .config import DEFAULT_CONFIG_DIR, Rules, Source, load_rules, load_settings, source_rules
+from .config import DEFAULT_CONFIG_DIR, Rules, Source, load_deadline_fixes, load_rules, load_settings, source_rules
 from .dates import extract_deadline, first_period_end
 from .detail import extends, full_title, looks_truncated, page_text
 from .gangsaitda import TEMPLATE_NAME, build_gangsaitda
@@ -305,6 +305,9 @@ def run(
     try:
         results = collect_all(sources, rules, store, http or Http(), now)
         store.log_runs(results, now)
+        fixed = store.fix_deadlines(load_deadline_fixes(config_dir))
+        if fixed:
+            log.info("config/deadlines.yaml 로 마감일 %d건 고침", fixed)
         store.commit()
 
         pending = store.unreported()
