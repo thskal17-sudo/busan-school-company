@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -84,3 +85,16 @@ def load_rules(config_dir: Path = DEFAULT_CONFIG_DIR) -> Rules:
         closing_soon_days=int(data.get("closing_soon_days", 3)),
         include_ignore=data.get("include_ignore", []),
     )
+
+
+def load_deadline_fixes(config_dir: Path = DEFAULT_CONFIG_DIR) -> dict[str, date]:
+    """config/deadlines.yaml: 원문 주소 → 손으로 고친 마감일. 파일이 없으면 빈 dict."""
+    path = config_dir / "deadlines.yaml"
+    if not path.exists():
+        return {}
+    entries = yaml.safe_load(path.read_text(encoding="utf-8")) or []
+    fixes: dict[str, date] = {}
+    for e in entries:
+        value = e["deadline"]
+        fixes[str(e["url"]).strip()] = value if isinstance(value, date) else date.fromisoformat(str(value))
+    return fixes

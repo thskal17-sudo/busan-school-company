@@ -43,3 +43,21 @@ def test_different_postings_are_not_merged(tmp_path):
     assert store.upsert(_p("d", "1", "2026년 해운대구 건강생활지원센터 건강지도자 위촉 공고", "해운대구"), NOW)
     assert all(p.status == "모집중" for p in store.unreported())
     store.close()
+
+
+def test_fix_deadlines_by_url(tmp_path):
+    # 마감일이 첨부 공고문에만 있어 비어 있던 공고를 config/deadlines.yaml 의 값으로 고친다
+    from busan_jobs.config import load_deadline_fixes
+
+    store = Store(tmp_path / "db.sqlite")
+    p = _p("pen_school_hire", "1181764", "부산해마루학교 2027학년도 방과후학교 강사 채용 공고", org="부산해마루학교")
+    store.upsert(p, NOW)
+    assert store.fix_deadlines({"https://example.org/other/1": date(2026, 10, 19)}) == 0  # 없는 공고는 건너뜀
+    assert store.fix_deadlines({p.url: date(2026, 10, 19)}) == 1
+    assert store.detail_state(p.uid)[0] == date(2026, 10, 19)
+    assert store.fix_deadlines({p.url: date(2026, 10, 19)}) == 0  # 이미 같으면 그대로
+    store.close()
+
+    fixes = load_deadline_fixes()
+    url = "https://www.pen.go.kr/main/na/ntt/selectNttInfo.do?mi=30367&bbsId=2364&nttSn=1181764"
+    assert fixes[url] == date(2026, 10, 19)
