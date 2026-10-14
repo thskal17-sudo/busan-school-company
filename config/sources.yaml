@@ -407,8 +407,9 @@ sources:
     pages: 2
     keyword_filter: true
     phase: 2
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
     options:
       page_param: pageIndex
       org_prefix: 부산 해운대구청
@@ -1168,8 +1169,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
     options:
       key_param: dataSid
       org_name: 해운대구 평생학습관
@@ -1461,18 +1463,20 @@ sources:
     org_type: 평생교육·도서관
     district: 부산진구
     collector: generic_board
-    url: https://lifelong.deu.ac.kr/Board/BoardList.aspx?MENU_ID=146&PAGE_NO=&BoardMstNo=1
+    # 2026-10 홈페이지 개편으로 옛 목록(/Board/BoardList.aspx)은 로그인 화면으로 넘어간다. 새 공지사항
+    # (/fro-end/dep-05/5100)은 목록을 CSRF 토큰을 붙인 POST(/api/common/board/search)로만 불러와서,
+    # 첫 화면 '공지사항' 탭에 그대로 실리는 최근 글 4건을 읽는다 (매일 수집하므로 충분, 2026-10-14 러너 확인).
+    # 날짜는 '13' / '2026.10' 으로 나뉘어 있어 게시일 없이 받는다
+    url: https://lifelong.deu.ac.kr/fro-end/main
     pages: 1
     keyword_filter: true
     phase: 3
     enabled: true
     verified: true
     options:
-      # 표가 아닌 <dl> 목록. 날짜는 '학점은행제 / 2026.10.02'
-      row_selector: "dl:has(a[id*=hlnkTitle])"
-      title_selector: "a[id*=hlnkTitle]"
-      date_selector: "span.summery"
-      key_param: BoardNo
+      row_selector: "div[data-panel=notice] div.tab-row"
+      title_selector: p.tit
+      key_pattern: "/view/(\\d+)"
       org_name: 동의대학교 미래교육원
       org_fixed: true
       include: [강사, 튜터, 초빙, 인력풀, 개설 희망, 강좌 제안, 강의 제안]
@@ -3385,8 +3389,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
     options:
       key_param: dataSid
       include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]

@@ -604,15 +604,21 @@ def test_post_only_detail_uses_list_link(fixture_bytes):
     assert {p.org_name for p in items} == {"부산가톨릭대학교 평생교육원"}
 
 
-def test_dl_list_board_and_lifelong_keywords(fixture_bytes, rules):
-    # 동의대 미래교육원: 표가 아닌 <dl> 목록, 날짜는 '학점은행제 / 2026.10.02'
-    rows = rows_of(fixture_bytes, "univ_deu_notice", "busan_deu_lifelong.html")
-    assert [(r.key, r.posted) for r in rows] == [
-        ("191388", date(2026, 10, 2)), ("191380", date(2026, 8, 6)), ("191233", date(2025, 1, 14)),
+def test_main_page_notice_tab_and_lifelong_keywords(fixture_bytes, rules):
+    # 동의대 미래교육원 (2026-10 개편): 공지 목록은 POST 로만 불러오므로 첫 화면 공지사항 탭의 최근 글을 읽는다.
+    # 탭 행은 <div class="tab-row"><a href="/fro-end/dep-05/5100/view/655"> 안에 날짜·제목·요약이 함께 든다
+    rows = rows_of(fixture_bytes, "univ_deu_notice", "busan_deu_lifelong_main.html")
+    assert [(r.key, r.title) for r in rows] == [
+        ("655", "파크골프 2급지도자(강사) 양성과정 모집안내(4기)"),
+        ("652", "[음악학전공] 2026-2학기 이론 중간고사 안내"),
+        ("651", "[부동산,경영, 체육학전공] 2026년 2학기 중간고사 안내"),
+        ("650", "★10.12기준 전공실기 시간 변경■ 2026-2 전공실기 중간시험 일정 및 곡명작성 안내"),
     ]
+    assert rows[0].url == "https://lifelong.deu.ac.kr/fro-end/dep-05/5100/view/655"
+    assert {r.posted for r in rows} == {None}  # 날짜가 '13' / '2026.10' 으로 나뉨
     narrow = source_rules(rules, SOURCES["univ_deu_notice"])
-    # '파크골프 2급지도자(강사) 양성과정 모집안내(3기)' 는 강사가 될 사람을 모으는 과정
-    assert [judge(r.title, narrow, True) for r in rows] == [None, None, None]
+    # '파크골프 2급지도자(강사) 양성과정 모집안내(4기)' 는 강사가 될 사람을 모으는 과정
+    assert [judge(r.title, narrow, True) for r in rows] == [None, None, None, None]
     assert judge("2026학년도 2학기 평생교육부 강좌 개설 희망자 모집", narrow, True) == "모집중"
     assert judge("2027학년도 1학기 신규 강좌 및 강사 모집", narrow, True) == "모집중"
     assert judge("[평생교육지원센터] 2025학년도 중독 예방 강사 양성 과정 모집", narrow, True) is None
