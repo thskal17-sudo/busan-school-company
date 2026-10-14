@@ -31,7 +31,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 325곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
+    S[sources.yaml<br/>게시판·API 323곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -417,7 +417,8 @@ www.busan.go.kr 이 이날도 러너에서 시간 초과이고 같은 공고가 
 | 게시판 | 기관 | 처리 |
 |---|---|---|
 | 첫 화면 '강사 공지사항' 탭 | 부산대 미래시민교육원 | 게시판 화면은 목록을 스크립트로 그려서 첫 화면의 최근 4건(`#notice li.notice-item`)을 읽음. 이름 그대로 강사 대상 공지 |
-| ASP.NET `BoardList.aspx` | 동의대 미래교육원(`<dl>` 목록, 날짜 '학점은행제 / 2026.10.02'), 부산보건대 | 글번호 `BoardNo` |
+| 첫 화면 '공지사항' 탭 | 동의대 미래교육원 | 2026-10 개편 뒤 공지 목록은 CSRF 토큰을 붙인 POST 로만 불러와, 첫 화면의 최근 4건(`div[data-panel=notice] div.tab-row`)을 읽음. 날짜가 '13' / '2026.10' 으로 나뉘어 게시일 없이 받음 |
+| ASP.NET `BoardList.aspx` | 부산보건대 | 글번호 `BoardNo` |
 | `__doPostBack` 링크 | 신라대 | 상세 주소가 없어 제목을 식별값(`key_selector`)으로, 링크는 목록. '평생교육부 강좌 개설 희망자 모집' 이 강사 모집 글 |
 | 행 `onclick` | 부산외대 (`window.location='/community_notice_detail/35'`) | 자동으로 주소를 읽음 |
 | `fn_View('402','374',…)` | 부산가톨릭대 | POST 로만 열려 글번호만 식별값으로, 상세는 열지 않음(`detail_get: false`) |
@@ -517,6 +518,7 @@ www.busan.go.kr 이 이날도 러너에서 시간 초과이고 같은 공고가 
 | 부산시설공단 (bisco.or.kr, 모바일 포함) | 해외 접속을 연결 즉시 끊음 (Connection reset). `enabled: false` + `blocked`. 공고는 부산시청 통합 채용정보로 받음 |
 | 수영구청 (www·eminwon·m) | 해외 접속을 응답 없이 끊음. 러너 4대(버지니아 2·아이오와 1·첫 진단 1)에서 모두 같음. 채용 게시판(`suyeong_hire`)은 꺼 둔 채 적어 둠 |
 | 금정구청 홈페이지 | 해외 접속 차단 (금정구 새올·평생학습관은 됨). 2026-09-30 에는 열려 같은 서버의 금샘도서관 공지는 넣음 |
+| 해운대구청 (새올 채용공고·평생학습관·청소년문화의집) | 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr)가 해외 질의에 답하지 않음. 10-14까지 수집 16번 모두 실패해 `enabled: false` + `blocked` (10-08까지는 됨) |
 | 해운대청소년수련관, 부산관광공사 | 접속 시간 초과 |
 | 중구·북구·강서구·기장군 새올 채용공고 | 목록이 0건 (그 구는 채용을 다른 곳에 올림). 중구·기장군은 구청 일자리 게시판으로 받음 |
 | 부산시청 채용공고(`/nbincruit`) | 통합 채용정보(`/depart/jobgonji01`)와 같은 글 |
