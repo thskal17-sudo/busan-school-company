@@ -1,0 +1,11 @@
+DATA_GO_KR_KEY: 길이 64 (앞뒤 공백·줄바꿈 0자) 형태 hex 지문 d4219f7b
+WORK24_API_KEY: 길이 36 (앞뒤 공백·줄바꿈 0자) 형태 uuid 지문 f1659927
+두 키가 같은 값: False
+=== gojobs_list · 나라일터 모집공고 (부산 지역, 인사혁신처 Open API)
+    목록 43건
+=== alio_recruit · 잡알리오 공공기관 채용정보 (근무지 부산, 재정경제부 Open API)
+    목록 41건
+=== cleaneye_api · 클린아이 채용정보 Open API (지방공기업·출자출연기관)
+    목록 6건
+=== work24_api · 고용24(워크넷) 채용정보 Open API
+    목록 13건
