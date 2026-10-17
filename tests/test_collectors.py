@@ -84,6 +84,13 @@ def test_work24_xml(fixture_bytes):
     include, exclude = re.compile(DEFAULT_ORG_INCLUDE), re.compile(DEFAULT_ORG_EXCLUDE)
     public = [i["company"] for i in items if include.search(i["company"]) and not exclude.search(i["company"])]
     assert public == ["울산광역시남구도시관리공단", "울산동부종합사회복지관"]
+    # 민간 직업훈련기관·요양보호사교육원은 '학교'·'교육원'이 들어 있어도 뺀다 (2026-10-17 부산 메일)
+    for org, keep in [
+        ("(재)부산광역시생활체육문화센터", True), ("부산광역시교육청 학생교육원", True), ("부산대학교 평생교육원", True),
+        ("효성직업전문학교", False), ("대산직업전문학교", False), ("브레인 요양보호사 교육원", False),
+        ("로뎀나무아래요양보호사교육원", False), ("미래직업전문학교", False),
+    ]:
+        assert bool(include.search(org) and not exclude.search(org)) is keep, org
 
 
 def test_json_board_items():
