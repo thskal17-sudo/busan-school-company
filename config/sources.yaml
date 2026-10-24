@@ -147,8 +147,9 @@ sources:
     pages: 2
     keyword_filter: false  # 학교 방과후·늘봄 개인위탁 강사 모집만 올라오는 게시판
     phase: 1
-    enabled: true
+    enabled: false
     verified: true
+    blocked: home.pen.go.kr/afterschool 이 '폐쇄된 홈페이지입니다' 화면만 보냄 (10-16부터 0건, 2026-10-24 끔). 새 누리집을 찾으면 그 게시판으로 다시 넣는다
     options:
       page_param: currPage
       link_attr: data-id
@@ -165,8 +166,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 1
-    enabled: true
+    enabled: false
     verified: true
+    blocked: home.pen.go.kr/afterschool 이 '폐쇄된 홈페이지입니다' 화면만 보냄 (10-16부터 0건, 2026-10-24 끔). 새 누리집을 찾으면 그 게시판으로 다시 넣는다
     options:
       page_param: currPage
       link_attr: data-id
@@ -910,8 +912,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
     options:
       key_param: wr_id
       org_name: 부산진구체육회
@@ -1002,8 +1005,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
     options:
       key_param: wr_id
       org_name: 부산광역시사하구체육회
@@ -1019,8 +1023,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
     options:
       key_param: wr_id
       org_name: 부산광역시수영구체육회
@@ -5140,8 +5145,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: true
+    enabled: false
     verified: true
+    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
     options:
       key_param: wr_id
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
