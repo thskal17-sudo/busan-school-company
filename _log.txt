@@ -1,0 +1,30 @@
+=== https://www.gangseosw.or.kr/SW_bbs/notice/list.php?zipEncode==u2yPr3BU91vt1drjrMCH9MyMetpSfMvWLME
+HTTP/1.1 302 Found
+Server: Apache
+Location: https://www.kuipernet.com/images/bg.png
+HTTP/1.1 200 OK
+Server: nginx/1.10.2
+=== https://www.baswc.or.kr/
+=== https://www.kuipernet.com/
+HTTP/1.1 200 OK
+Server: nginx/1.10.2
+=== ip
+222.97.189.225  www.gangseosw.or.kr
+222.97.189.225  www.chambokji.org
+1.234.19.166    www.kuipernet.com
+=== https://www.bdu.ac.kr/edulife/sub07_01_01.do
+HTTP/1.1 500 Internal Server Error
+=== https://www.bdu.ac.kr/edulife/main.do
+HTTP/1.1 404 Not Found
+=== http://bkyouth.or.kr/notice
+HTTP/1.1 403 Forbidden
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/7.0.29
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>403 Forbidden</title>
+</head><body>
+<h1>Forbidden</h1>
+<p>You don't have permission to access /notice
+on this server.</p>
+</body></html>
+
