@@ -1,0 +1,28 @@
+as_private 200 786B 
+as_company 200 786B 
+busanjin_sp 403 40B 
+saha_sp 403 40B 
+suyeong_sp 403 40B 
+myeongji 403 40B 
+--- busanjin_sp
+Access from your country is not allowed.
+--- saha_sp
+Access from your country is not allowed.
+--- suyeong_sp
+Access from your country is not allowed.
+--- myeongji
+Access from your country is not allowed.
+=== afterschool_private · 부산늘봄지원센터 - 개인위탁 강사 모집공고
+    목록 0건
+=== cw_gangseo_notice · 강서구종합사회복지관 - 공지사항
+    목록 0건
+=== senior_busanjin_hire · 부산진구노인복지관 - 채용공고
+    목록 0건
+=== lib_dongnae · 동래구 동래읍성도서관 - 공지사항
+    목록 14건
+=== seogu_eminwon · 서구청 채용공고(새올)
+    목록 6건
+=== dongnae_lifelong · 동래구 평생학습관 - 공지사항
+    목록 15건
+=== cw_sajik_notice · 사직종합사회복지관 - 공지사항
+    목록 0건
