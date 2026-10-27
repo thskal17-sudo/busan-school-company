@@ -72,3 +72,9 @@ def test_infer_org_type_and_district():
     assert infer_district("부산진구시설관리공단") == "부산진구"
     assert infer_district("해운대구 평생학습관") == "해운대구"
     assert infer_district("기장군도시관리공단") == "기장군"
+
+
+def test_mentor_lecture_notice_is_not_hiring(rules):
+    # 학교밖청소년에게 특강을 알리는 글 ('멘토'로 걸렸음, 2026-10-28 사용자 지적)
+    assert judge("꿈드림) 멘토쌤과 함께하는 전공특강", rules, True) is None
+    assert judge("2026 학교밖청소년 멘토와 함께하는 진로탐색 안내", rules, True) is None
