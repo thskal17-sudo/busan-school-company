@@ -31,7 +31,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 317곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
+    S[sources.yaml<br/>게시판·API 325곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
@@ -515,11 +515,9 @@ www.busan.go.kr 이 이날도 러너에서 시간 초과이고 같은 공고가 
 
 | 사이트 | 까닭 |
 |---|---|
-| 부산시설공단 (bisco.or.kr, 모바일 포함) | 해외 접속을 연결 즉시 끊음 (Connection reset). `enabled: false` + `blocked`. 공고는 부산시청 통합 채용정보로 받음 |
+| 부산시설공단 (bisco.or.kr, 모바일 포함) | 해외 접속을 연결 즉시 끊음 (Connection reset). 2026-10-30 국내 중계로 다시 켬 (`bisco_hire`) |
 | 수영구청 (www·eminwon·m) | 해외 접속을 응답 없이 끊음. 러너 4대(버지니아 2·아이오와 1·첫 진단 1)에서 모두 같음. 채용 게시판(`suyeong_hire`)은 꺼 둔 채 적어 둠 |
 | 금정구청 홈페이지 | 해외 접속 차단 (금정구 새올·평생학습관은 됨). 2026-09-30 에는 열려 같은 서버의 금샘도서관 공지는 넣음 |
-| 해운대구청 (새올 채용공고·평생학습관·청소년문화의집) | 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr)가 해외 질의에 답하지 않음. 10-14까지 수집 16번 모두 실패해 `enabled: false` + `blocked` (10-08까지는 됨) |
-| 부산진구·사하구·수영구 체육회, 명지노인종합복지관 | 2026-10-16부터 해외 접속에 403 'Access from your country is not allowed' (10-24 러너 세 대 같음). `enabled: false` + `blocked` |
 | 부산늘봄지원센터 개인·업체위탁 게시판 | 2026-10-16부터 누리집이 '폐쇄된 홈페이지입니다' 화면만 보냄. `enabled: false` + `blocked` |
 | 해운대청소년수련관, 부산관광공사 | 접속 시간 초과 |
 | 중구·북구·강서구·기장군 새올 채용공고 | 목록이 0건 (그 구는 채용을 다른 곳에 올림). 중구·기장군은 구청 일자리 게시판으로 받음 |
