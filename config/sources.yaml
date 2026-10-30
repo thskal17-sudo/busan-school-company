@@ -540,16 +540,23 @@ sources:
       key_param: not_ancmt_mgt_no
 
   - id: suyeong_hire
-    name: 수영구청 채용 (게재기간중인글)
+    name: 수영구청 채용공고(새올)
     org_type: 지자체
     district: 수영구
     collector: generic_board
-    url: https://www.suyeong.go.kr/index.suyeong?menuCd=DOM_000000103001010001
+    # 구청 '채용(게재기간중인글)' 화면은 새올 목록을 iframe 으로 싣는다. 해외 접속을 끊어 꺼 두었다가
+    # 국내 중계(KR_PROXY_URL)로 열려 새올 목록을 바로 읽는다 (2026-10-30)
+    url: "https://eminwon.suyeong.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectListOfrNotAncmt&methodnm=selectListOfrNotAncmtHomepage&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&epcCheck=Y&nodate_recent_mm=12&pageIndex=1"
+    pages: 2
     keyword_filter: true
     phase: 2
-    enabled: false
-    verified: false
-    blocked: 해외(GitHub 러너) 접속을 응답 없이 끊음. www·eminwon·m.suyeong.go.kr 모두, 러너 4대(버지니아·아이오와)에서 같음 (2026-09-29). 국내 실행 환경에서만 수집 가능
+    enabled: true
+    verified: true
+    options:
+      page_param: pageIndex
+      org_prefix: 부산 수영구청
+      link_template: "https://eminwon.suyeong.go.kr/emwp/gov/mogaha/ntis/web/ofr/action/OfrAction.do?jndinm=OfrNotAncmtEJB&context=NTIS&method=selectOfrNotAncmt&methodnm=selectOfrNotAncmtRegst&not_ancmt_mgt_no={0}&homepage_pbs_yn=Y&subCheck=Y&ofr_pageSize=10&not_ancmt_se_code=05&title=%EC%B1%84%EC%9A%A9%EA%B3%B5%EA%B3%A0&initValue=Y&countYn=Y&list_gubun=A&Key=B_Subject"
+      key_param: not_ancmt_mgt_no
 
   - id: donggu_hire
     name: 동구청 채용공고 (체육교실 강사 등)
@@ -1181,6 +1188,41 @@ sources:
       key_param: dataSid
       org_name: 해운대구 평생학습관
 
+  # 2026-10-30 국내 중계(KR_PROXY_URL)로 열려 새로 넣은 곳 (www.haeundae.go.kr 은 해외에서 주소를 못 찾음)
+  - id: lib_haeundae_gu
+    name: 해운대구립도서관 - 도서관 새소식 (인문학·반여·재송어린이·작은인문학 등)
+    org_type: 평생교육·도서관
+    district: 해운대구
+    collector: generic_board
+    url: https://www.haeundae.go.kr/board/list.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 해운대구립도서관
+      org_fixed: true
+      include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+
+  - id: hall_haeundae_notice
+    name: 해운대문화회관 - 공지사항
+    org_type: 문화센터
+    district: 해운대구
+    collector: generic_board
+    url: https://www.haeundae.go.kr/board/list.do?boardId=BBS_0000110&menuCd=DOM_000000904004000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: dataSid
+      org_name: 해운대문화회관
+      org_fixed: true
+      include: [강사, 튜터, 코치, 지도자, 인력풀]
+
   - id: saha_lifelong
     name: 사하구 평생학습관 - 공지사항
     org_type: 평생교육·도서관
@@ -1197,6 +1239,25 @@ sources:
       link_template: "https://www.saha.go.kr/edu/bbs/view.do?bIdx={3}&ptIdx={4}&mId={5}"
       key_param: bIdx
       org_name: 사하구 평생학습관
+
+  - id: hall_eulsukdo_notice
+    name: 을숙도문화회관 - 공지사항
+    org_type: 문화센터
+    district: 사하구
+    collector: generic_board
+    # 2026-10-30 국내 중계(KR_PROXY_URL)로 확인해 넣음 (전에는 확인하지 못함)
+    url: https://www.saha.go.kr/eulsukdo/bbs/list.do?ptIdx=79&mId=0501000000
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      link_template: "https://www.saha.go.kr/eulsukdo/bbs/view.do?bIdx={3}&ptIdx={4}&mId={5}"
+      key_param: bIdx
+      org_name: 을숙도문화회관
+      org_fixed: true
+      include: [강사, 튜터, 코치, 지도자, 인력풀]
 
   - id: geumjeong_lifelong
     name: 금정구 평생학습관 - 공지사항
@@ -3230,7 +3291,7 @@ sources:
     phase: 3
     enabled: false
     verified: false
-    blocked: 해외(GitHub 러너)에서 접속 시간 초과 (http·https 모두, 2026-09-29 세 번). 채용 공고는 청소년활동진흥센터 채용정보(busanyouth_hire)에도 올라옴
+    blocked: 해외 접속 시간 초과(2026-09-29). 2026-10-30 국내 중계로도 40초 시간 초과 (사이트 쪽 장애로 보임)
 
   # 청소년문화의집 (부산청소년활동진흥센터 '부산 청소년 시설' 현황의 문화의집 10곳). 방과후아카데미 강사 모집·직원 채용이 공지사항에 올라온다
   - id: gaya_youth_notice
@@ -3289,16 +3350,21 @@ sources:
       org_name: 기장청소년센터
 
   - id: jeonpo_youth
-    name: 부산진구 전포 청소년센터 (jinguzzang.com)
+    name: 부산진구 전포 청소년센터 - 알림마당
     org_type: 청소년
     district: 부산진구
     collector: generic_board
-    url: https://www.jinguzzang.com/
+    # 해외 접속에 403 이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 알림마당을 읽음 (2026-10-30)
+    url: https://www.jinguzzang.com/news_01
+    pages: 1
     keyword_filter: true
     phase: 3
-    enabled: false
-    verified: false
-    blocked: 해외(GitHub 러너)에서 모든 주소가 403 '접근 권한이 없습니다' (http·https·www 유무, 브라우저 User-Agent 로도 같음, 2026-09-29). 직원 채용은 청소년활동진흥센터 채용정보(busanyouth_hire)에도 올라옴
+    enabled: true
+    verified: true
+    options:
+      org_name: 부산진구 전포청소년센터
+      org_fixed: true
+      include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
 
   - id: bkyouth_notice
     name: 북구청소년문화의집 - 공지사항
@@ -3614,7 +3680,7 @@ sources:
     phase: 3
     enabled: false
     verified: false
-    blocked: 해외(GitHub 러너)에서 http 는 403 Forbidden, https 는 인증서 오류 (브라우저 User-Agent 로도 같음, 2026-09-29)
+    blocked: 해외에서 http 403·https 인증서 오류. 2026-10-30 국내 중계(KR_PROXY_URL)로도 403
 
   - id: geumnyeonsan_youth
     name: 금련산청소년수련원 - 알림사항
@@ -5595,6 +5661,42 @@ sources:
       org_name: 부산광역시 여성회관
 
   # 여성인력개발센터 (부산시 지정 6곳: 해운대·동래·부산진·사상·동구·사하). 공지사항에 직원·강사 채용 공고가 올라온다
+  - id: wcc_notice
+    name: 부산광역시 여성문화회관 - 공지사항
+    org_type: 여성·가족
+    district: 부산전체
+    collector: generic_board
+    # www.busan.go.kr 이 해외 접속 시간 초과라 못 넣었다가 국내 중계(KR_PROXY_URL)로 확인 (2026-10-30)
+    url: https://www.busan.go.kr/wcc/wcnotice
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      page_param: curPage
+      org_name: 부산광역시 여성문화회관
+      org_fixed: true
+      include: [강사, 튜터, 코치, 지도자, 인력풀, 새일]
+
+  - id: adong_center_notice
+    name: 부산광역시 아동보호종합센터 - 공지사항
+    org_type: 아동
+    district: 부산전체
+    collector: generic_board
+    # 아동학대예방 부모교육·아동권리교육 전문강사 모집이 해마다 올라옴. 국내 중계로 확인 (2026-10-30)
+    url: https://www.busan.go.kr/adong/cccaler01
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      page_param: curPage
+      org_name: 부산광역시 아동보호종합센터
+      org_fixed: true
+      include: [강사, 튜터, 코치, 지도자, 인력풀]
+
   - id: bswoman_notice
     name: 부산진여성인력개발센터 - 공지사항
     org_type: 여성·가족
