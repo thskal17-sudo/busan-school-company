@@ -98,3 +98,57 @@ def test_short_headers_drop_accept_language(monkeypatch):
         ("https://eminwon.bsnamgu.go.kr/emwp/view", {"Accept-Language": None}),
         ("https://eminwon.saha.go.kr/emwp/view", None),
     ]
+
+
+def test_kr_proxy_routes_sites_and_falls_back(monkeypatch):
+    """KR_PROXY_URL 이 있으면 GitHub 주소만 빼고 중계로 보내고, 중계로 안 닿으면 그 사이트만 바로 접속한다."""
+    monkeypatch.setenv("KR_PROXY_URL", "http://u:p@1.2.3.4:8888")
+    client = Http(min_interval=0)
+    calls = []
+
+    def fake_request(method, url, **kwargs):
+        proxied = "proxies" in kwargs
+        calls.append((url, proxied))
+        if proxied and "blocked.kr" in url:
+            # 실제 requests 오류 문구 형태 (urllib3 가 Tunnel 실패를 감싼다)
+            raise requests.exceptions.ProxyError(
+                "Max retries exceeded (Caused by ProxyError('Unable to connect to proxy', "
+                "OSError('Tunnel connection failed: 403 Forbidden')))")
+        return _Resp()
+
+    monkeypatch.setattr(client.session, "request", fake_request)
+    client.get("https://www.pen.go.kr/a")
+    client.get("https://www.chambokji.org/b")  # 국내 .org 복지관도 중계
+    client.get("https://api.github.com/c")
+    client.get("https://blocked.kr/d")
+    client.get("https://blocked.kr/e")
+    assert calls == [
+        ("https://www.pen.go.kr/a", True),
+        ("https://www.chambokji.org/b", True),
+        ("https://api.github.com/c", False),  # GitHub 은 중계하지 않는다
+        ("https://blocked.kr/d", True),
+        ("https://blocked.kr/d", False),  # 중계 실패 → 바로 접속
+        ("https://blocked.kr/e", False),  # 같은 실행에서는 그 사이트를 바로 접속
+    ]
+
+
+def test_kr_proxy_down_or_auth_failure_disables_proxy_for_run():
+    for err in ("Unable to connect to proxy", "Tunnel connection failed: 407 Proxy Authentication Required"):
+        client = Http(min_interval=0, kr_proxy="http://u:p@1.2.3.4:8888")
+        calls = []
+
+        def fake_request(method, url, **kwargs):
+            calls.append("proxies" in kwargs)
+            if "proxies" in kwargs:
+                raise requests.exceptions.ProxyError(err)
+            return _Resp()
+
+        client.session.request = fake_request
+        client.get("https://a.go.kr/1")
+        client.get("https://b.or.kr/2")
+        assert calls == [True, False, False] and client.kr_proxy is None, err
+
+
+def test_no_proxy_without_env(monkeypatch):
+    monkeypatch.delenv("KR_PROXY_URL", raising=False)
+    assert Http(min_interval=0).kr_proxy is None

@@ -155,10 +155,12 @@ GitHub Actions 에서 무료로 돌아갑니다.
 | `MAIL_TO` | 받는 주소 (여러 명이면 쉼표로 구분). 비우면 `SMTP_USER` 로 보냄 | |
 | `WORK24_API_KEY` | [고용24 Open API](https://www.work24.go.kr/cm/e/a/0110/selectOpenApiIntro.do) 채용정보 인증키 | |
 | `DATA_GO_KR_KEY` | 공공데이터포털 개인 인증키(일반 인증키). [클린아이 채용정보](https://www.data.go.kr/data/15159757/openapi.do)·[인사혁신처 공공취업정보](https://www.data.go.kr/data/15156780/openapi.do)·[공공기관 채용정보](https://www.data.go.kr/data/15125273/openapi.do) 활용 승인 필요 | |
+| `KR_PROXY_URL` | 국내 중계 서버 주소 `http://아이디:비밀번호@IP:포트` (네이버 클라우드 등 한국 서버의 tinyproxy). 울산판과 같은 값을 써도 됨 | |
 
 - `WORK24_API_KEY` 가 없으면 고용24만 건너뛰고 나머지는 정상 수집합니다 (수집현황에 '설정필요'로 표시).
 - `DATA_GO_KR_KEY` 가 없으면 나라일터·잡알리오·클린아이를 같은 식으로 건너뜁니다. 키는 하나지만 API 마다 활용 승인이 따로 필요합니다.
 - `SMTP_USER`·`SMTP_APP_PASSWORD` 가 없으면 메일을 켠 실행은 실패합니다 (메일을 끈 시험 실행은 됩니다).
+- `KR_PROXY_URL` 이 있으면 사이트 접속을 한국 IP 로 보냅니다 (GitHub 주소 제외). 해외 접속을 막는 복지관(kuipernet 호스팅 55곳) 등을 읽기 위함입니다. 중계로 안 닿는 사이트는 그 사이트만, 중계 서버가 꺼져 있으면 그날 전체를 바로 접속으로 돌립니다. 없으면 지금처럼 바로 접속합니다.
 
 ### 3. 시험 실행
 
