@@ -409,9 +409,9 @@ sources:
     pages: 2
     keyword_filter: true
     phase: 2
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       page_param: pageIndex
       org_prefix: 부산 해운대구청
@@ -717,9 +717,9 @@ sources:
     url: https://www.bisco.or.kr/about/about05/about05_2/?bcIdx=19&MODE=L&P=1&PC=20
     keyword_filter: true
     phase: 2
-    enabled: false
-    verified: false
-    blocked: 해외(GitHub 러너) 접속을 끊음 (Connection reset). 공고는 부산시청 통합 채용정보(city_jobs)에 함께 올라온다
+    enabled: true
+    verified: true
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
 
   - id: bnfmc_hire
     name: 부산남구시설관리공단 - 채용공고 (시간강사 등)
@@ -912,9 +912,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: wr_id
       org_name: 부산진구체육회
@@ -1005,9 +1005,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: wr_id
       org_name: 부산광역시사하구체육회
@@ -1023,9 +1023,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 2
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: wr_id
       org_name: 부산광역시수영구체육회
@@ -1174,9 +1174,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: dataSid
       org_name: 해운대구 평생학습관
@@ -3394,9 +3394,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 2026-10-09부터 해운대구 DNS(ns.haeundae.go.kr 210.99.50.24)가 해외(GitHub 러너) 질의에 응답하지 않아 주소를 찾지 못함. 10-08까지는 됨, 10-09~10-14 수집 16번 모두 실패 (2026-10-14 끔). 러너에서 www·eminwon.haeundae.go.kr 이름이 다시 풀리면 다시 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: dataSid
       include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
@@ -5145,9 +5145,9 @@ sources:
     pages: 1
     keyword_filter: true
     phase: 3
-    enabled: false
+    enabled: true
     verified: true
-    blocked: 10-16부터 해외 접속에 403 'Access from your country is not allowed' (러너 세 대 같음, 2026-10-24 끔). 해외 접속이 다시 열리면 켠다
+    # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
     options:
       key_param: wr_id
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]
