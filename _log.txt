@@ -1,0 +1,22 @@
+== baswc
+curl: (7) CONNECT tunnel failed, response 500
+code 000 0B https://www.baswc.or.kr/
+== baswc_http
+curl: (6) Could not resolve host: www.baswc.or.kr
+code 000 0B http://www.baswc.or.kr/
+== ymcahy
+curl: (28) Connection timed out after 40001 milliseconds
+code 000 0B http://www.ymcahy.or.kr/bbs/board.php?bo_table=notice
+== saba
+curl: (28) Connection timed out after 40001 milliseconds
+code 000 0B http://www.saba.or.kr/
+== wcc
+code 200 50438B https://www.busan.go.kr/wcc/wcnotice
+== hud_lib
+code 200 161402B https://www.haeundae.go.kr/library/index.do
+== sy_lib
+code 200 73938B https://www.suyeong.go.kr/library/index.suyeong
+== hud_culture
+code 200 172778B https://www.haeundae.go.kr/culture/index.do
+== naver
+code 200 221500B https://www.naver.com/

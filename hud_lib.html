@@ -1,0 +1,2915 @@
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,width=device-width">
+		<meta name="format-detection" content="telephone=no" />
+		<title>해운대인문학도서관</title>
+		<link rel="stylesheet" type="text/css" href="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/4.css" /><!-- reset.css -->
+		<link rel="stylesheet" type="text/css" href="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/5.css" /><!-- common.css -->
+		<link rel="stylesheet" type="text/css" href="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/3080.css" /><!-- 2023 layout.css -->
+		<link rel="stylesheet" type="text/css" href="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/3081.css" /> <!-- 2023 main.css -->
+        <link rel="stylesheet" type="text/css" href="/user_res/js/slick/slick.css">
+        <link rel="stylesheet" type="text/css" href="/user_res/js/slick/slick-theme.css">		
+		<script type="text/javascript" src="/user_res/js/jquery-1.11.2.min.js"></script>
+<script>
+
+	var csrfToken = "390387bd-7e4d-4b4c-8c26-5bb6815c1e78";
+
+
+
+    window.addEventListener("DOMContentLoaded", function () {
+        const forms = document.querySelectorAll("form");
+
+        forms.forEach(function (form) {
+            if (!form.querySelector("input[name='_csrf']")) {
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "_csrf";
+                hiddenInput.value = csrfToken;
+                form.appendChild(hiddenInput);
+            }
+        });
+    });
+</script>
+		<script type="text/javascript" src="/user_res/js/jquery-ui.custom.js"></script> 
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/1165.js"></script><!--문화회관꺼 gnb.js -->
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/224.js"></script><!--gnb.js -->
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/12.js"></script><!--common.js -->
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/13.js"></script><!--topmenu.js -->
+
+		<!--main-->
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/11.js"></script><!--mcustom.js -->
+		<script type="text/javascript" src="/rfc3/user/domain/www.haeundae.go.kr~library.80/0/3085.js"></script><!-- 2023 main.js -->
+		<script src="/user_res/js/slick.min.js"></script> 
+		<script type="text/javascript">         
+			if (document.location.protocol == 'http:') 
+			{
+				document.location.href = document.location.href.replace('http:', 'https:');
+			}
+		</script>
+	</head>
+
+	<body id="total" class="sub_">
+
+	    <!-- 스킵네비케이션시작 -->
+	    <div id="accessibility">
+	        <a href="#mcontent">메인컨텐츠 바로가기</a>
+	        <a href="#gnb">주메뉴 바로가기</a>
+	    </div>
+	    <!-- 스킵네비케이션끝 -->
+
+	    <div id="wrap" class="mwrap">
+	        <div id="touchArea"></div>
+	        <div id="shadow_device"></div>
+	        <!--  s:헤더 -->
+	        
+
+
+
+
+
+<script type="text/javascript" src="/user_res/js/jq.js"></script>
+
+<script type="text/javascript">
+	function call_search()
+	{
+		document.t_search.action='https://www.haeundae.go.kr/search/search?kwd=' + encodeURIComponent($("#searchkeyword").val()) + '&domain_id=DOM_0000010';
+        document.t_search.submit();
+	}
+</script>
+
+<header id="header_group">
+    <div id="top_head">
+        <div class="wrapper">
+			<h1 id="logo">
+                <a class="main_logo" href="/index.do" target="_blank" title="새창열림"><span>살고싶은 도시 오고싶은 도시 해운대</span></a>
+                <a class="library_logo" href="/library/index.do">해운대인문학도서관</a>
+				<!--a href="/library/index.do"><img src="/user_res/images/library/logo-lib.png" style="auto;margin-top: -6px;" alt="해운대도서관" /></a-->
+			</h1>
+            <span id="open_mn" class="mn_btn"><a href="#topmenu"><span class="ir">주 메뉴 열기</span></a></span>
+    </div>
+    
+
+<script type="text/javascript">
+	$(document).ready(function() 
+	{
+		var obj = $("#topsearch");
+		var btn = $("#open_sc");
+
+		// 아이패드, 아이폰 포커스 버그픽스
+		if (navigator.userAgent.match("iPad") || navigator.userAgent.match("iPhone")) 
+		{
+			$("#searchkeyword").on('click', function() 
+			{
+				lastFocus = $(this).attr('id');
+				checkFocusInterval = setInterval(blurApple, 200);
+			});
+		}
+
+		function blurApple() 
+		{
+			var focusNow = document.activeElement;
+			if (focusNow.getAttribute('id') != lastFocus) 
+			{
+				clearInterval(checkFocusInterval);
+				obj.removeClass("hiddenSearch");
+			}
+		}
+
+		btn.unbind().bind("click touchend", function(event) 
+		{
+			if (obj.css("display") == "none") 
+			{
+				obj.addClass("hiddenSearch");
+				btn.addClass("ov");
+                btn.html("검색닫기");
+			} 
+			else 
+			{
+				obj.removeClass("hiddenSearch");
+				btn.removeClass("ov");
+                btn.html("검색");
+			}
+			event.preventDefault();
+			event.stopPropagation();
+		});
+
+		$("#searchkeyword").unbind().bind("focusout", function() 
+		{
+			obj.removeClass("hiddenSearch");
+			btn.removeClass("ov");
+		});
+
+		obj.find(":submit").unbind().bind("touchstart", function(event) 
+		{
+			obj.find("form").submit();
+			event.preventDefault();
+		});
+	});
+</script>
+
+    <div id="header_2017">
+		<div class="">
+            <a href="/library/index.do" class="mob_btn"><span class="hidden">PC 메뉴</span></a>
+            <div id="nav">
+                <div id="blind" style="height: 100%;"></div>
+                <div id="gnb">
+                    <ul class="group">
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001001000000000' class='th1_lnk' target="_self"><span>자료검색</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001001000000' target="_self" class="depth"><strong>자료검색</strong></a>
+												</li>
+
+												<li>
+													
+<a href='https://library.busan.go.kr/hub/himbooks/search/indexAll.do' target="_blank" class="depth" target="새창열기"><strong>부산지역 도서관 자료검색</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001004000000' target="_self" class="depth"><strong>연속간행물 목록</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001005000000' target="_self" class="depth"><strong>신착도서</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001011000000' target="_self" class="depth"><strong>대출 베스트</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001006000000' target="_self" class="depth"><strong>추천도서</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001012000000' target="_self" class="depth"><strong>대출내역 조회</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001013000000' target="_self" class="depth"><strong>비치희망도서 신청</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001014000000' target="_self" class="depth"><strong>지역서점 바로대출 신청</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001016000000' target="_self" class="depth"><strong>상호대차 신청</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001001015000000' target="_self" class="depth"><strong>DVD 목록</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001002000000000' class='th1_lnk' target="_self"><span>행사ㆍ강좌</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002001000000' target="_self" class="depth"><strong>이달의 행사</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002002000000' target="_self" class="depth"><strong>4월 도서관 주간</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002003000000' target="_self" class="depth"><strong>9월 독서의 달</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002008000000' target="_self" class="depth"><strong>문화강좌</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002005000000' target="_self" class="depth"><strong>문화행사</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002013000000' target="_self" class="depth"><strong>일일독서교실</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002004000000' target="_self" class="depth"><strong>방학독서교실</strong></a>
+												</li>
+
+                                                <li>
+													<a href='/library/index.do?menuCd=DOM_000001002015000000' target="_self" class="depth"><strong>들락날락 체험교실</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002010000000' target="_self" class="depth"><strong>토요스쿨</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002011000000' target="_self" class="depth"><strong>유아프로그램</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001002012000000' target="_self" class="depth"><strong>영화상영</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001003000000000' class='th1_lnk' target="_self"><span>온라인 수강신청</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001003001000000' target="_self" class="depth"><strong>온라인 수강신청</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001004000000000' class='th1_lnk' target="_self"><span>도서관이용</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004001000000' target="_self" class="depth"><strong>도서회원 가입안내</strong></a>
+												</li>
+<li>
+													<a href='/library/index.do?menuCd=DOM_000001004017000000' target="_self" class="depth"><strong>도서관 이용안내</strong></a>
+												</li>
+
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004002000000' target="_self" class="depth"><strong>자료 이용안내</strong></a>
+												</li>
+
+												
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004010000000' target="_self" class="depth"><strong>스마트도서관</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004008000000' target="_self" class="depth"><strong>전자책도서관</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004009000000' target="_self" class="depth"><strong>오디오북</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001004011000000' target="_self" class="depth"><strong>작은도서관 현황</strong></a>
+												</li>
+
+                        <li>
+													<a href='https://www.smalllibrary.org/library/index' target="_blank" class="depth" title="새창열기"><strong>작은도서관 전국현황</strong></a>
+												</li>
+
+                        <li>
+													<a href='/library/index.do?menuCd=DOM_000001004012000000' target="_self" class="depth"><strong>새마을문고</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001005000000000' class='th1_lnk' target="_self"><span>이용자마당</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005001000000' target="_self" class="depth"><strong>공지사항</strong></a>
+												</li>
+
+												<!--<li>
+													<a href='/library/index.do?menuCd=DOM_000001005002000000' target="_self" class="depth"><strong>포토갤러리</strong></a>
+												</li>-->
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005009000000' target="_self" class="depth"><strong>질문과 답변 </strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005004000000' target="_self" class="depth"><strong>자주하는 질문</strong></a>
+												</li>
+
+												<!--<li>
+													<a href='/library/index.do?menuCd=DOM_000001005013000000' target="_self" class="depth"><strong>설문조사</strong></a>
+												</li>-->
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005012000000' target="_self" class="depth"><strong>독서회</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005005000000' target="_self" class="depth"><strong>독후감 공모</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005006000000' target="_self" class="depth"><strong>도서기증 안내</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005007000000' target="_self" class="depth"><strong>자원봉사 신청</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005008000000' target="_self" class="depth"><strong>관련사이트</strong></a>
+												</li>
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001005014000000' target="_self" class="depth"><strong>지역서점 현황</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+								<li class="menu1">
+									<a href='/library/index.do?menuCd=DOM_000001006000000000' class='th1_lnk' target="_self"><span>도서관 소개</span></a>
+
+										<ul class="menuBox group">
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001006001000000' target="_self" class="depth"><strong>인사말</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001006003000000' target="_self" class="depth"><strong>직원 업무안내</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001006004000000' target="_self" class="depth"><strong>연혁</strong></a>
+												</li>
+
+												<li>
+													<a href='/library/index.do?menuCd=DOM_000001006005000000' target="_self" class="depth"><strong>장서현황</strong></a>
+												</li>
+
+										</ul>
+
+								</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="lang_site" class="menu">
+        
+        <div class="menu-box">
+            <a id="log-in" href="https://library.busan.go.kr/himbooks/member/login" target="_blank" title="새창열림">로그인</a>
+            <a id="open_sc" href="javascript:void(0);">검색</a>
+            <div id="topsearch" class="basic_search">
+                <form action="javascript:call_search();" method="post" id="t_search" name="t_search">
+
+                    <input type="hidden" name="type" value="all">
+                    <div class="searchFrm">
+                        <h2 class="skip">SEARCH</h2>
+                        <fieldset class="search">
+                            <legend>통합검색</legend>
+                            <label class="blind" for="searchkeyword">검색어 입력</label>
+                            <input type="search" id="searchkeyword" name="word" value="" placeholder="검색어를 입력하세요" onkeydown="if(eventKeycode == 13) {call_search(); return false;}"/>
+                            <input type="submit" value="검색" onclick="javascript:call_search(); return false;"/>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+           <div id="family_site" class="menu">
+                <strong><a href="#family_site" title="메뉴닫힘"><img src="/user_res/images/library/renew_2023/common/icon_vowel.png" alt="주요사이트"></a></strong>
+                <div class="obj" style="display:none;">
+                    <ul>
+                        <li><a href="/index.do" target="_blank" title="새창열림">해운대구청</a></li>
+                        <li><a href="/mayor/index.do" target="_blank" title="새창열림">구청장실</a></li>
+                        <li><a href="http://council.haeundae.go.kr" target="_blank" title="새창열림">의회</a></li>
+                        <li><a href="/health/index.do" target="_blank" title="새창열림">보건소</a></li>
+                        <li><a href="/tour/index.do" target="_blank" title="새창열림">문화관광</a></li>
+                        <li><a href="/media/index.do" target="_blank" title="새창열림">해운대미디어</a></li>
+                        
+                        <li><a href="/culture/index.do" target="_blank" title="새창열림">문화회관</a></li>
+                        <li><a href="/edu/index.do" target="_blank" title="새창열림">평생학습관</a></li>
+                        <li><a href="/reserve/index.do" target="_blank" title="새창열림">통합예약</a></li>
+                        <li><a href="/map/index.do" target="_blank" title="새창열림">생활지도</a></li>
+                        <!--<li><a href="/talk/index.do" target="_blank" title="새창열림">온라인소통방</a></li>-->
+                        <li><a href="/young" target="_blank" title="새창열림">청소년문화의집</a></li>
+                        <!--<li><a href="http://www.haeundae.go.kr/hits/index.do" target="_blank" title="새창열림">해운대교통정보</a></li>-->
+                        <li><a href="http://www.haeundae.go.kr/jangsanlocalpark/index.do" target="_blank" title="새창열림">장산구립공원</a></li>
+                    </ul>
+                </div>
+            </div>                
+            <div id="open_sitemap" class="menu">
+                <a href="/library/index.do?menuCd=DOM_000001007001000000">사이트맵</a>
+            </div>
+        </div>
+    </div>    
+    </div>
+</header>
+
+
+<nav id="topmenu">
+    <h2 class="skip">주 메뉴 영역</h2>
+    <div class="m_global">
+        <a class="btn home" href="#">HOME</a>
+        <a class="btn sitemap" href="#">SITEMAP</a>
+
+        <div id="family_site_mobile" class="menu">
+            <strong><a href="#">도서관</a></strong>
+            <div class="obj" style="display:none;">
+                <ul>
+                    <li><a href="/index.do" target="_blank" title="새창열림">해운대구청</a></li>
+                    <li><a href="/mayor" target="_blank" title="새창열림">구청장실</a></li>
+                    <li><a href="http://council.haeundae.go.kr" target="_blank" title="새창열림">의회</a></li>
+                    <li><a href="/health" target="_blank" title="새창열림">보건소</a></li>
+                    <li><a href="/tour/" target="_blank" title="새창열림">문화관광</a></li>
+                    <li><a href="/media" target="_blank" title="새창열림">해운대미디어</a></li>
+                    
+                    <li><a href="/culture" target="_blank" title="새창열림">문화회관</a></li>
+                    <li><a href="/library" target="_blank" title="새창열림">도서관</a></li>
+                    <li><a href="/edu" target="_blank" title="새창열림">평생학습관</a></li>
+                    <li><a href="/reserve/index.do" target="_blank" title="새창열림">통합예약</a></li>
+                    <li><a href="/map" target="_blank" title="새창열림">생활지도</a></li>
+                    <!--<li><a href="/talk" target="_blank" title="새창열림">온라인소통방</a></li>-->
+                     <li><a href="/young" target="_blank" title="새창열림">청소년문화의집</a></li>
+                     <!--<li><a href="http://www.haeundae.go.kr/hits/index.do" target="_blank" title="새창열림">해운대교통정보</a></li>-->
+                </ul>
+            </div>
+        </div>
+        <a href="https://library.busan.go.kr/himbooks/member/login" id="log-in-m" target="_blank" title="새창열림">로그인</a>
+        <a id="close_topmenu" class="ir" href="#">메뉴 닫기</a>
+</div>
+
+    
+    <ul id='gnb_device'>
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001001000000000' class='th1_lnk' target="_self">자료검색</a>
+			<b>자료검색</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001001000000' target='_self' class='lnk_2th'><span>자료검색</span></a>
+
+						</li>
+
+                                                 <li>
+							
+<a href='https://library.busan.go.kr/hub/himbooks/search/indexAll.do' target="_self" class="lnk_2th" ><strong>부산지역 도서관 자료검색</strong></a>
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001004000000' target='_self' class='lnk_2th'><span>연속간행물 목록</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001005000000' target='_self' class='lnk_2th'><span>신착도서</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001011000000' target='_self' class='lnk_2th'><span>대출 베스트</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001006000000' target='_self' class='lnk_2th'><span>추천도서</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001012000000' target='_self' class='lnk_2th'><span>대출내역 조회</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001013000000' target='_self' class='lnk_2th'><span>비치희망도서 신청</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001014000000' target='_self' class='lnk_2th'><span>지역서점 바로대출 신청</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001016000000' target="_self" class="depth"><strong>상호대차 신청</strong></a>
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001001015000000' target='_self' class='lnk_2th'><span>DVD 목록</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001002000000000' class='th1_lnk' target="_self">행사ㆍ강좌</a>
+			<b>행사ㆍ강좌</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/board/list.do?boardId=BBS_0000488&menuCd=DOM_000001002001000000&contentsSid=3231&cpath=%2Flibrary' target='_self' class='lnk_2th'><span>이달의 행사</span></a>
+
+								
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002002000000' target='_self' class='lnk_2th'><span>4월 도서관 주간</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002003000000' target='_self' class='lnk_2th'><span>9월 독서의 달</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002008000000' target='_self' class='lnk_2th'><span>문화강좌</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002005000000' target='_self' class='lnk_2th'><span>문화행사</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002013000000' target='_self' class='lnk_2th'><span>일일독서교실</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001002013001000' target='_self' class='lnk_2th'>초등 일일독서교실</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001002013002000' target='_self' class='lnk_2th'>유아 일일독서교실</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002004000000' target='_self' class='lnk_2th'><span>방학독서교실</span></a>
+
+						</li>
+
+                        <li>
+                            <a href='/library/index.do?menuCd=DOM_000001002015000000' target="_self" class="depth"><strong>들락날락 체험교실</strong></a>
+                        </li>
+
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002010000000' target='_self' class='lnk_2th'><span>토요스쿨</span></a>
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002011000000' target='_self' class='lnk_2th'><span>유아프로그램</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001002011001000' target='_self' class='lnk_2th'>인문학도서관</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001002011002000' target='_self' class='lnk_2th'>재송어린이도서관</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001002012000000' target='_self' class='lnk_2th'><span>영화상영</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001003000000000' class='th1_lnk' target="_self">온라인 수강신청</a>
+			<b>온라인 수강신청</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001003001000000' target='_self' class='lnk_2th'><span>온라인 수강신청</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001004000000000' class='th1_lnk' target="_self">도서관이용</a>
+			<b>도서관이용</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004001000000' target='_self' class='lnk_2th'><span>도서회원 가입안내</span></a>
+
+						</li>
+<li>
+							<a href='/library/index.do?menuCd=DOM_000001004017000000' target='_self' class='lnk_2th'><span>도서관 이용안내</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004002000000' target='_self' class='lnk_2th'><span>자료 이용안내</span></a>
+
+						</li>
+
+						
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004010000000' target='_self' class='lnk_2th'><span>스마트도서관</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004008000000' target='_self' class='lnk_2th'><span>전자책도서관</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001004008001000' target='_self' class='lnk_2th'>재송어린이도서관</a>
+
+										</li>
+
+										<!--<li>
+											<a href='/library/index.do?menuCd=DOM_000001004008002000' target='_blank' class='lnk_2th'>반여도서관</a>
+
+										</li>-->
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001004008003000' target='_self' class='lnk_2th'>부산광역시 전자도서관</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004009000000' target='_self' class='lnk_2th'><span>오디오북</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001004011000000' target='_self' class='lnk_2th'><span>사립 작은도서관</span></a>
+
+						</li>
+
+            <li>
+              <a href='https://www.smalllibrary.org/library/index' target="_blank" class="depth" title="새창열기"><strong>작은도서관 전국현황</strong></a>
+            </li>
+            
+            <li>
+							<a href='/library/index.do?menuCd=DOM_000001004012000000' target='_self' class='lnk_2th'><span>새마을문고</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001005000000000' class='th1_lnk' target="_self">이용자마당</a>
+			<b>이용자마당</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005001000000' target='_self' class='lnk_2th'><span>공지사항</span></a>
+
+						</li>
+
+						<!--<li>
+							<a href='/library/index.do?menuCd=DOM_000001005002000000' target='_self' class='lnk_2th'><span>포토갤러리</span></a>
+
+						</li>-->
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005009000000' target='_self' class='lnk_2th'><span>질문과 답변 </span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005004000000' target='_self' class='lnk_2th'><span>자주하는 질문</span></a>
+
+						</li>
+
+						<!--<li>
+							<a href='/library/index.do?menuCd=DOM_000001005013000000' target='_self' class='lnk_2th'><span>설문조사</span></a>
+
+						</li>-->
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005012000000' target='_self' class='lnk_2th'><span>독서회</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001005012003000' target='_self' class='lnk_2th'>독서회 소개</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001005012004000' target='_self' class='lnk_2th'>독서회 커뮤니티</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005005000000' target='_self' class='lnk_2th'><span>독후감 공모</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001005005001000' target='_self' class='lnk_2th'>인문학도서관</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001005005002000' target='_self' class='lnk_2th'>반여도서관</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005006000000' target='_self' class='lnk_2th'><span>도서기증 안내</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005007000000' target='_self' class='lnk_2th'><span>자원봉사 신청</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005008000000' target='_self' class='lnk_2th'><span>관련사이트</span></a>
+
+						</li>
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001005014000000' target='_self' class='lnk_2th'><span>지역서점 현황</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+		<li class='th1'>
+			<a href='/library/index.do?menuCd=DOM_000001006000000000' class='th1_lnk' target="_self">도서관 소개</a>
+			<b>도서관 소개</b>
+
+				<ul class='th2'>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001006001000000' target='_self' class='lnk_2th'><span>인사말</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001006003000000' target='_self' class='lnk_2th'><span>직원 업무안내</span></a>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001006004000000' target='_self' class='lnk_2th'><span>연혁</span></a>
+
+								<ul class='th3'>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001006004001000' target='_self' class='lnk_2th'>인문학도서관</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001006004002000' target='_self' class='lnk_2th'>반여도서관</a>
+
+										</li>
+
+										<li>
+											<a href='/library/index.do?menuCd=DOM_000001006004003000' target='_self' class='lnk_2th'>재송어린이도서관</a>
+
+										</li>
+
+								</ul>
+
+						</li>
+
+						<li>
+							<a href='/library/index.do?menuCd=DOM_000001006005000000' target='_self' class='lnk_2th'><span>장서현황</span></a>
+
+						</li>
+
+				</ul>
+
+		</li>
+
+    </ul>
+</nav>
+<script type="text/javascript">
+    (function() 
+	{
+        var ismain = "010101";
+
+        var param = "#topmenu";
+        var obj = "#wrap";
+        var btn = "#open_mn";
+        var index1 = ismain.substr(0, 2); // th1 메뉴코드, index로 사용
+        var index2 = ismain.substr(2, 4); // th2 메뉴코드, index로 사용
+        var index3 = ismain.substr(4, 6); // th3 메뉴코드, index로 사용
+        var dur = 100; // 애니메이션 진행 속도
+        var meth = "easeOutExpo"; // 애니메이션 진행 타입
+
+        gnb_open(param, obj, btn, index1, index2, index3, dur, meth, ismain);
+    }());
+</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+	        <!--  //헤더 -->
+
+	        <!-- content  -->
+	        <div id="mcontent">
+	            
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="main_wrap">
+    <div class="main_bg">
+        <div class="inner">
+            
+            <!-- 메인 검색 -->
+            <div class="main_search">
+                <form name="searchForm" action="/library/index.do" method="GET">
+                    <input type="hidden" name="search_category" value="search_title" />
+                    <input type="hidden" name="pageno" value="1" />
+                    <input type="hidden" name="menuCd" value="DOM_000001001001001000" />
+                    <input type="hidden" name="search_isbn_issn" value="" />
+                    <input type="hidden" name="search_year_start" value="" />
+                    <input type="hidden" name="search_year_end" value="" />
+                    <input type="hidden" name="search_shelf" value="" />
+                    <input type="hidden" name="subject_code" value="" />
+                    <input type="hidden" name="reg_code" value="" />
+                    <input type="hidden" name="media_code" value="" />
+                    <input type="hidden" name="display" value="10" />
+                    <input type="hidden" name="orderby_item" value="" />
+                    <input type="hidden" name="orderby" value="" />
+
+                    <div class="choice">
+                        <div class="order1">
+                            <label for="selectbox1" class="blind">카테고리 선택</label>
+                            <select name="manage_code" id="selectbox1">
+                                <option value="BR">인문학</option>
+                                <option value="AT">반여</option>
+                                <option value="GQ">작은인문학</option>
+                                <option value="AZ">재송어린이</option>
+                                <option value="KS">우2동작은</option>
+                                <option value="HM">송정동작은</option>
+                            </select>
+                        </div>
+                        <div class="order2">
+                            <h2 class="skip">SEARCH</h2>
+                            <fieldset class="search">
+                                <legend>통합검색</legend>
+                                <label for="searchkeyword_book" class="blind">검색어</label>
+                                <input type="search" id="searchkeyword_book" name="search_txt" placeholder="제목 또는 저자를 입력해주세요">
+                                <input type="submit" class="btn_msearch" value="검색" onclick="fn_do_search();">
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>              
+            </div>
+            <!-- //메인 검색 -->
+            
+            <!-- 메인 비주얼 + 팝업존 -->
+            <div class="main_center">
+                <div class="visual_slide">
+                    <div class="visual_box">
+                        <div class="pt"><img src="/user_res/images/library/renew_2023/main/mainVisual-02.jpg" alt=""></div>
+                        <div class="visual_txt">
+                            <div class="big_text">
+                                <span class="medium">책</span> 읽는 <span class="strong">해운대</span><br>
+                                <span class="medium">미래</span>를 여는 <span class="strong">인문학도서관</span></div>
+                            <div class="small_text">지역주민과 더불어 문화의 향기가 꽃피는 공간이 되도록 노력하겠습니다.</div>
+                        </div>                        
+                    </div>
+                    <div class="visual_box">
+                        <div class="pt"><img src="/user_res/images/library/renew_2023/main/mainVisual-01.jpg" alt=""></div>
+                        <div class="visual_txt">
+                            <div class="big_text">
+                                <span class="medium">책</span> 읽는 <span class="strong">해운대</span><br>
+                                <span class="medium">미래</span>를 여는 <span class="strong">인문학도서관</span></div>
+                            <div class="small_text">지역주민과 더불어 문화의 향기가 꽃피는 공간이 되도록 노력하겠습니다.</div>
+                        </div>  
+                    </div>
+                </div>
+                <div class="popup_zone">
+                    <section class="popup">
+                        <h2><span class="skip">홍보창1</span></h2>
+                        <ul class="popup_list">
+
+                            
+                                            <li>
+                                                <a href="https://www.haeundae.go.kr/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3160058&categoryCode1=600" target="_self" title="페이지이동">
+                                                    <img src="/upload_data/popup/info/177200787273023.jpg" alt="송정동어린이작은도서관 상호대차 서비스 확대 운영 안내
+3월3일부터 참여도서관의 자료를 송정동어린이작은도서관으로 받아보실 수 있습니다.
+
+상호대차 이용방법
+1.통합검색포털 로그인> 2.도서검색 후, 도서제목 클릭 > 3.이용도서관(책 받을 곳) > 4.도착알림(입수승인) > 5.기간 내 도서관 방문
+
+상호대차 서비스 참여도서관
+해운대인문학도서관(749-6591)
+재송어린이도서관(749-7635)
+작은인문학도서관(749-2922)
+해운대도서관 우동분관(709-0983)
+해운대도서관(709-0946)
+송정동어린이작은도서관(749-5896)
+우2동어린이작은도서관(749-6658)
+반송도서관(922-0716)
+반여도서관(749-6084)"  />
+                                                </a>
+                                            </li>
+                                            
+                                        <li>
+                                            <img src="/upload_data/popup/info/176532511321166.jpg" alt="해운대인문학도서관 부설주차장 유료화 안내
+
+주차장의 효율적 관리를 위한 주차관제시스템 설치에 따라, 해운대인문학도서관 부설주차장이 12/16(화)부터 유료로 전환됩니다.
+
+운영시간 및 이용 요금 안내
+개관일
+화~금요일 09:00~22:00
+토요일 09:00~18:00
+일요일 09:00~17:00
+-> 이용료  최초1시간 무료 (이후 10분당 200원), 1일 최대 6,000원
+
+휴관일/운영시간 외 무료개방
+
+문의 051-749-6572(해운대구청 교육도서관과)"  />
+                                        </li>
+                                        
+                                        <li>
+                                            <img src="/upload_data/popup/info/175869434665385.jpg" alt="장산역 스마트도서관 개소 및 이용안내
+
+위치 : 도시철도 2호선 장산역 12번, 14번 출구 (부산 해운대구 해운대로820)
+이용대상: 공공도서관 책이음 회원증 소지자
+이용시간 : 365일 (※시스템 점검시간 : am12:00~06:00)
+도서대출 : 1인당 2권 14일간 대출 (※해운대인문학도서관 대출권수 5권에 포함)
+대출정지: 연체 시 연체일수만큼 대출 정지
+문의사항 : ☎749-6591/6586 (이용방법 안내), ☎1661-1379(기기장애 안내 콜센터)"  />
+                                        </li>
+                                        
+                                            <li>
+                                                <a href="https://library.busan.go.kr/himbooks/book/search/collectionOfMaterials" target="_blank" title="새창">
+                                                    <img src="/upload_data/popup/info/175463795773429.png" alt="우2동 어린이작은도서관 상호대차 서비스 확대 운영 안내
+4월 1일부터 참여도서관의 자료를 우2동어린이작은도서관으로
+받아보실 수 있습니다.
+상호대차 이용방법
+1.통합검색포털 로그인
+2.도서검색 후, 도서제목 클릭
+3.이용도서관(책 받을 곳)
+4.도착 알림(입수승인)
+5.기간 내 도서관 방문
+상호대차 서비스 참여도서관
+해운대인문학도서관(749-6591)
+재송어린이도서관(749-7635)
+반여도서관(749-6084)
+작은인문학도서관(749-2922)
+우2동어린이작은도서관(749-6658)
+해운대도서관(709-0900)
+해운대도서관 우동분관(742-2167)
+반송도서관(545-0102)
+문의 051)749-6658/6591
+"  />
+                                                </a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&paging=ok&startPage=1&dataSid=3145122" target="_self" title="페이지이동">
+                                                    <img src="/upload_data/popup/info/175463821351117.png" alt="반송종합사회복지관 들락날락 개관
+개관일 : 2025.7.1.(화)
+위치 : 해운대구 아랫반송로1번길 15, 반송종합사회복지관 5층
+운영시간 : 화~토요일 09:30~17:30 ※일,월요일 및 법정공휴일 휴관
+주요시설 : 그물놀이터, XR클라이밍, 4면 실감형체험관, 라이브스케치 등
+이용방법 : 운영시간 내 자율이용, 단체방문시(10인 이상) 사전예약
+문의 : 070-5045-1675
+"  />
+                                                </a>
+                                            </li>
+                                            
+                                        <li>
+                                            <img src="/upload_data/popup/info/175463995264154.jpg" alt="반여도서관 운영안내     
+종합자료실 화~금 9시~22시, 토 9시~18시, 일 9시~17시
+어린이자료실  화~금 9시~18시, 토 9시~18시, 일 9시~17시
+ ※메타버스 상상놀이터 화~일 9시~17시
+- 어린이복합문화공간 들락날락
+로봇공연, 다양한 실감형 콘텐츠, 체험형 견학프로그램 운영
+
+휴관일 : 법정공휴일, 임시공휴일 및 정기공휴일(월요일)
+문의 : 749-6081"  />
+                                        </li>
+                                        
+                                        <li>
+                                            <img src="/upload_data/popup/info/175464040712057.jpg" alt="송정동 어린이작은도서관 개관 및 운영 안내
+
+운영시간: 화~토요일 09:00~18:00 ​ ※일·월요일 및 법정공휴일​ 휴관
+주요시설: 메타버스, 라이브스케치, 스마트테이블, AR도서, 코딩로봇 등
+주소: 해운대구 송정중앙로21번길 20(송정동 행정복지센터 2층)
+문의: 057-749-5896
+"  />
+                                        </li>
+                                        
+                                            <li>
+                                                <a href="https://www.haeundae.go.kr/councilk/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&paging=ok&startPage=17&dataSid=3102354" target="_self" title="페이지이동">
+                                                    <img src="/upload_data/popup/info/175464145314569.gif" alt="인문학도서관 자원봉사자 모집
+
+모집 대상 : 청소년 ~ 성인
+활동 내용 : 서가 정리 및 도서 배가, 이용자 안내 등
+봉사 혜택 : 자원 봉사 시간 인정
+"  />
+                                                </a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="https://www.haeundae.go.kr/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&paging=ok&startPage=1&dataSid=3115501" target="_self" title="페이지이동">
+                                                    <img src="/upload_data/popup/info/175464172494819.gif" alt="아이사랑 자원 봉사자 모집
+
+모집 대상 : 성인 
+월2회 4시간 이상 봉사 참여 희망자
+
+활동 내용 : 서가정리(도서 배열 상태 체크, 반납된 도서 정리 등)
+도서관 자료실 이용자 열람 지도 및 안내
+도서관 행사지원 등 
+
+봉사 혜택 : 대출권수 2배 확대, 상·하반기 간담회, 상·하반기 자기계발/취미분야 일일특강(※3개월 이상 월2회 4시간 활동지속 회원대상)
+자원봉사센터 연계 봉사시간 적립(모든 회원 대상)
+"  />
+                                                </a>
+                                            </li>
+                                            
+                                        <li>
+                                            <img src="/upload_data/popup/info/177191229316053.jpg" alt="2026년도 해운대구 구립도서관(인문학, 반여, 재송어린이)의 희망도서 서비스 운영 일정을 아래와 같이 알려드립니다
+
+비치희망도서
+26년 1월1일 09시~ 26년 11월 30일 23시59분
+
+지역서점바로대출
+26년 1월 6일(화) 10:00~(예산 소진시 마감)"  />
+                                        </li>
+                                        
+                                            <li>
+                                                <a href="https://www.haeundae.go.kr/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&paging=ok&startPage=1&categoryCode1=99,100&dataSid=3081576" target="_self" title="페이지이동">
+                                                    <img src="/upload_data/popup/info/175463756382009.jpg" alt="책이음 차량(타관반납도서 운송) 운영 축소 안내
+
+부산도서관에서 운영·관리하는
+책이음 차량(타관반납도서 운송) 운영이 축소되어
+해당 도서관으로의 도서 복귀가 지연될 수 있으니 참고바랍니다.
+단, 반납일자는 지연되지 않습니다.
+
+인문학도서관·재송어린이도서관 : 화, 수, 목, 토(금 미운행)
+반여도서관 : 화, 목, 토(수, 금 미운행)
+문의: 부산도서관 관리팀 310-5491~3"  />
+                                                </a>
+                                            </li>
+                                            
+                        </ul>
+                        <div class="popup_ctrl">
+                            <div class="popup_tit">팝업존</div>
+                            <div class="control_box">
+                                <span class="visual_count"><strong class="count"></strong> / <span class="all"></span></span>
+                                <button type="button" class="popup_prev">이전 팝업 보기</button>
+                                <button type="button" class="popup_control stop">팝업 롤링 정지</button>
+                                <button type="button" class="popup_next">다음 팝업 보기</button>
+                                <!-- 20220422 주석처리 <a class="more" href="#">팝업 전체보기</a> -->
+                            </div>
+                        </div>   
+                        <script>
+                            $('.popup').imageRolling({
+                                rollList : '.popup_list > li',
+                                prevBtn : '.popup_prev',
+                                nextBtn : '.popup_next',
+                                controlBtn : '.popup_control',
+                                waitingTime : '9000'
+                            });
+                        </script>
+                    </section>
+                </div>                  
+            </div>  
+            <!-- //메인 비주얼 + 팝업존 -->      
+        </div>
+    </div>
+    
+    <!-- 자주 찾는 정보 -->
+    <div class="main_quick">
+        <div class="inner">
+            <div class="quick_tit">자주찾는 정보</div>
+            <div class="quick_list">
+                <ul>
+                    <li>
+                        <a href="/library/index.do?menuCd=DOM_000001004000000000" target="_self">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon1.png" alt="" /></div>
+                            <div class="qi_txt">도서관 이용안내</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/library/index.do?menuCd=DOM_000001004011000000" target="_self">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon7.png" alt="" /></div>
+                            <div class="qi_txt">작은도서관 현황</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.haeundae.go.kr/library/index.do?menuCd=DOM_000001001012000000" target="_blank" title="대출내역조회(새창)">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon2.png" alt="" /></div>
+                            <div class="qi_txt">대출내역조회</div>
+                        </a>
+                    </li>   
+                    <li>
+                        <a href="http://www.haeundae.go.kr/library/index.do?menuCd=DOM_000001001013000000" target="_self">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon3.png" alt="" /></div>
+                            <div class="qi_txt">비치희망 도서신청</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/library/index.do?menuCd=DOM_000001003000000000" target="_self">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon4.png" alt="" /></div>
+                            <div class="qi_txt">온라인 수강신청</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://library.busan.go.kr/himbooks" target="_blank" title="통합사이트(새창)">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon6.png" alt="" /></div>
+                            <div class="qi_txt">통합사이트</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/board/list.do?boardId=BBS_0000488&menuCd=DOM_000001002001000000&contentsSid=3231&cpath=%2Flibrary" target="_self">
+                            <div class="qi icon1"><img src="/user_res/images/library/renew_2023/main/info_icon6-16.png" alt="" /></div>
+                            <div class="qi_txt">이달의 행사</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>            
+    <!-- //자주 찾는 정보 --> 
+    
+    <!-- 도서관 새소식 -->
+    <div class="news_box">
+        <div class="inner">
+            <div class="layer_tit"><span class="blue">도서관</span> 새소식</div>
+            <div class="tab list">
+                <ul>
+                    <li class="active"><a href="#" title="선택됨"><span>공통</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3068062&categoryCode1=99">
+                                                            부산시 통합도서관 서비스 약관재동의 대상 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2021-01-05</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175356&categoryCode1=99">
+                                                            장산역 스마트도서관 도서교체 작업 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-02</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175282&categoryCode1=99">
+                                                            해운대구립도서관 외부반납함 수거일 변동 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-01</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175134&categoryCode1=99">
+                                                            해운대구립도서관 2026년 10월 공휴일 휴관 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-09-29</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3174429&categoryCode1=99">
+                                                            해운대구립도서관 외부반납함 수거일 변동 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-09-17</div> 
+                                                </li>
+                                                         
+                            <li class="more"><a href="https://www.haeundae.go.kr/board/list.do?orderBy=&boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&contentsSid=706&categoryCode1=99"><span class="blind">도서관 새소식 공통</span>더보기</a></li>
+                        </ul>
+                    </li> 
+                    <li class=""><a href="#" title="선택안됨"><span>인문학도서관</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175729&categoryCode1=100">
+                                                            [11월 고전의 창(窓)] 고전의 창으로 보는 삶, 관계, 그리고 인간 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-09</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175728&categoryCode1=100">
+                                                            [11월 다시 책, 다시 나] 내 삶을 깨우는 네 번의 혁명 - 고독 속에서 정화되는 내면 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-09</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175727&categoryCode1=100">
+                                                            [동네서점 문화놀이터(곰곰이서점)] 김세실 작가와의 만남 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-09</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3176470&categoryCode1=100">
+                                                            [인문학도서관] 11월 북큐레이션 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-27</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3176352&categoryCode1=100">
+                                                            2026년 11월 주말의 영화 무료상영 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-23</div> 
+                                                </li>
+                            
+                                <li class="more">
+                                    <a href="/board/list.do?boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&categoryCode1=100"><span class="blind">도서관 새소식 인문학도서관</span>더보기</a>
+                                </li>                                
+                            </ul>
+
+                    </li>
+                    <li class=""><a href="#" title="선택안됨"><span>반여도서관</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">반여도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3175965&categoryCode1=200">
+                                                            [반여]2026년 뚝딱뚝딱 메이커 프로그램 운영 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-10-15</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">반여도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3173260&categoryCode1=200">
+                                                            [반여] 2026년 하반기어린이강좌 &lt;마음을 읽는 문해력, 그림책 여행&gt; 수강생 모집
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-09-03</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">반여도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3173137&categoryCode1=200">
+                                                            2026년 반여도서관 지역서점 희망도서 바로대출 도서신청 마감 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-09-01</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">반여도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172918&categoryCode1=200">
+                                                            [반여] 2026년 들락날락 체험교실 하반기(9~12월) 접수 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-08-30</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">반여도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171987&categoryCode1=200">
+                                                            [반여]2026년 9월 독서의 달 행사 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-08-11</div> 
+                                                </li>
+                            
+                            <li class="more">
+                                <a href="/board/list.do?boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&categoryCode1=200"><span class="blind">도서관 새소식 반여도서관</span>더보기</a>
+                            </li>                                
+                        </ul>
+                    </li>
+                    <li class=""><a href="#" title="선택안됨"><span>재송어린이도서관</span></a>
+                        <ul style="display: none;">
+                        
+                                            <li>
+                                                <div class="news_cate">
+                                                    <!-- 공지일때 공지 표시 class="noti" -->
+                                                    <span class="cate noti">공지</span>
+                                                    <!-- 해당 카테고리 표시 class="cg" -->
+                                                    <span class="cate cg">재송어린이도서관</span>
+                                                </div>
+                                                <div class="news_tit">
+                                                    <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172608&categoryCode1=300">
+                                                        2026년 재송어린이도서관 지역서점 바로대출 희망도서 신청 마감안내(8/25)
+                                                    </a>
+                                                </div>
+                                                <div class="news_date">2026-08-25</div> 
+                                            </li>
+
+                        
+                                            <li>
+                                                <div class="news_cate">
+                                                    <!-- 공지일때 공지 표시 class="noti" -->
+                                                    <span class="cate noti">공지</span>
+                                                    <!-- 해당 카테고리 표시 class="cg" -->
+                                                    <span class="cate cg">재송어린이도서관</span>
+                                                </div>
+                                                <div class="news_tit">
+                                                    <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172128&categoryCode1=300">
+                                                        [재송] 2026 하반기 유아일일독서교실 신청 안내
+                                                    </a>
+                                                </div>
+                                                <div class="news_date">2026-08-13</div> 
+                                            </li>
+
+                        
+                                            <li>
+                                                <div class="news_cate">
+                                                    <!-- 공지일때 공지 표시 class="noti" -->
+                                                    <span class="cate noti">공지</span>
+                                                    <!-- 해당 카테고리 표시 class="cg" -->
+                                                    <span class="cate cg">재송어린이도서관</span>
+                                                </div>
+                                                <div class="news_tit">
+                                                    <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3158510&categoryCode1=300">
+                                                        [재송] 『책 읽는 재미 가득! 나는야 읽기쟁이』 독서통장 발급 안내
+                                                    </a>
+                                                </div>
+                                                <div class="news_date">2026-01-21</div> 
+                                            </li>
+
+                        
+                                            <li>
+                                                <div class="news_cate">
+                                                    <!-- 해당 카테고리 표시 class="cg" -->
+                                                    <span class="cate cg">재송어린이도서관</span>
+                                                </div>
+                                                <div class="news_tit">
+                                                    <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172240&categoryCode1=300">
+                                                        [재송어린이] 2026년 독서의 달 행사 안내
+                                                    </a>
+                                                </div>
+                                                <div class="news_date">2026-08-16</div> 
+                                            </li>
+                        
+                                            <li>
+                                                <div class="news_cate">
+                                                    <!-- 해당 카테고리 표시 class="cg" -->
+                                                    <span class="cate cg">재송어린이도서관</span>
+                                                </div>
+                                                <div class="news_tit">
+                                                    <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171271&categoryCode1=300">
+                                                        [재송] 2026 하반기 어린이교육강좌 수강신청 안내
+                                                    </a>
+                                                </div>
+                                                <div class="news_date">2026-07-30</div> 
+                                            </li>
+                        
+                            <li class="more">
+                                <a href="/board/list.do?boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&categoryCode1=300"><span class="blind">도서관 새소식 재송어린이도서관</span>더보기</a>
+                            </li>                            
+                        </ul>
+
+                    </li>
+                    <li class=""><a href="#" title="선택안됨"><span>작은인문학도서관</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">작은인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171514&categoryCode1=400">
+                                                            [작은인문학] 들락날락 영어랑놀자(2기) 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-08-04</div> 
+                                                </li>
+    
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">작은인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3170942&categoryCode1=400">
+                                                            [작은인문학] 들락날락 창의배움터 여름바다교실 프로그램 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-24</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">작은인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3167554&categoryCode1=400">
+                                                            2026년 들락날락 영어랑놀자(1기) 수강생 모집
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-05-13</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">작은인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3110469&categoryCode1=400">
+                                                            [작은인문학도서관] 신착도서안내 (제5차 정기도서)
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2023-11-07</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">작은인문학도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3107235&categoryCode1=400">
+                                                            [작은인문학도서관] 신착도서안내 (제4차 정기도서)
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2023-09-05</div> 
+                                                </li>
+                            
+                            <li class="more">
+                                <a href="/board/list.do?boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&categoryCode1=400"><span class="blind">도서관 새소식 작은인문학도서관</span>더보기</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                    <li><a href="#" title="선택안됨"><span>우2동어린이작은도서관</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172122&categoryCode1=500">
+                                                            [우2동]들락날락 체험교실 관내어린이집 및 유치원 신청 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-08-13</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3170987&categoryCode1=500">
+                                                            2026년 우2동어린이작은도서관 들락날락 영어랑 놀자(2기)프로그램 수강생 모집안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-25</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3169205&categoryCode1=500">
+                                                            2026년 들락날락 창의배움터 수강생 모집
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-06-19</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">우2동어린이작은도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171089&categoryCode1=500">
+                                                            우2동 어린이작은도서관 들락날락 창의배움터 여름 바다교실 접수 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-28</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">우2동어린이작은도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3170986&categoryCode1=500">
+                                                            2026년 우2동어린이작은도서관 들락날락 영어랑 놀자(2기)프로그램 수강생 모집안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-25</div> 
+                                                </li>
+                                                         
+                            <li class="more"><a href="https://www.haeundae.go.kr/board/list.do?orderBy=&boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&contentsSid=706&categoryCode1=99"><span class="blind">도서관 새소식 우2동어린이작은도서관</span>더보기</a></li>
+                        </ul>
+                    </li>  
+                    <li><a href="#" title="선택안됨"><span>송정동어린이작은도서관</span></a>
+                        <ul style="display: none;">
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3172120&categoryCode1=600">
+                                                            [송정동]들락날락 체험교실 관내어린이집 및 유치원 신청 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-08-13</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 공지일때 공지 표시 class="noti" -->
+                                                        <span class="cate noti">공지</span>
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">공통</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3169207&categoryCode1=600">
+                                                            2026년 들락날락 창의배움터 수강생 모집
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-06-19</div> 
+                                                </li>
+
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">송정동어린이작은도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171259&categoryCode1=600">
+                                                            2026년 송정동어린이작은도서관 들락날락 영어랑 놀자(2기) 프로그램 수강생 모집 안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-30</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">송정동어린이작은도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3171090&categoryCode1=600">
+                                                            송정동어린이작은도서관 들락날락 창의배움터 여름 바다교실 프로그램 수강생 모집안내
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-07-28</div> 
+                                                </li>
+                            
+                                                <li>
+                                                    <div class="news_cate">
+                                                        <!-- 해당 카테고리 표시 class="cg" -->
+                                                        <span class="cate cg">송정동어린이작은도서관</span>
+                                                    </div>
+                                                    <div class="news_tit">
+                                                        <a href="/library/board/view.do?boardId=BBS_0000091&menuCd=DOM_000001005001000000&dataSid=3166429&categoryCode1=600">
+                                                            가정의 달 가족프로그램 수강생 모집
+                                                        </a>
+                                                    </div>
+                                                    <div class="news_date">2026-04-23</div> 
+                                                </li>
+                                                         
+                            <li class="more"><a href="https://www.haeundae.go.kr/board/list.do?orderBy=&boardId=BBS_0000091&startPage=1&menuCd=DOM_000001005001000000&contentsSid=706&categoryCode1=99"><span class="blind">도서관 새소식 송정동어린이작은도서관</span>더보기</a></li>
+                        </ul>
+                    </li>                                      
+                </ul>
+            </div>   
+        </div>       
+    </div>
+    <!-- //도서관 새소식 -->   
+    
+    <!-- 일정 및 운영시간 안내 -->
+    <div class="info_box">
+        <div class="inner">
+            <!-- 오늘의 일정 -->
+            <div class="left_box">
+                <div class="layer_tit"><span class="mint">오늘의</span> 일정</div>
+                <div class="today_tab list">
+                    <ul>
+                        <li class="active"><a href="#" title="선택됨"><span>인문학도서관</span></a>
+                            <div class="tab_cont" style="display: none;">
+                                <div class="schedule_box">
+                                    <!-- 날짜 선택 -->
+                                    <div class="calendar">
+                                        <div class="btn_yesterday">
+                                            <button type="button" onclick="$.json('inmoon','minus')"><img src="/user_res/images/library/renew_2023/main/btn_top.png" alt="전 날짜로"></button>
+                                        </div>
+                                        <div class="select_day" id="inmoon_select_day">
+                                            <div class="year">2026</div>
+                                            <div class="date">10.30</div>
+                                            <div class="day_week">금요일</div>
+                                        </div>
+                                        <div class="btn_tomorrow">
+                                            <button type="button" onclick="$.json('inmoon','plus')"><img src="/user_res/images/library/renew_2023/main/btn_bottom.png" alt="다음 날짜로"></button>
+                                        </div>
+                                    </div>
+                                    <!-- //날짜 선택 -->
+                                    <!-- 일정 -->
+                                    <div class="calendar_detail">
+                                        <div class="sel_date_tit">인문학도서관</div>
+                                        <div class="sel_date_list">
+                                            <ul id="inmoonlibrary">
+                                            
+                                                <li>
+                                                    <div class="schedule_name">
+                                                        <a>*등록된 일정이 없습니다</a>
+                                                    </div>
+                                                    <div class="schedule_info">
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                            </ul>
+                                        </div>
+                                    </div>   
+                                    <!-- //일정 -->                                 
+                                </div>
+                                <div class="more"><a href="/board/list.do?boardId=BBS_0000488&menuCd=DOM_000001002001000000&contentsSid=3231&cpath=%2Flibrary"><span class="blind">오늘의 일정 인문학도서관</span>더보기</a></div>
+                            </div>
+                        </li>
+                        <li class=""><a href="#" title="선택안됨"><span>재송어린이도서관</span></a>
+                            <div class="tab_cont" style="display: none;">
+                                <div class="schedule_box">
+                                    <!-- 날짜 선택 -->
+                                    <div class="calendar">
+                                        <div class="btn_yesterday">
+                                            <button type="button" onclick="$.json('jaesong','minus')"><img src="/user_res/images/library/renew_2023/main/btn_top.png" alt="전 날짜로"></button>
+                                        </div>
+                                        <div class="select_day" id="jaesong_select_day">
+                                            <div class="year">2026</div>
+                                            <div class="date">10.30</div>
+                                            <div class="day_week">금요일</div>
+                                        </div>
+                                        <div class="btn_tomorrow">
+                                            <button type="button" onclick="$.json('jaesong','plus')"><img src="/user_res/images/library/renew_2023/main/btn_bottom.png" alt="다음 날짜로"></button>
+                                        </div>
+                                    </div>
+                                    <!-- //날짜 선택 -->
+                                    <!-- 일정 -->
+                                    <div class="calendar_detail">
+                                        <div class="sel_date_tit">재송어린이도서관</div>
+                                        <div class="sel_date_list">
+                                            <ul id="jaesonglibrary">
+                                            
+                                            <li>
+                                                <div class="schedule_name">
+                                                    <a>*등록된 일정이 없습니다</a>
+                                                </div>
+                                                <div class="schedule_info">
+                                                    
+                                                </div>
+                                            </li>
+                                                              
+                                            </ul>
+                                        </div>
+                                    </div>   
+                                    <!-- //일정 -->                                 
+                                </div>
+                                <div class="more"><a href="/board/list.do?boardId=BBS_0000488&menuCd=DOM_000001002001000000&contentsSid=3231&cpath=%2Flibrary"><span class="blind">오늘의 일정 재송어린이도서관</span>더보기</a></div>
+                            </div>
+                        </li>
+                        <li class=""><a href="#" title="선택안됨"><span>반여도서관</span></a>
+                            <div class="tab_cont" style="display: none;">
+                                <div class="schedule_box">
+                                    <!-- 날짜 선택 -->
+                                    <div class="calendar">
+                                        <div class="btn_yesterday">
+                                            <button type="button" onclick="$.json('vanyeo','minus')"><img src="/user_res/images/library/renew_2023/main/btn_top.png" alt="전 날짜로"></button>
+                                        </div>
+                                        <div class="select_day" id="vanyeo_select_day">
+                                            <div class="year">2026</div>
+                                            <div class="date">10.30</div>
+                                            <div class="day_week">금요일</div>
+                                        </div>
+                                        <div class="btn_tomorrow">
+                                            <button type="button" onclick="$.json('vanyeo','plus')"><img src="/user_res/images/library/renew_2023/main/btn_bottom.png" alt="다음 날짜로"></button>
+                                        </div>
+                                    </div>
+                                    <!-- //날짜 선택 -->
+                                    <!-- 일정 -->
+                                    <div class="calendar_detail">
+                                        <div class="sel_date_tit">반여도서관</div>
+                                        <div class="sel_date_list">
+                                            <ul id="vanyeolibrary">
+                                            
+                                            <li>
+                                                <div class="schedule_name">
+                                                    <a>*등록된 일정이 없습니다</a>
+                                                </div>
+                                                <div class="schedule_info">
+                                                    
+                                                </div>
+                                            </li>
+                                                          
+                                            </ul>
+                                        </div>
+                                    </div>   
+                                    <!-- //일정 -->                                 
+                                </div>
+                                <div class="more"><a href="/board/list.do?boardId=BBS_0000488&menuCd=DOM_000001002001000000&contentsSid=3231&cpath=%2Flibrary"><span class="blind">오늘의 일정 반여도서관</span>더보기</a></div>
+                            </div>
+                        </li>             
+                    </ul>
+                </div>    
+            </div>
+            <!-- //오늘의 일정 -->
+
+            <!-- 도서관별 대표전화 및 운영시간 -->
+            <div class="right_box">
+                <div class="block_tit">도서관별 대표전화 및 운영시간</div>
+                <div class="time_tab list">
+                    <ul>
+                        <li class="active"><a href="#" title="선택됨"><span>인문학도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">인문학도서관</div>
+                                        <div class="library_tel">051-749-6580</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">종합자료실</span>
+                                                <span class="lib_time">09:00-<strong>22:00</strong> (☎051-749-6586 / 6591)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">어린이자료실</span>
+                                                <span class="lib_time">09:00-<strong>20:00</strong> (☎051-749-6587~8)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">디지털&amp;연속간행물실</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong> (☎051-749-6585)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">토요일</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">일요일</span>
+                                                <span class="lib_time">09:00-<strong>17:00</strong></span>
+                                            </li>                                                               
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                        <!--<div class="holiday_tit">※ 이달의 <span class="bold">휴관일</span></div>
+                                        <div class="holiday_day">
+                                            <ul>
+                                                <li>07</li>
+                                                <li>14</li>
+                                                <li>15</li>
+                                                <li>21</li>
+                                                <li>28</li>
+                                            </ul>
+                                        </div>-->
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>
+                        <li class=""><a href="#" title="선택안됨"><span>반여도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">반여도서관</div>
+                                        <div class="library_tel">051-749-6081</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">종합자료실(화~금)</span>
+                                                <span class="lib_time">09:00-<strong>22:00</strong> (☎051-749-6084)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">어린이자료실(화~금)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong> (☎051-749-6083)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">토요일</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">일요일</span>
+                                                <span class="lib_time">09:00-<strong>17:00</strong></span>
+                                            </li>  
+                                            <li>
+                                                <span class="lib_atc">메타버스상상놀이터(화~일)</span> 
+                                                <span class="lib_time">09:00-<strong>17:00</strong></span>
+                                            </li>                                                             
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>  
+                        <li class=""><a href="#" title="선택안됨"><span>재송어린이도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">재송어린이도서관</div>
+                                        <div class="library_tel">051-749-7645</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">아동자료실(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong> (☎051-749-7635)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">유아자료실(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong> (☎051-749-7634)</span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">디지털자료실(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">일요일</span>
+                                                <span class="lib_time">09:00-<strong>17:00</strong></span>
+                                            </li>                                                               
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>
+                        <li class=""><a href="#" title="선택안됨"><span>작은인문학도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">작은인문학도서관</div>
+                                        <div class="library_tel">051-749-2922</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">도서관(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">열람실(월~토)</span>
+                                                <span class="lib_time">07:00-<strong>22:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">도서관 휴관</span>
+                                                <span class="lib_time"><strong>일·월요일, 공휴일</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">열람실 휴관</span>
+                                                <span class="lib_time"><strong>일요일, 공휴일</strong></span>
+                                            </li>                                                               
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>          
+                        <li class=""><a href="#" title="선택안됨"><span>우2동어린이작은도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">우2동어린이작은도서관</div>
+                                        <div class="library_tel">051-749-6658</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">도서관(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">도서관 휴관</span>
+                                                <span class="lib_time"><strong>일·월요일, 공휴일</strong></span>
+                                            </li>                                                            
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>
+                        <li class=""><a href="#" title="선택안됨"><span>송정동어린이작은도서관</span></a>
+                            <div class="time_cont" style="display: none;">
+                                <div class="lib_info_wrap">
+                                    <div class="library_info">
+                                        <div class="library_name">송정동어린이작은도서관</div>
+                                        <div class="library_tel">051-749-5896</div>
+                                    </div>
+                                    <div class="library_info_list">
+                                        <ul>
+                                            <li>
+                                                <span class="lib_atc">도서관(화~토)</span>
+                                                <span class="lib_time">09:00-<strong>18:00</strong></span>
+                                            </li>
+                                            <li>
+                                                <span class="lib_atc">도서관 휴관</span>
+                                                <span class="lib_time"><strong>일·월요일, 공휴일</strong></span>
+                                            </li>                                                            
+                                        </ul>
+                                    </div>                                    
+                                </div>
+                                <div class="holiday_wrap">
+                                    <div class="holiday_info">
+                                    </div>
+                                    <div class="holiday_stxt">법정공휴일, 임시 공휴일, 정기휴관일 매주 월요일</div>  
+                                </div>
+                            </div>
+                        </li>                                 
+                    </ul>
+                </div> 
+            </div>
+            <!-- //도서관별 대표전화 및 운영시간 -->
+        </div>
+    </div>
+    <!-- //일정 및 운영시간 안내 -->
+    
+    <!-- 이달의 추천도서 -->
+    <div class="book_box">
+        <div class="inner">
+            <div class="section_tit_wrap">
+                <div class="block_tit"><span class="yellow">이달의</span> 추천도서</div>
+                <div class="more"><a href="/board/list.do?boardId=BBS_0000213&menuCd=DOM_000001001006000000"><span class="blind">이달의 추천도서관</span>더보기</a></div>
+            </div>
+            <div class="book">
+                <div class="btn_area">
+                    <div class="btn_box">
+                        <button class="prev"><img src="/user_res/images/library/renew_2023/main/btn_prev_yellow.png" alt="이전" /></button>
+                        <button class="next"><img src="/user_res/images/library/renew_2023/main/btn_next_yellow.png" alt="다음" /></button>
+                    </div>
+                </div>
+                <div class="book_slide">
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175169" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068563522454.jpg" alt="[26년10월일반] 요즘 어른을 위한 최소한의 맞춤법 도서 이미지"></div>
+                                <div class="book_name">[26년10월일반] 요즘 어른을 위한 최소한의 맞춤법</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175168" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068557883252.jpg" alt="[26년10월일반] 데미안 프로젝트 도서 이미지"></div>
+                                <div class="book_name">[26년10월일반] 데미안 프로젝트</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175167" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068553338780.jpg" alt="[26년10월청소년] 청소년을 위한 개념 있는 언어 생활 도서 이미지"></div>
+                                <div class="book_name">[26년10월청소년] 청소년을 위한 개념 있는 언어 생활</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175166" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068547070359.jpg" alt="[26년10월청소년] 시간을 건너는 집 도서 이미지"></div>
+                                <div class="book_name">[26년10월청소년] 시간을 건너는 집</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175165" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068541683533.jpg" alt="[26년10월아동] 세종책방 회원을 모집합니다. 도서 이미지"></div>
+                                <div class="book_name">[26년10월아동] 세종책방 회원을 모집합니다.</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175164" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068535931275.jpg" alt="[26년10월아동] 세계를 담은 한 도서 이미지"></div>
+                                <div class="book_name">[26년10월아동] 세계를 담은 한</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175162" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068523491800.jpg" alt="[26년10월유아] 잊어도 괜찮 도서 이미지"></div>
+                                <div class="book_name">[26년10월유아] 잊어도 괜찮</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3175161" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/179068513293313.jpg" alt="[26년10월유아] 맞춤법이 맞나요 빵집 도서 이미지"></div>
+                                <div class="book_name">[26년10월유아] 맞춤법이 맞나요 빵집</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3172884" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/178790891617710.jpg" alt="[26년9월일반] 독서의 기술 도서 이미지"></div>
+                                <div class="book_name">[26년9월일반] 독서의 기술</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="wbox">
+                        <a href="/board/view.do?boardId=BBS_0000213&amp;menuCd=DOM_000001001006000000&amp;dataSid=3172883" class="box ">
+                            <div class="base">
+                                <div class="img_wrap"><img src="/upload_data/board_data/BBS_0000213/thumbnail/178790887284889.jpg" alt="[26년9월일반] 첫 여름, 완주 도서 이미지"></div>
+                                <div class="book_name">[26년9월일반] 첫 여름, 완주</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //이달의 추천도서 -->
+    
+    <!-- 배너 모음 -->
+    <div class="banner">
+        <div class="inner">
+	        <div class="banner_wrap">
+	            <div class="bn_ctrl">
+	                <button class="bn_prev" title="이전 배너 보기">
+	                    <img alt="이전 배너 보기" src="/user_res/images/library/renew_2023/main/btn_prev_line.png" />
+	                </button>
+	                <button class="bn_stop" title="배너 롤링 정지">
+	                    <img alt="배너 롤링 정지" src="/user_res/images/library/renew_2023/main/btn_stop_line.png" />
+	                </button>
+	                <button class="bn_next" title="다음 배너 보기">
+	                    <img alt="다음 배너 보기" src="/user_res/images/library/renew_2023/main/btn_next_line.png" />
+	                </button>
+	            </div>
+	            <ul class="clearfix">
+                
+	                <li>
+	                    <a href="https://home.pen.go.kr/haeundaelib/" target="_self" title="페이지이동">
+	                        <img src="/upload_data/popup/banner/160809435301451.jpg" alt="부산광역시립해운대도서관" />
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a href="https://www.nl.go.kr/NL/contents/N30502000000.do" target="_self" title="페이지이동">
+	                        <img src="/upload_data/popup/banner/160809432263976.jpg" alt="사서에게 물어보세요" />
+	                    </a>
+	                </li>
+	            
+                    <li>
+	                    <a href="https://library.busan.go.kr:8585/baro/homepage/main.do" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/159962512675248.jpg" alt="부산희망도서바로대출" />
+	                    </a>
+	                </li>
+                
+                    <li>
+	                    <a href="https://books.nl.go.kr" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/158330806256841.png" alt="책바다" />
+	                    </a>
+	                </li>
+                
+                    <li>
+	                    <a href="http://cn.nl.go.kr/index.do" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/158330803336879.png" alt="책나래" />
+	                    </a>
+	                </li>
+                
+                    <li>
+	                    <a href="https://library.busan.go.kr/elib" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/158330800235386.jpg" alt="전자도서관" />
+	                    </a>
+	                </li>
+                
+                    <li>
+	                    <a href="https://library.busan.go.kr/portal/index.do" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/158330797488812.jpg" alt="도서관포털" />
+	                    </a>
+	                </li>
+                
+                    <li>
+	                    <a href="https://www.nl.go.kr/NL/contents/N30502000000.do" target="_blank" title="새창">
+	                        <img src="/upload_data/popup/banner/155367596362728.jpg" alt="사서에게 물어보세요" />
+	                    </a>
+	                </li>
+                
+	            </ul>
+	        </div>
+        </div>
+    </div>
+    <!-- //배너 모음 -->
+</div>
+ 
+<script type="text/javascript">              
+    function fn_do_search() {
+
+        if ( frm.search_txt.value == "" ) {
+            alert( "검색어를 입력하세요." );
+        } else {
+            frm.submit();
+        }
+    }    
+</script>        
+
+
+
+<script language="javascript">	
+	function getCookie(name)
+	{
+		var wcname = name + '=';
+		var wcstart, wcend, end;
+		var i = 0;
+
+		while(i <= document.cookie.length)
+		{
+			wcstart = i;
+			wcend   = (i + wcname.length);
+			if(document.cookie.substring(wcstart, wcend) == wcname)
+			{
+				if((end = document.cookie.indexOf(';', wcend)) == -1)
+				{
+					end = document.cookie.length;
+					document.ttt.value = document.cookie.substring(wcend, end);
+					return document.cookie.substring(wcend, end);
+				}
+			}
+
+			i = document.cookie.indexOf('', i) + 1;
+
+			if(i == 0) 
+			{
+				break;
+			}
+		}
+		return '';
+	}
+</script>
+
+<!--오늘의 일정 ajax-->
+<script>
+//인문학도서관 오늘 날짜
+var inmooncurrentDate = new Date();
+var inmoonyear = inmooncurrentDate.getFullYear();
+var inmoonmonth = inmooncurrentDate.getMonth();
+var inmoonday = inmooncurrentDate.getDate();
+var inmoondate = inmooncurrentDate.getDay();
+//새로운 날짜 저장용
+// var newinmoonyear;
+// var newinmoonmonth;
+// var newinmoonday;
+
+//어린이재송도서관 오늘 날짜
+var jaesongcurrentDate = new Date();
+var jaesongyear = jaesongcurrentDate.getFullYear();
+var jaesongmonth = jaesongcurrentDate.getMonth();
+var jaesongday = jaesongcurrentDate.getDate();
+var jaesongndate = jaesongcurrentDate.getDay();
+//새로운 날짜 저장용
+// var jaesongnyear;
+// var jaesongmonth;
+// var jaesongday;
+
+//반여도서관 오늘 날짜
+var vanyeocurrentDate = new Date();
+var vanyeoyear = vanyeocurrentDate.getFullYear();
+var vanyeomonth = vanyeocurrentDate.getMonth();
+var vanyeoday = vanyeocurrentDate.getDate();
+var vanyeodate = vanyeocurrentDate.getDay();
+//요일
+var tday;
+
+$.json = function(library, type) {
+        
+        //어느도서관
+        var lib = library;
+
+        //+,- 구분
+        var pm = type;
+
+        //게시글 불러올 날짜
+        var today;
+
+        //오늘 요일
+        var todate;
+
+        if(pm == 'plus') 
+        {
+              if(lib == 'inmoon') 
+              {
+                inmooncurrentDate.setDate(inmooncurrentDate.getDate() + 1);
+                inmoonyear = inmooncurrentDate.getFullYear();
+                inmoonmonth = inmooncurrentDate.getMonth();
+                inmoonday = inmooncurrentDate.getDate();
+                inmoondate = inmooncurrentDate.getDay();
+                today = inmoonyear + "-" + (inmoonmonth+1).toString().padStart(2,'0') + "-" + inmoonday.toString().padStart(2,'0');
+                todate = inmoondate;
+              } 
+              else if(lib == 'jaesong')  
+              {
+                jaesongcurrentDate.setDate(jaesongcurrentDate.getDate() + 1);
+                jaesongnyear = jaesongcurrentDate.getFullYear();
+                jaesongmonth = jaesongcurrentDate.getMonth();
+                jaesongday = jaesongcurrentDate.getDate();
+                jaesongndate = jaesongcurrentDate.getDay();
+                today = jaesongnyear + "-" + (jaesongmonth+1).toString().padStart(2,'0') + "-" + jaesongday.toString().padStart(2,'0');
+                todate = jaesongndate;
+              }
+              else
+              {
+                vanyeocurrentDate.setDate(vanyeocurrentDate.getDate() + 1);
+                vanyeoyear = vanyeocurrentDate.getFullYear();
+                vanyeomonth = vanyeocurrentDate.getMonth();
+                vanyeoday = vanyeocurrentDate.getDate();
+                vanyeodate = vanyeocurrentDate.getDay();
+                today = vanyeoyear + "-" + (vanyeomonth+1).toString().padStart(2,'0') + "-" + vanyeoday.toString().padStart(2,'0');
+                todate = vanyeodate;
+              }
+        } 
+        else 
+        {
+            if(lib == 'inmoon') 
+              {
+                inmooncurrentDate.setDate(inmooncurrentDate.getDate() - 1);
+                inmoonyear = inmooncurrentDate.getFullYear();
+                inmoonmonth = inmooncurrentDate.getMonth();
+                inmoonday = inmooncurrentDate.getDate();
+                inmoondate = inmooncurrentDate.getDay();
+                today = inmoonyear + "-" + (inmoonmonth+1).toString().padStart(2,'0') + "-" + inmoonday.toString().padStart(2,'0');
+                todate = inmoondate;
+              } 
+              else if(lib == 'jaesong')
+              {
+                jaesongcurrentDate.setDate(jaesongcurrentDate.getDate() - 1);
+                jaesongnyear = jaesongcurrentDate.getFullYear();
+                jaesongmonth = jaesongcurrentDate.getMonth();
+                jaesongday = jaesongcurrentDate.getDate();
+                jaesongndate = jaesongcurrentDate.getDay();
+                today = jaesongnyear + "-" + (jaesongmonth+1).toString().padStart(2,'0') + "-" + jaesongday.toString().padStart(2,'0');
+                todate = jaesongndate;
+              }
+              else
+              {
+                vanyeocurrentDate.setDate(vanyeocurrentDate.getDate() - 1);
+                vanyeoyear = vanyeocurrentDate.getFullYear();
+                vanyeomonth = vanyeocurrentDate.getMonth();
+                vanyeoday = vanyeocurrentDate.getDate();
+                vanyeodate = vanyeocurrentDate.getDay();
+                today = vanyeoyear + "-" + (vanyeomonth+1).toString().padStart(2,'0') + "-" + vanyeoday.toString().padStart(2,'0');
+                todate = vanyeodate;  
+              }
+        }
+
+        //게시판아이디
+        var bid;
+        var categorycode1;
+        if(lib == 'inmoon') {
+            bid = 'BBS_0000488';
+            categorycode1 = 'L001';
+        } 
+        else if(lib == 'jaesong') {
+            bid = 'BBS_0000488';
+            categorycode1 = 'L002';
+        }
+        else {
+            bid = 'BBS_0000488';
+            categorycode1 = 'L003';
+        }
+
+        console.log(today);
+
+		$.ajax({
+		type: "post",
+		url: "/index.do?contentsSid=3239",
+		data: {"today": today, "boardid": bid, "categorycode1": categorycode1, "todate":todate},
+		dataType: "html",
+		success: function (data) {
+            if(lib == 'inmoon') {
+            var yearElement = document.querySelector("#inmoon_select_day .year");
+            var dateElement = document.querySelector("#inmoon_select_day .date");
+            var dayWeekElement = document.querySelector("#inmoon_select_day .day_week");
+            yearElement.innerHTML = inmoonyear; // 새로운 연도로 변경
+            dateElement.innerHTML = (inmoonmonth+1).toString().padStart(2,'0')+"."+inmoonday.toString().padStart(2,'0'); // 새로운 날짜로 변경
+            transday(inmooncurrentDate.getDay());
+            dayWeekElement.innerHTML = tday // 새로운 요일로 변경
+		//if(tday != "월요일") {
+            console.log(data);
+			$("#inmoonlibrary").empty();
+			$("#inmoonlibrary").append(data);
+        //        } else {
+		//	$("#inmoonlibrary").empty();
+		//	var newHTML = '<li><div class="schedule_name"><a>*정기휴관일</a></div><div class="schedule_info"></div></li>';
+		//	$("#inmoonlibrary").append(newHTML);
+        //        }
+            }
+            if(lib == 'jaesong') {
+            var yearElement = document.querySelector("#jaesong_select_day .year");
+            var dateElement = document.querySelector("#jaesong_select_day .date");
+            var dayWeekElement = document.querySelector("#jaesong_select_day .day_week");
+            yearElement.innerHTML = jaesongyear; // 새로운 연도로 변경
+            dateElement.innerHTML = (jaesongmonth+1).toString().padStart(2,'0')+"."+jaesongday.toString().padStart(2,'0'); // 새로운 날짜로 변경
+            transday(jaesongcurrentDate.getDay());
+            dayWeekElement.innerHTML = tday; // 새로운 요일로 변경
+	    //if(tday != "월요일") {
+           	$("#jaesonglibrary").empty();
+		 	$("#jaesonglibrary").append(data);
+        //    } else {
+		//	$("#jaesonglibrary").empty();
+		//	var newHTML = '<li><div class="schedule_name"><a>*정기휴관일</a></div><div class="schedule_info"></div></li>';
+		//	$("#jaesonglibrary").append(newHTML);
+        //    }
+           	}
+            if(lib == 'vanyeo') {
+            var yearElement = document.querySelector("#vanyeo_select_day .year");
+            var dateElement = document.querySelector("#vanyeo_select_day .date");
+            var dayWeekElement = document.querySelector("#vanyeo_select_day .day_week");
+            yearElement.innerHTML = vanyeoyear; // 새로운 연도로 변경
+            dateElement.innerHTML = (vanyeomonth+1).toString().padStart(2,'0')+"."+vanyeoday.toString().padStart(2,'0'); // 새로운 날짜로 변경
+            transday(vanyeocurrentDate.getDay());
+            dayWeekElement.innerHTML = tday; // 새로운 요일로 변경
+	    //if(tday != "월요일") {
+        	$("#vanyeolibrary").empty();
+		 	$("#vanyeolibrary").append(data);
+        //    } else {
+		//	$("#vanyeolibrary").empty();
+		//	var newHTML = '<li><div class="schedule_name"><a>*정기휴관일</a></div><div class="schedule_info"></div></li>';
+		//	$("#vanyeolibrary").append(newHTML);
+        //    }
+           	}
+		}, error: function (error) {
+			alert("error");
+		}
+	})
+}
+
+
+function transday(day) {
+    if(day == 0)
+    {
+        tday = "일요일";
+    }
+    else if(day == 1)
+    {
+        tday = "월요일";
+    }
+    else if(day == 2)
+    {
+        tday = "화요일";
+    }
+    else if(day == 3)
+    {
+        tday = "수요일";
+    }
+    else if(day == 4)
+    {
+        tday = "목요일";
+    }
+    else if(day == 5)
+    {
+        tday = "금요일";
+    }
+    else if(day == 6)
+    {
+        tday = "토요일";
+    }
+    else if(day == 7)
+    {
+        tday = "일요일";
+    }
+}
+</script>
+<!--오늘의 일정 ajax 끝-->
+
+<!-- 팝업창-->
+<!--
+<script type="text/javascript">
+	$(function () {
+
+		if (!checkPoupCookie("pop_library01")) {
+			window.open("https://www.haeundae.go.kr/index.do?contentsSid=2891", "", "width=520, height=750,left=50px,top=50px, toolbar=no, menubar=no, scrollbars=yes, resizable=no,location=no,titlebar=no");
+		}
+
+	});
+
+	function checkPoupCookie(cookieName) {
+		var cookie = document.cookie;
+		// 현재 쿠키가 존재할 경우
+		if (cookie.length > 0) {
+			// 자식창에서 set해준 쿠키명이 존재하는지 검색
+			startIndex = cookie.indexOf(cookieName);
+			// 존재한다면
+			if (startIndex != -1) {
+				return true;
+			} else {
+				// 쿠키 내에 해당 쿠키가 존재하지 않을 경우
+				return false;
+			};
+		} else {
+			// 쿠키 자체가 없을 경우
+			return false;
+		};
+	}
+</script>
+-->
+<!-- //팝업창 -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	        </div>
+	        <!-- //content  -->
+
+	    </div><!-- //wrap -->
+
+	    <!-- s:footer -->
+	    <footer id="footer">
+    <div class="wrap">
+        <div class="site_link">
+            <div class="wrap clearfix">
+                <div class="sitelink_cont department_sitelink">
+                    <div class="skip">부서 홈페이지 사이트목록 열기</div>
+                    <h3><button class="open">부서 홈페이지</button></h3>
+                    <div class="layer">
+                        <div class="link_part depart_link">
+                            <div class="inner clearfix">
+                                <div class="organ_ti"><strong>부서 홈페이지</strong></div>
+                                <ul class="organ_list clearfix">
+                                    <li><a href="/index.do?menuCd=DOM_000000101005002000" target="_self">감사담당관</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005001000" target="_self">기획예산과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005006000" target="_self">홍보협력과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005011000" target="_self">일자리정책과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005031000" target="_self">교육도서관과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005030005" target="_self">신청사건립추진단</a></li>                                
+                                    <li><a href="/index.do?menuCd=DOM_000000101005004000" target="_self">총무과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005005000" target="_self">재무과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005007000" target="_self">재산취득세과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005028000" target="_self">지방소득세과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005008000" target="_self">세무관리과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005010000" target="_self">문화관광과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005034000" target="_self">경제진흥과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005032000" target="_self">해양진흥과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005020000" target="_self">자원순환과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005016000" target="_self">복지정책과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005017000" target="_self">생활보장과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005018000" target="_self">노인장애인복지과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005019000" target="_self">가족복지과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005021000" target="_self">민원여권과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005022000" target="_self">교통행정과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005003000" target="_self">창조도시과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005013000" target="_self">늘푸른과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005029000" target="_self">주차행정과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005012000" target="_self">환경위생과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005023000" target="_self">재난안전과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005024000" target="_self">도시관리과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005025000" target="_self">건설과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005026000" target="_self">건축과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005033000" target="_self">공동주택과</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101005027000" target="_self">토지정보과</a></li>                                                              
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="close">부서별 홈페이지 사이트목록 닫기</button>
+                    </div>
+                </div>
+                <div class="sitelink_cont department_sitelink town_link">
+                    <div class="skip">사업소/ 동 홈페이지 사이트목록 열기</div>
+                    <h3><button class="open">사업소/ 동 홈페이지</button></h3>
+                    <div class="layer">
+                        <div class="link_part depart_link">
+                            <div class="inner town clearfix">
+                                <div class="organ_ti"><strong>사업소/ 동 홈페이지</strong></div>
+                                <ul class="organ_list clearfix sit2">
+                                    <li><a href="/index.do?menuCd=DOM_000000101011004000" target="_self">보건소</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101011002000" target="_self">관광시설사업소</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101011003000" target="_self">문화회관</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006001000" target="_self">우1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006002000" target="_self">우2동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006003000" target="_self">우3동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006004000" target="_self">중1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006005000" target="_self">중2동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006006000" target="_self">좌1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006007000" target="_self">좌2동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006008000" target="_self">좌3동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006009000" target="_self">좌4동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006010000" target="_self">송정동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006011000" target="_self">반여1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006012000" target="_self">반여2동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006013000" target="_self">반여3동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006014000" target="_self">반여4동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006015000" target="_self">반송1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006016000" target="_self">반송2동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006017000" target="_self">재송1동</a></li>
+                                    <li><a href="/index.do?menuCd=DOM_000000101006018000" target="_self">재송2동</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="close">사업소/ 동 홈페이지 사이트목록 닫기</button>
+                    </div>
+                </div>
+                <div class="sitelink_cont department_sitelink">
+                    <div class="skip">구·군 홈페이지 사이트목록 열기</div>
+                    <h3><button class="open">구·군 홈페이지</button></h3>
+                    <div class="layer">
+                        <div class="link_part depart_link">
+                            <div class="inner clearfix">
+                                <div class="organ_ti"><strong>구·군 홈페이지</strong></div>
+                                
+                                <ul class="organ_list clearfix">
+                                    <li class="first"><a href="http://www.busan.go.kr" target="_blank" title="새창열림">부산광역시</a></li>
+                                    <li><a href="http://WWW.bsjunggu.go.kr" target="_blank" title="새창열림">중구</a></li>
+                                    <li><a href="http://www.bsseogu.go.kr" target="_blank" title="새창열림">서구</a></li>
+                                    <li><a href="http://www.bsdonggu.go.kr" target="_blank" title="새창열림">동구</a></li>
+                                    <li><a href="http://www.yeongdo.go.kr" target="_blank" title="새창열림">영도구</a></li>
+                                    <li><a href="http://www.busanjin.go.kr" target="_blank" title="새창열림">부산진구</a></li>
+                                    <li><a href="http://www.dongnae.go.kr" target="_blank" title="새창열림">동래구</a></li>
+                                    <li><a href="http://www.bsnamgu.go.kr" target="_blank" title="새창열림">남구</a></li>
+                                    <li><a href="http://www.bsbukgu.go.kr" target="_blank" title="새창열림">북구</a></li>
+                                    <li><a href="http://www.saha.go.kr" target="_blank" title="새창열림">사하구</a></li>
+                                    <li><a href="http://www.geumjeong.go.kr" target="_blank" title="새창열림">금정구</a></li>
+                                    <li><a href="http://www.bsgangseo.go.kr" target="_blank" title="새창열림">강서구</a></li>
+                                    <li><a href="http://www.yeonje.go.kr" target="_blank" title="새창열림">연제구</a></li>
+                                    <li><a href="http://www.suyeong.go.kr" target="_blank" title="새창열림">수영구</a></li>
+                                    <li><a href="http://www.sasang.go.kr" target="_blank" title="새창열림">사상구</a></li>
+                                    <li><a href="http://www.gijang.go.kr" target="_blank" title="새창열림">기장군</a></li>
+                                </ul>
+    
+                            </div>
+                        </div>
+                        <button class="close">구·군 홈페이지 사이트목록 닫기</button>
+                    </div>
+                </div>
+                <div class="sitelink_cont department_sitelink">
+                    <div class="skip">유관기관 사이트목록 열기</div>
+                    <h3><button class="open">유관기관</button></h3>
+                    <div class="layer">
+                        <div class="link_part depart_link">
+                            <div class="inner clearfix">
+                                <div class="organ_ti"><strong>유관기관</strong></div>
+                                <ul class="organ_list clearfix">
+                                    <li><a href="http://www.hud7330.com" target="_blank" title="새창열림">생활체육회</a></li>
+                                    <li><a href="https://dreamnuri.or.kr/" target="_blank" title="새창열림">진로교육지원센터</a></li>
+                                    <li><a href="http://www.jabongi.kr" target="_blank" title="새창열림" class="ml10">자원봉사센터</a></li>
+                                    <!----<li><a href="https://www.dreamstart.go.kr/haeundae/" target="_blank"  title="새창열림">드림스타트</a></li>---->
+                                    <li><a href="https://www.kgeu.org/branch/haeundaegu" target="_blank" title="새창열림">공무원노조</a></li>
+                                    <li><a href="https://www.hte.or.kr/" target="_blank" title="새창열림" class="ml10">기술교육원</a></li>
+                                    <li><a href="https://www.haeundaebizcenter.or.kr" target="_blank" title="새창열림" class="ml10">해운대창조비지니스센터</a></li>
+                                    <li><a href="http://www.hudcc.org" target="_blank" title="새창열림" class="ml10">해운대문화원</a></li>
+                                    <li><a href="https://www.ymcahy.or.kr/" target="_blank" title="새창열림" class="ml10">해운대청소년수련관</a></li>
+                                    <li><a href="https://haeundae.familynet.or.kr/center/index.do" target="_blank" title="새창열림" class="ml10">해운대구 건강가정지원센터</a></li>
+                                    <li><a href="https://haedaji.familynet.or.kr/center/index.do" target="_blank" title="새창열림" class="ml10">해운대구다문화가족지원센터</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="close">유관기관 사이트목록 닫기</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--//site_link	-->   
+        <div class="foot_bottom">
+            <h2 class="skip">사이트정보</h2>
+            <div class="footer_logo">해운대구 로고</div>
+            <ul class="footer_navi clearfix">
+                <li><a href="/index.do?menuCd=DOM_000000101004003000" target="_blank" title="새창열림">전화번호안내</a></li>
+                <li class="privacy bold"><a href="/index.do?menuCd=DOM_000000106001000000" target="_blank" title="새창열림">개인정보처리방침</a></li>
+                <li><a href="/index.do?menuCd=DOM_000000106003000000" target="_blank" title="새창열림">저작권보호정책</a></li>
+                <li><a href="/index.do?menuCd=DOM_000000101004004000" target="_blank" title="새창열림">찾아오시는길</a></li>
+            </ul>
+            <div class="footer_info">
+                <address>(우)48036 부산광역시 해운대구 반여로 132 <span>대표전화 : (051)749-6580</span> <span>팩스 : (051)749-6579 </span></address>
+
+                <p class="copyright">Copyright© 2019 Haeundae-gu. All rights reserved.</p>
+                
+            </div>
+        </div>    
+    </div>
+</footer>                                   
+	    <!-- //footer -->
+	</body>
+</html>                                                                                                                                                                                                                                                                        
