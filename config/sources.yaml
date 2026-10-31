@@ -727,6 +727,13 @@ sources:
     enabled: true
     verified: true
     # 해외 접속 차단이라 꺼 두었다가 국내 중계(KR_PROXY_URL)로 열려 2026-10-30 다시 켬
+    options:
+      # 행에 첨부파일 링크(download.asp, 파일 이름이 더 김)도 있어 글 링크(MODE=V)를 제목으로 고른다.
+      # 첨부만 있는 행은 건너뛴다 (10-31 메일에 '…공고문.hwpx' 가 제목으로 나감)
+      title_selector: "a[href*='MODE=V']"
+      key_param: bidx
+      org_name: 부산시설공단
+      org_fixed: true
 
   - id: bnfmc_hire
     name: 부산남구시설관리공단 - 채용공고 (시간강사 등)
