@@ -217,14 +217,25 @@ class Http:
         return tmp.name
 
 
+def _legacy_ssl_context() -> ssl.SSLContext:
+    """인증서 검증은 그대로 두고 짧은 DH 키·구형 암호군·TLS 1.0/1.1 만 허용한다."""
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    ctx.set_ciphers("DEFAULT:@SECLEVEL=0")
+    ctx.minimum_version = ssl.TLSVersion.TLSv1
+    ctx.options |= getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0x4)
+    return ctx
+
+
 class LegacyTLSAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
-        ctx = ssl.create_default_context(cafile=certifi.where())
-        ctx.set_ciphers("DEFAULT:@SECLEVEL=0")
-        ctx.minimum_version = ssl.TLSVersion.TLSv1
-        ctx.options |= getattr(ssl, "OP_LEGACY_SERVER_CONNECT", 0x4)
-        kwargs["ssl_context"] = ctx
+        kwargs["ssl_context"] = _legacy_ssl_context()
         return super().init_poolmanager(*args, **kwargs)
+
+    def proxy_manager_for(self, proxy, **proxy_kwargs):
+        # 중계(KR_PROXY_URL)를 거칠 때는 requests 가 별도 ProxyManager 를 만들어
+        # init_poolmanager 의 설정이 빠진다. 같은 구형 TLS 설정을 넘겨준다
+        proxy_kwargs.setdefault("ssl_context", _legacy_ssl_context())
+        return super().proxy_manager_for(proxy, **proxy_kwargs)
 
 
 def is_connect_failure(exc: requests.exceptions.ConnectionError) -> bool:
