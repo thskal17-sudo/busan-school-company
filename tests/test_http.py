@@ -1,5 +1,6 @@
 from http.client import RemoteDisconnected
 
+import ssl
 import pytest
 import requests
 from urllib3.exceptions import MaxRetryError, NewConnectionError, ProtocolError
@@ -152,3 +153,15 @@ def test_kr_proxy_down_or_auth_failure_disables_proxy_for_run():
 def test_no_proxy_without_env(monkeypatch):
     monkeypatch.delenv("KR_PROXY_URL", raising=False)
     assert Http(min_interval=0).kr_proxy is None
+
+
+def test_legacy_tls_applies_through_proxy():
+    """중계를 거칠 때도 구형 TLS 설정(SECLEVEL=0 등)이 프록시 연결에 쓰여야 한다."""
+    from busan_jobs.http import LegacyTLSAdapter
+
+    adapter = LegacyTLSAdapter()
+    manager = adapter.proxy_manager_for("http://user:pw@127.0.0.1:3128")
+    ctx = manager.connection_pool_kw.get("ssl_context")
+    assert ctx is not None
+    assert ctx.verify_mode == ssl.CERT_REQUIRED and ctx.check_hostname
+    assert ctx.minimum_version == ssl.TLSVersion.TLSv1

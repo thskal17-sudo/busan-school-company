@@ -5430,8 +5430,8 @@ sources:
     org_type: 복지관
     district: 북구
     collector: generic_board
-    # 오래된 TLS 설정(짧은 DH 키)이라 legacy_tls
-    url: https://bgrc.or.kr/community_05.html
+    # 오래된 TLS 설정(짧은 DH 키)이라 legacy_tls. 2026-10-30 새 인증서가 www.bgrc.or.kr 이름이라 www 주소로 (www 없는 주소는 인증서 이름 불일치)
+    url: https://www.bgrc.or.kr/community_05.html
     pages: 1
     keyword_filter: true
     phase: 3
