@@ -139,42 +139,42 @@ sources:
       org_name: 부산광역시교육청
 
   - id: afterschool_private
-    name: 부산늘봄지원센터 - 개인위탁 강사 모집공고
+    name: 초등방과후돌봄통합플랫폼 - 개인위탁 강사 모집공고
     org_type: 교육청·학교
     district: 부산전체
     collector: generic_board
-    url: https://home.pen.go.kr/afterschool/na/ntt/selectNttList.do?mi=14360&bbsId=4177
+    url: https://home.pen.go.kr/aftersc/na/ntt/selectNttList.do?mi=18388&bbsId=5552
     pages: 2
     keyword_filter: false  # 학교 방과후·늘봄 개인위탁 강사 모집만 올라오는 게시판
     phase: 1
-    enabled: false
+    # 2026-11-01 부산늘봄지원센터(home.pen.go.kr/afterschool)가 '초등방과후돌봄통합플랫폼'(home.pen.go.kr/aftersc)으로 옮겨 새 게시판으로 다시 켬
+    enabled: true
     verified: true
-    blocked: home.pen.go.kr/afterschool 이 '폐쇄된 홈페이지입니다' 화면만 보냄 (10-16부터 0건, 2026-10-24 끔). 새 누리집을 찾으면 그 게시판으로 다시 넣는다
     options:
       page_param: currPage
       link_attr: data-id
-      link_template: "https://home.pen.go.kr/afterschool/na/ntt/selectNttInfo.do?mi=14360&bbsId=4177&nttSn={0}"
+      link_template: "https://home.pen.go.kr/aftersc/na/ntt/selectNttInfo.do?mi=18388&bbsId=5552&nttSn={0}"
       key_param: nttSn
-      org_name: 부산늘봄지원센터
+      org_name: 초등방과후돌봄통합플랫폼
 
   - id: afterschool_company
-    name: 부산늘봄지원센터 - 업체위탁 모집공고
+    name: 초등방과후돌봄통합플랫폼 - 업체위탁 모집공고
     org_type: 교육청·학교
     district: 부산전체
     collector: generic_board
-    url: https://home.pen.go.kr/afterschool/na/ntt/selectNttList.do?mi=14361&bbsId=4178
+    url: https://home.pen.go.kr/aftersc/na/ntt/selectNttList.do?mi=18390&bbsId=5553
     pages: 1
     keyword_filter: true
     phase: 1
-    enabled: false
+    # 2026-11-01 부산늘봄지원센터(home.pen.go.kr/afterschool)가 '초등방과후돌봄통합플랫폼'(home.pen.go.kr/aftersc)으로 옮겨 새 게시판으로 다시 켬
+    enabled: true
     verified: true
-    blocked: home.pen.go.kr/afterschool 이 '폐쇄된 홈페이지입니다' 화면만 보냄 (10-16부터 0건, 2026-10-24 끔). 새 누리집을 찾으면 그 게시판으로 다시 넣는다
     options:
       page_param: currPage
       link_attr: data-id
-      link_template: "https://home.pen.go.kr/afterschool/na/ntt/selectNttInfo.do?mi=14361&bbsId=4178&nttSn={0}"
+      link_template: "https://home.pen.go.kr/aftersc/na/ntt/selectNttInfo.do?mi=18390&bbsId=5553&nttSn={0}"
       key_param: nttSn
-      org_name: 부산늘봄지원센터
+      org_name: 초등방과후돌봄통합플랫폼
 
   # 5개 교육지원청 학교인력채용 (관할 학교의 구인 공고)
   - id: seobu_edu_hire

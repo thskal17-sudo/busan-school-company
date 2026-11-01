@@ -31,7 +31,7 @@
 
 ```mermaid
 flowchart LR
-    S[sources.yaml<br/>게시판·API 332곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
+    S[sources.yaml<br/>게시판·API 334곳] --> C[수집기<br/>generic_board<br/>mpm_api · alio_api · cleaneye_api · work24_api]
     C --> F[강사 공고 판별·분야 분류<br/>keywords.yaml]
     F --> D[(SQLite<br/>state 브랜치)]
     D --> I[상세·첨부 공고문<br/>마감일·수업 일정 찾기]
