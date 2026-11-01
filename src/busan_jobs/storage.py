@@ -36,6 +36,12 @@ CREATE TABLE IF NOT EXISTS postings (
     info          TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_postings_reported ON postings(reported_at);
+-- 나이스에서 찾은 학교 → 구·군 (school_district.py). '' = 찾지 못함 (다시 묻지 않음)
+CREATE TABLE IF NOT EXISTS school_districts (
+    school     TEXT PRIMARY KEY,
+    district   TEXT NOT NULL,
+    checked_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS source_runs (
     run_at    TEXT NOT NULL,
     source_id TEXT NOT NULL,
@@ -200,6 +206,17 @@ class Store:
         self.conn.executemany(
             "INSERT INTO source_runs VALUES (?, ?, ?, ?, ?, ?, ?)",
             [(ts, r.source_id, r.state, r.fetched, r.matched, r.new, r.error) for r in results],
+        )
+
+    def school_district(self, school: str) -> str | None:
+        """나이스에서 찾아 둔 학교의 구·군. 물어본 적 없으면 None, 찾지 못했으면 ''."""
+        row = self.conn.execute("SELECT district FROM school_districts WHERE school = ?", (school,)).fetchone()
+        return None if row is None else row["district"]
+
+    def set_school_district(self, school: str, district: str) -> None:
+        self.conn.execute(
+            "INSERT OR REPLACE INTO school_districts VALUES (?, ?, ?)",
+            (school, district, datetime.now().isoformat(timespec="seconds")),
         )
 
     def commit(self) -> None:

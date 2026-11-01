@@ -22,3 +22,11 @@ def rules():
     from busan_jobs.config import load_rules
 
     return load_rules(ROOT / "config")
+
+
+@pytest.fixture(autouse=True)
+def _no_neis(monkeypatch):
+    """시험은 나이스(학교 주소)에 실제로 접속하지 않는다. 필요한 시험은 school_district.neis_addresses 를 다시 바꾼다."""
+    from busan_jobs import school_district
+
+    monkeypatch.setattr(school_district, "neis_addresses", lambda http, school: [])
