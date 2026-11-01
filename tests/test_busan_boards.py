@@ -65,7 +65,7 @@ def test_afterschool_private_board(fixture_bytes):
         ("남천초등학교", date(2026, 9, 3), date(2026, 9, 9)),
         ("장림여자중학교", date(2026, 9, 3), date(2026, 9, 4)),
     ]
-    assert rows[1].url.endswith("selectNttInfo.do?mi=14360&bbsId=4177&nttSn=1014630")
+    assert rows[1].url.endswith("selectNttInfo.do?mi=18388&bbsId=5552&nttSn=1014630")
     assert rows[1].key == "1014630"
 
 
