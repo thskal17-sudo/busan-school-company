@@ -4,3 +4,6 @@ __pycache__/
 data/
 out/
 .venv/
+
+# pip install -e . 가 만드는 파일
+*.egg-info/
