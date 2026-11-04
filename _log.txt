@@ -1,0 +1,64 @@
+== https://www.busan.go.kr/robots.txt
+curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading
+000 https://www.busan.go.kr/robots.txt
+head: cannot open 'robots.txt' for reading: No such file or directory
+== https://www.busan.go.kr/depart/jobgonji01
+200 https://www.busan.go.kr/depart/jobgonji01
+
+<a href="/depart/jobgonji01" >
+<a href="/depart/jobgonji01" >
+<a href="/depart/jobgonji01">
+<a href="/depart/jobgonji01">
+<a href="/depart/jobgonji01" >
+<a href="/depart/jobgonji01">
+<a href="/depart/jobgonji01/1761938">
+<a href="/depart/jobgonji01/1761796">
+<a href="/depart/jobgonji01/1761565">
+<a href="/depart/jobgonji01/1761332">
+<a href="/depart/jobgonji01/1760738">
+<a href="/depart/jobgonji01/1760479">
+<a href="/depart/jobgonji01/1760478">
+<a href="/depart/jobgonji01/1760420">
+<a href="/depart/jobgonji01/1760220">
+<a href="/depart/jobgonji01/1759610">
+<a href="/depart/jobgonji01.rss" class="btnTypeM btnColorType5" title="새창열림" target="_blank">
+7856-			<a href="/depart" class="btn-home">홈</a>
+7857-			<span><a href="/depart/jobedu">일자리·노동·교육</a></span><span><a href="/depart/ahjobinfo">취업정보</a></span><span><a href="/depart/jobgonji">채용공고</a></span><span class="current"><a href="/depart/jobgonji01">채용정보</a></span></div>
+7858-		<div class="share">
+7859:			<a href="javascript:void(0);" onclick="shareHandler(this);" class="btn-share">공유하기 열기</a>
+7860-			<div class="share-box">
+7861-				<ul class="share-list">
+7862:					<li><a href="#" class="btn-naverband" onclick="f_share('band', '채용정보'); return false;" title="새창" target="_blank">네이버 밴드</a></li>
+7863:					<li><a href="#" class="btn-kakaostory" onclick="f_share('kakao', '채용정보'); return false;" title="새창" target="_blank">카카오톡</a></li>
+7864:					<li><a href="#" class="btn-twitter" onclick="f_share('twitter', '채용정보'); return false;" title="새창" target="_blank">트위터</a></li>
+7865:					<li><a href="#" class="btn-facebook" onclick="f_share('facebook', '채용정보'); return false;" title="새창" target="_blank">페이스북</a></li>
+7866-				</ul>
+7867-			</div>
+7868-			<a href="javascript:window.print();" class="btn-print" title="새창">프린트</a>
+7869:			<a href="#" class="btn-bookmark" onclick="addBookMark('>Home>일자리·노동·교육>취업정보>채용공고>채용정보','분야별 통합'); return false" title="클릭하시면 북마크에 등록됩니다">북마크</a>
+7870-		</div>
+7871-	</div>
+7872-</div><div class="container-inner">
+--
+8421-					<input type="hidden" name="nttNo" id="nttNo" value=""/>
+8422-					<label for="password" class="hidden">비밀번호</label>
+8423-					<input type="password" name="password" id="password" placeholder="비밀번호" class="form-control" onkeypress="javascript:if(event.keyCode==13){f_bbsPasswordChk();return false;}"/>
+8424:					<a class="btn btn-default mr-xs mb-sm" title="확인" onclick="f_bbsPasswordChk(); return false;">확인</a>
+8425-				</div>
+8426-			</form>
+8427-		</div>
+--
+8482-				                    <label for="score5">매우불만</label>
+8483-			                    </span>
+8484-			                    <div class="comment">
+8485:			                        <input type="button" value="평점주기" class="button" onclick="saveStsfdy('CREATE',0);return false;">
+8486-			                    </div>
+8487-			                </div>
+8488-			            </article>
+== https://www.busan.go.kr/depart/jobgonji01/1759885
+200 https://www.busan.go.kr/depart/jobgonji01
+<title>채용정보 : 부산광역시 분야별 통합
+0
+== https://www.busan.go.kr/depart/jobgonji01/view?dataNo=1759885
+200 https://www.busan.go.kr/depart/jobgonji01/view?dataNo=1759885
+<title>Page Not Found | Busan Metropolitan City
