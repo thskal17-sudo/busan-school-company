@@ -1,0 +1,20 @@
+name: dev-probe (임시)
+on:
+  push:
+    branches: [claude/jolly-galileo-kgtfjx]
+    paths: [scripts/dev_probe.sh]
+permissions:
+  contents: write
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir out && bash scripts/dev_probe.sh > out/_log.txt 2>&1 || true
+        env:
+          KR_PROXY_URL: ${{ secrets.KR_PROXY_URL }}
+      - run: |
+          cd out && git init -q && git checkout -q -b probe-out-1 && git add -A
+          git -c user.name=probe -c user.email=probe@example.invalid commit -qm "probe out ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" probe-out-1
