@@ -114,6 +114,22 @@ class Store:
                 return r["uid"]
         return None
 
+    def lasting_twin_url(self, p: Posting) -> str | None:
+        """다른 게시판에 '중복'으로 저장된 같은 공고의 원문 주소 (없으면 None).
+
+        부산시청 통합 채용정보(depart/jobgonji01)는 모집이 끝나면 글을 내려서, 원문 주소를 열면 목록 화면이 나온다
+        (2026-11-05 '2027년 상반기 여성회관 교육강사 모집 공고'). 같은 공고가 부서 게시판(여성회관 공지 등)에도 있으면
+        그쪽은 마감 뒤에도 남으므로, 강사잇다 원문 링크로는 그 주소를 쓴다 (pipeline.prefer_lasting_links).
+        """
+        rows = self.conn.execute(
+            "SELECT title, district, posted_date, url FROM postings WHERE source_id != ? AND status = ? AND url != ''",
+            (p.source_id, DUPLICATE),
+        )
+        for r in rows:
+            if _same_posting(p, r["title"], r["district"], _d(r["posted_date"])):
+                return r["url"]
+        return None
+
     def upsert(self, p: Posting, now: datetime) -> bool:
         """저장하고, 처음 보는 공고면 True (다른 게시판에 먼저 올라온 같은 공고면 '중복'으로 저장하고 False)."""
         ts = now.isoformat(timespec="seconds")
