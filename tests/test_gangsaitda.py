@@ -66,3 +66,11 @@ def test_workbook_keeps_template_and_adds_rows(tmp_path):
     assert ws["K2"].hyperlink.target == "https://example.org/1"
     assert ws["N2"].value is None and ws["N3"].value == HOLD
     assert ws["F2"].alignment.wrap_text
+
+
+def test_detail_is_posting_body_when_found():
+    """상세 내용 통일 (2026-11-05): 공고 본문을 가져왔으면 본문을 그대로 쓴다."""
+    body = "2026학년도 한얼고등학교 영어과 시간강사 채용 공고입니다.\n1. 채용과목 및 인원: 영어 1명"
+    p = Posting("pen_school_hire", "2026학년도 한얼고등학교 영어과 시간강사 채용공고", "https://example.org/3",
+                org_name="한얼고등학교", deadline=date(2026, 11, 4), info={"body": body})
+    assert row_values(p, "부산교육청 학교인력채용")["상세 내용"] == body
