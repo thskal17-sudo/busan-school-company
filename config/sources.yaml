@@ -282,6 +282,8 @@ sources:
     options:
       page_param: curPage
       org_prefix: 부산광역시
+      # 모집이 끝나면 글을 내린다(원문 주소가 목록 화면이 됨). 같은 공고가 부서 게시판에도 있으면 그 주소를 원문 링크로 쓴다
+      link_expires: true
 
   - id: city_jobs_other
     name: 부산시청 타기관 채용정보 (국가기관·공공기관 부산 공고)
@@ -296,6 +298,7 @@ sources:
     verified: true
     options:
       page_param: curPage
+      link_expires: true
 
   - id: city_stadium_notice
     name: 부산시 체육시설관리사업소 - 공지사항 (사직·강서 수영장 강사 모집)

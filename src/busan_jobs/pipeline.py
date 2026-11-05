@@ -332,6 +332,9 @@ def run(
             out_dir / f"부산_강사구인_{today.isoformat()}{suffix}.xlsx",
             today, new, closing_soon, active, results, source_names,
         )
+        swapped = prefer_lasting_links(active, store, settings.sources)
+        if swapped:
+            log.info("마감 뒤 내려가는 게시판의 원문 링크 %d건을 부서 게시판 주소로 바꿈", swapped)
         upload_path = build_gangsaitda(
             out_dir / f"강사잇다_부산_{today.isoformat()}{suffix}.xlsx", active, source_names, _template(config_dir)
         )
@@ -363,3 +366,18 @@ def run(
         return outcome
     finally:
         store.close()
+
+
+def prefer_lasting_links(postings: list[Posting], store: Store, sources) -> int:
+    """마감 뒤 글을 내리는 게시판(options.link_expires)의 공고는, 같은 공고가 다른 게시판에도 있으면 그 주소를 원문으로 쓴다.
+    바꾼 공고 수 (Store.lasting_twin_url 참고)."""
+    expiring = {s.id for s in sources if (s.options or {}).get("link_expires")}
+    swapped = 0
+    for p in postings:
+        if p.source_id not in expiring:
+            continue
+        url = store.lasting_twin_url(p)
+        if url and url != p.url:
+            p.url = url
+            swapped += 1
+    return swapped
