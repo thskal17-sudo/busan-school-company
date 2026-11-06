@@ -96,3 +96,16 @@ def test_expiring_board_without_twin_keeps_link(tmp_path):
     sources = [Source(id="city_jobs", name="시청", collector="generic_board", options={"link_expires": True})]
     assert prefer_lasting_links([city], store, sources) == 0
     assert city.url == "https://example.org/city_jobs/9"
+
+
+def test_close_if_open_closes_stored_recruit_only(tmp_path):
+    """거르는 말을 늘린 뒤, 전에 '모집중'으로 저장된 글은 닫고 다른 상태는 그대로 둔다."""
+    from busan_jobs.storage import CLOSED
+
+    store = Store(tmp_path / "db.sqlite")
+    p = _p("sjcwc", "7", "사직종합사회복지관 프리랜서 강사 채용 관련 면접전형대상자 공고")
+    p.status = "모집중"
+    store.upsert(p, NOW)
+    assert store.close_if_open(p.uid) == p.title
+    assert store.detail_state(p.uid)[2] == CLOSED
+    assert store.close_if_open(p.uid) is None  # 이미 닫힘
