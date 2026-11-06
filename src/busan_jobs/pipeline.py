@@ -166,10 +166,16 @@ def _collect_source(
 
         status = judge(p.title, rules, src.keyword_filter, p.label, keep_results=True)
         if status is None:
+            # 거르는 말이 늘기 전에 모집공고로 저장된 글이면 진행중에서 뺀다
+            if store.close_if_open(p.uid):
+                log.info("강사 공고 아님(규칙 변경) %s", p.title)
             continue
         if status == "결과공고":
             result_notices.append(p)
             if not rules.keep_result_notices:
+                # 결과공고 낱말이 늘기 전에 모집공고로 저장된 글이면 이제 닫는다 ('… 면접전형대상자 공고', 2026-11-06)
+                if store.close_if_open(p.uid):
+                    log.info("결과공고로 다시 분류 %s", p.title)
                 continue
         p.status = status
         p.category = categorize(f"{p.title} {p.label}", p.org_name, rules)

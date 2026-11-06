@@ -78,3 +78,11 @@ def test_mentor_lecture_notice_is_not_hiring(rules):
     # 학교밖청소년에게 특강을 알리는 글 ('멘토'로 걸렸음, 2026-10-28 사용자 지적)
     assert judge("꿈드림) 멘토쌤과 함께하는 전공특강", rules, True) is None
     assert judge("2026 학교밖청소년 멘토와 함께하는 진로탐색 안내", rules, True) is None
+
+
+def test_interview_candidates_notice_is_result(rules):
+    """'면접전형대상자 공고'는 모집이 아니라 결과 공고다 (2026-11-06 사직종합사회복지관)."""
+    title = "부산광역시사직종합사회복지관 [어반스케치] 프리랜서 강사 채용 관련 면접전형대상자 공고"
+    assert judge(title, rules, True) is None
+    assert judge(title, rules, True, keep_results=True) == "결과공고"
+    assert judge("부산광역시사직종합사회복지관 [어반스케치] 프리랜서 강사 채용 공고", rules, True) == "모집중"

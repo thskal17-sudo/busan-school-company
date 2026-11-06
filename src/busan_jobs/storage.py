@@ -165,6 +165,15 @@ class Store:
         )
         return [_to_posting(r) for r in rows]
 
+    def close_if_open(self, uid: str) -> str | None:
+        """전에 모집공고로 저장했지만 지금 규칙으로는 결과공고(또는 강사 공고가 아닌 글)인 글을 닫는다. 닫았으면 그 제목.
+        거르는 말을 늘린 뒤에도 이미 '모집중'으로 저장된 글이 진행중·원문확인에 남지 않게 한다."""
+        row = self.conn.execute("SELECT title FROM postings WHERE uid = ? AND status = '모집중'", (uid,)).fetchone()
+        if row is None:
+            return None
+        self.conn.execute("UPDATE postings SET status = ? WHERE uid = ?", (CLOSED, uid))
+        return row[0]
+
     def mark_closed(self, uid: str) -> None:
         """결과공고가 올라와 모집이 끝난 공고로 표시 (신규·진행중에서 빠진다)."""
         self.conn.execute("UPDATE postings SET status = ? WHERE uid = ?", (CLOSED, uid))
