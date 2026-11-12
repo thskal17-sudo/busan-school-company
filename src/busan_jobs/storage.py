@@ -233,10 +233,15 @@ class Store:
             [(ts, r.source_id, r.state, r.fetched, r.matched, r.new, r.error) for r in results],
         )
 
-    def school_district(self, school: str) -> str | None:
-        """나이스에서 찾아 둔 학교의 구·군. 물어본 적 없으면 None, 찾지 못했으면 ''."""
-        row = self.conn.execute("SELECT district FROM school_districts WHERE school = ?", (school,)).fetchone()
-        return None if row is None else row["district"]
+    def school_district(self, school: str, recheck_before: str | None = None) -> str | None:
+        """나이스에서 찾아 둔 학교의 구·군 (여러 구면 '강서구,해운대구'). 물어본 적 없으면 None, 찾지 못했으면 ''.
+        recheck_before(날짜) 전에 '찾지 못함'으로 남긴 것은 물어본 적 없는 것으로 친다."""
+        row = self.conn.execute(
+            "SELECT district, checked_at FROM school_districts WHERE school = ?", (school,)
+        ).fetchone()
+        if row is None or (recheck_before and not row["district"] and row["checked_at"] < recheck_before):
+            return None
+        return row["district"]
 
     def set_school_district(self, school: str, district: str) -> None:
         self.conn.execute(
