@@ -5959,6 +5959,60 @@ sources:
       link_template: "https://www.busanjob.net/view.do?no=1309&pgMode=show&id={0}"
       key_param: id
 
+  # 국가 공공기관 지역 기관·부산시 출연기관 게시판 (2026-11-22 국내 중계로 확인). 클린아이·잡알리오에는 정규직 채용만 올라오고
+  # 강사 위촉·외부강사 모집은 기관 게시판에만 올라오는 곳
+  - id: kead_exrecru
+    name: 한국장애인고용공단 - 외부강사 모집공고 (부산직업능력개발원)
+    org_type: 국가·공공기관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.kead.or.kr/developmental/bbs/exrecru/bbsPage.do?menuId=MENU1079
+    pages: 1  # 쪽 넘김이 스크립트(fn_bbsList)라 첫 쪽만. 한 쪽(10건)이 2~3주 분량
+    keyword_filter: false  # 외부강사 모집만 올라오는 게시판
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      # 제목 링크가 fn_bbsView('215946') → 폼 POST 지만 GET 으로도 열림
+      link_template: "https://www.kead.or.kr/campus/bbs/exrecru/bbsView.do?bbsCnId={0}&menuId=MENU1079"
+      key_param: bbsCnId
+      row_must_contain: 부산  # '[부산직업능력개발원] … 외부강사 모집 공고'
+      org_name: 한국장애인고용공단 부산직업능력개발원
+      org_fixed: true
+
+  - id: nps_hire
+    name: 국민연금공단 - 채용공고 (노후준비 민간 전문강사 등)
+    org_type: 국가·공공기관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.nps.or.kr/pnsgdnc/hiregdnc/getOHAE0004M0List.do?menuId=MN24000969
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      key_param: pstId
+      org_name: 국민연금공단
+      # 지역본부 기간제·공무직 채용이 대부분이라 강사 글만 ('노후준비 민간 전문강사 선발'은 전국 공고, 부산 배정 포함)
+      include: [강사, 인력풀]
+
+  - id: bdi_notice
+    name: 부산연구원 - 공지사항 (경제교육 강사 발굴 '나는 강사다!' 등)
+    org_type: 시 산하기관
+    district: 부산전체
+    collector: generic_board
+    url: https://www.bdi.re.kr/www/board/1
+    pages: 1
+    keyword_filter: true
+    phase: 3
+    enabled: true
+    verified: true
+    options:
+      org_name: 부산연구원
+      org_fixed: true
+      include: [강사, 인력풀]
+
   # 조사했지만 넣지 않은 곳 (2026-09-29 GitHub 러너에서 확인)
   # - 해외 접속 차단: 부산시설공단(bisco.or.kr), 수영구청(www·eminwon·m.suyeong.go.kr → suyeong_hire 는 꺼 둠), 금정구청 홈페이지(www.geumjeong.go.kr;
   #   새올 eminwon.geumjeong.go.kr 은 됨), 해운대YMCA청소년수련관, 부산관광공사
@@ -5968,3 +6022,11 @@ sources:
   # - 부산교육청 공지사항·늘봄지원센터 공지: 강사 모집이 아닌 안내 글, 교육공무직원 채용(ginsa.pen.go.kr): 조리실무사 등
   # - 여성회관 강사초빙: 목록이 비어 있는 안내 화면
   # - 부산디자인진흥원·부산정보산업진흥원: 정규 직원 채용만 올라옴
+  # 조사했지만 넣지 않은 곳 (2026-11-22, 국내 중계로 확인. 국가 공공기관 지역본부·부산시 출연기관)
+  # - robots.txt 가 막음: 근로복지공단(comwel.or.kr, 지역 누리집 일부만 허용), 국민건강보험공단(/nhis/), 한국소비자원(전체),
+  #   부산테크노파크·부산관광공사(*Board.do)
+  # - 강사 모집이 올라오지 않음: 장애인고용공단 부산직업능력개발원·부산디지털훈련센터 공지(훈련생 모집), 국민연금공단 새소식,
+  #   한국산업인력공단 공지, 한국노인인력개발원 공지, 금융감독원 공지, 한국주택금융공사 공지, 부산과학기술고등교육진흥원 공지
+  # - 목록을 스크립트로 그림: 안전보건공단(kosha.or.kr/landing), 도로교통공단, 서민금융진흥원·신용회복위원회 공지, 국립부산과학관
+  # - 보안 정책으로 자동 접속 차단: 부산디자인진흥원(dcb.or.kr), 부산교통공사(humetro.busan.kr)
+  # - 인증서 문제(검증을 끄지 않음): 부산사회서비스원(bsi.or.kr), 부산광역정신건강복지센터(이름 불일치), 부산청소년활동진흥센터(자체 서명)

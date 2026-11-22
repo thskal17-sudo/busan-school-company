@@ -27,8 +27,16 @@ def extends(full: str, short: str) -> bool:
     return _squash(full).startswith(_squash(_ELLIPSIS.sub("", short or "")))
 
 
-def page_soup(content: bytes | str) -> BeautifulSoup:
+def make_soup(content: bytes | str) -> BeautifulSoup:
+    """lxml 로 읽는다. 주석 처리된 meta 의 틀린 문자셋(예: EUC-KR) 때문에 문서가 통째로 비면 UTF-8 로 다시 읽는다."""
     soup = BeautifulSoup(content, "lxml")
+    if isinstance(content, bytes) and content.strip() and soup.find() is None:
+        soup = BeautifulSoup(content, "lxml", from_encoding="utf-8")
+    return soup
+
+
+def page_soup(content: bytes | str) -> BeautifulSoup:
+    soup = make_soup(content)
     for tag in soup(["script", "style", "nav", "header", "footer"]):
         tag.decompose()
     return soup
