@@ -66,7 +66,7 @@ def test_fix_deadlines_by_url(tmp_path):
 def test_expiring_board_uses_lasting_twin_link(tmp_path):
     """부산시청 통합 채용정보는 마감 뒤 글을 내린다. 같은 공고가 여성회관 공지에도 있으면 그 주소를 원문 링크로 쓴다 (2026-11-05)."""
     from busan_jobs.config import Source
-    from busan_jobs.pipeline import prefer_lasting_links
+    from busan_jobs.pipeline import prefer_original_links
 
     store = Store(tmp_path / "db.sqlite")
     title = "2027년 상반기 여성회관 교육강사 모집 공고"
@@ -81,20 +81,20 @@ def test_expiring_board_uses_lasting_twin_link(tmp_path):
     sources = [Source(id="city_jobs", name="시청", collector="generic_board", options={"link_expires": True}),
                Source(id="pen_school_hire", name="교육청", collector="generic_board")]
     postings = [city, other]
-    assert prefer_lasting_links(postings, store, sources) == 1
+    assert prefer_original_links(postings, store, sources) == 1
     assert city.url == "https://www.busan.go.kr/woman/whnotice/1759884"
     assert other.url == "https://example.org/pen_school_hire/1"  # 마감 뒤에도 남는 게시판은 그대로
 
 
 def test_expiring_board_without_twin_keeps_link(tmp_path):
     from busan_jobs.config import Source
-    from busan_jobs.pipeline import prefer_lasting_links
+    from busan_jobs.pipeline import prefer_original_links
 
     store = Store(tmp_path / "db.sqlite")
     city = _p("city_jobs", "9", "부산광역시 여성문화회관 문화교실 강사 공개모집 공고")
     store.upsert(city, NOW)
     sources = [Source(id="city_jobs", name="시청", collector="generic_board", options={"link_expires": True})]
-    assert prefer_lasting_links([city], store, sources) == 0
+    assert prefer_original_links([city], store, sources) == 0
     assert city.url == "https://example.org/city_jobs/9"
 
 
@@ -109,3 +109,28 @@ def test_close_if_open_closes_stored_recruit_only(tmp_path):
     assert store.close_if_open(p.uid) == p.title
     assert store.detail_state(p.uid)[2] == CLOSED
     assert store.close_if_open(p.uid) is None  # 이미 닫힘
+
+
+def test_relay_board_prefers_original_board_link(tmp_path):
+    """모음 게시판(부산일자리정보망 등)에 먼저 잡힌 공고는 원래 기관 게시판 주소를 원문으로 쓴다.
+    다른 모음 게시판의 주소로는 바꾸지 않는다."""
+    from busan_jobs.config import Source
+    from busan_jobs.pipeline import prefer_original_links
+
+    store = Store(tmp_path / "db.sqlite")
+    title = "2027년 동래구 평생학습관 프로그램 강사 모집 공고"
+    job = Posting("busanjob_public", title, "https://www.busanjob.net/view.do?id=1", "1", "동래구청",
+                  district="부산 동래구", posted_date=date(2026, 11, 20))
+    city = Posting("city_jobs", title, "https://www.busan.go.kr/depart/jobgonji01/2", "2", "동래구청",
+                   district="부산 동래구", posted_date=date(2026, 11, 20))
+    store.upsert(job, NOW)
+    store.upsert(city, NOW)  # 다른 모음 게시판 → '중복'
+    sources = [Source(id="busanjob_public", name="일자리정보망", collector="generic_board", options={"relay": True}),
+               Source(id="city_jobs", name="시청", collector="generic_board", options={"link_expires": True}),
+               Source(id="lll_dongnae", name="동래구 평생학습", collector="generic_board")]
+    assert prefer_original_links([job], store, sources) == 0  # 모음끼리는 바꾸지 않음
+    own = Posting("lll_dongnae", title, "https://www.dongnae.go.kr/lll/notice/3", "3", "동래구청",
+                  district="부산 동래구", posted_date=date(2026, 11, 21))
+    store.upsert(own, NOW)  # 기관 게시판 → '중복'
+    assert prefer_original_links([job], store, sources) == 1
+    assert job.url == "https://www.dongnae.go.kr/lll/notice/3"

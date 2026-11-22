@@ -6,6 +6,8 @@
 # - keyword_filter: 강사 전용 게시판이면 false (모든 글 수집), 일반 게시판이면 true (강사 키워드로 거름).
 # - options: 수집기별 설정 (page_param: 페이지 번호 파라미터, key_param: 게시글 번호 파라미터 등).
 #   자세한 설명은 src/busan_jobs/collectors/board.py 머리말 참고.
+#   relay: true 는 다른 기관 공고를 옮겨 싣는 모음 게시판(시청 통합 채용정보·일자리정보망·잡알리오 등). 같은 공고가 원래 기관
+#   게시판에도 잡히면 메일·강사잇다 양식의 원문 링크로 기관 게시판 주소를 쓴다 (link_expires 도 모음 게시판으로 친다).
 # - 해외 서버(GitHub 러너) 접속을 막는 사이트는 enabled: false 로 두고 blocked 에 까닭을 적었다.
 #
 # 새 소스를 추가할 때는 먼저 진단 도구로 구조를 확인한다:
@@ -30,6 +32,8 @@ sources:
     phase: 1
     enabled: true
     verified: false
+    options:
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: cleaneye_api
     name: 클린아이 채용정보 Open API (지방공기업·출자출연기관)
@@ -44,6 +48,8 @@ sources:
     phase: 1
     enabled: true
     verified: true
+    options:
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: gojobs_list
     name: 나라일터 모집공고 (부산 지역, 인사혁신처 Open API)
@@ -64,6 +70,7 @@ sources:
     options:
       days: 14
       max_pages: 20
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: alio_recruit
     name: 잡알리오 공공기관 채용정보 (근무지 부산, 재정경제부 Open API)
@@ -81,6 +88,8 @@ sources:
     phase: 1
     enabled: true
     verified: true
+    options:
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # ─────────────────────────────── 교육청·학교
   # 부산교육청 게시판(na/ntt)은 제목 링크가 <a class="nttInfoBtn" data-id="글번호"> 이고 상세는 selectNttInfo.do 로 GET 으로 열린다
@@ -282,7 +291,7 @@ sources:
     options:
       page_param: curPage
       org_prefix: 부산광역시
-      # 모집이 끝나면 글을 내린다(원문 주소가 목록 화면이 됨). 같은 공고가 부서 게시판에도 있으면 그 주소를 원문 링크로 쓴다
+      # 모집이 끝나면 글을 내린다(원문 주소가 목록 화면이 됨). 모음 게시판(relay)으로 치고, 같은 공고가 부서 게시판에도 있으면 그 주소를 원문 링크로 쓴다
       link_expires: true
 
   - id: city_jobs_other
@@ -3101,6 +3110,7 @@ sources:
       date_selector: ".date"
       link_template: "{1}"
       include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]  # '청소년지도사 채용'(직원)은 거름
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: youth_assoc_hire
     name: 부산광역시청소년수련시설협회 - 채용공고 (회원 수련관·문화의집·청소년센터 채용 모음)
@@ -3118,6 +3128,7 @@ sources:
       key_param: idx
       include: [강사, 코치, 트레이너, 튜터, 활동지도자, 멘토]
       org_name: 부산광역시청소년수련시설협회
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # 청소년성문화센터·청소년종합지원센터 (사상구 모덕로 82 청소년종합지원센터 건물). 같은 게시판 프로그램(bbs_shop)
   - id: youth_say_notice
@@ -3722,6 +3733,7 @@ sources:
     options:
       # 작성자 칸이 올린 기관(○○지역아동센터·○○구청)이라 기관명으로 쓴다
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 아동복지교사, 기초학습, 특기적성]  # 생활복지사·센터장·조리사 등 종사자 채용은 거름
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: icare_busan_hire
     name: 아동권리보장원 - 지역아동센터 구인게시판 (부산)
@@ -3839,6 +3851,7 @@ sources:
       title_org_pattern: "^\\[([^\\]]+센터)\\]"  # '[영도구육아종합지원센터] 행정원 채용 공고'
       org_name: 부산광역시육아종합지원센터
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: childcare_daycare_joboffer
     name: 부산육아종합지원센터 - 인력뱅크 어린이집 구인 (부산 어린이집 채용 모음)
@@ -3863,6 +3876,7 @@ sources:
       link_template: "https://busan.childcare.go.kr/ccef/job/JobOfferSl.jsp?flag=Sl&JOSEQ={0}"
       key_param: JOSEQ
       include: [강사, 튜터, 코치, 지도자, 인력풀, 특별활동]
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: childcare_sasang_notice
     name: 사상구육아종합지원센터 - 공지사항
@@ -4089,6 +4103,7 @@ sources:
     options:
       # 작성자 칸이 올린 복지관이라 기관명으로 쓴다
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]  # 사회복지사·요양보호사·조리원 등 종사자 채용은 거름 ('늘봄실버요양센터' 때문에 늘봄은 뺌)
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: bswin_job
     name: 부산광역시사회복지협의회 - 취업정보 (복지관·요양·아동 시설 채용 모음)
@@ -4109,6 +4124,7 @@ sources:
       key_param: idx
       title_org_pattern: '^\[([^\]]+)\]'  # 제목 앞 [기관명]
       include: [강사, 코치, 트레이너, 튜터, 멘토, 지도자, 강습, 방과후]  # 사회복지사·요양보호사·조리원 등 종사자 채용은 거름 ('늘봄실버요양센터' 때문에 늘봄은 뺌)
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # 종합사회복지관 55곳 (부산시사회복지관협회 회원기관 목록의 누리집). 협회 구인게시판에 안 올리고 자기 누리집에만 올리는
   # 프로그램 강사 모집('웰빙댄스 강사', '웃음치료 강사', '스마트폰 교육 강사')이 있어 공지·채용 게시판을 함께 받는다.
@@ -5847,6 +5863,7 @@ sources:
       title_org_pattern: "(부산(?:광역)?시\\s?(?:건강가정지원센터|아이돌봄광역지원센터|일생활균형지원센터|여성폭력방지종합지원센터))"
       org_name: 부산여성가족과평생교육진흥원
       include: [강사, 튜터, 멘토, 코치, 지도자, 인력풀]
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   - id: bgli_other
     name: 부산여성가족과평생교육진흥원 - 타기관 소식 (여성인력개발센터 등)
@@ -5861,6 +5878,7 @@ sources:
     verified: true
     options:
       key_param: board_seq
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # 가족센터·다문화가족지원센터: 구·군 센터 누리집(*.familynet.or.kr)은 러너 접속을 '400 Request Blocked' 로 막아서(robots.txt 까지)
   # 센터 채용 공고가 모이는 다누리(다문화가족지원포털) 채용정보를 부산(area=A002)으로 걸러 받는다
@@ -5887,6 +5905,7 @@ sources:
       org_name: 부산 가족센터
       # 사회복지사·아이돌봄·통번역 인력 채용이 많아 강사·지도사(언어발달·방문교육) 글만
       include: [강사, 지도사, 튜터, 멘토, 코치, 인력풀]
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # ─────────────────────────────── 시 출자·출연기관, 부산 일자리 사이트
   - id: bepa_hire
@@ -5958,6 +5977,7 @@ sources:
       org_selector: ".org"
       link_template: "https://www.busanjob.net/view.do?no=1309&pgMode=show&id={0}"
       key_param: id
+      relay: true  # 다른 기관 공고를 옮겨 싣는 모음 게시판: 원래 기관 게시판에도 있으면 그 주소를 원문 링크로
 
   # 국가 공공기관 지역 기관·부산시 출연기관 게시판 (2026-11-22 국내 중계로 확인). 클린아이·잡알리오에는 정규직 채용만 올라오고
   # 강사 위촉·외부강사 모집은 기관 게시판에만 올라오는 곳
