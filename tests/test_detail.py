@@ -199,3 +199,27 @@ def test_deadline_is_found_next_run_when_detail_was_blocked(tmp_path, rules, mon
     collect_all([src], rules, store, NoHttp(), now)
     assert store.detail_state(uid)[0] == date(2026, 10, 2)
     store.close()
+
+
+def test_page_soup_ignores_commented_out_wrong_charset():
+    """주석 속 meta 의 EUC-KR 때문에 UTF-8 문서가 통째로 비지 않아야 한다 (장애인고용공단 게시판)."""
+    from datetime import date as _date
+
+    from busan_jobs.collectors.board import parse_board
+
+    html = (
+        '<html><head><!-- <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR"> --></head>'
+        "<body><table><tr><th>번호</th><th>제목</th><th>등록일</th></tr>"
+        "<tr><td>1</td><td><a href=\"javascript:void(0);\" onClick=\"fn_bbsView('215258');\">"
+        "[부산직업능력개발원] 2026년 PLC분야 외부강사 모집 공고(~8.14.)</a></td><td>2026-08-04</td></tr>"
+        "</table></body></html>"
+    ).encode("utf-8")
+    assert "외부강사" in page_soup(html).get_text()
+    rows = parse_board(
+        html,
+        "https://www.kead.or.kr/developmental/bbs/exrecru/bbsPage.do?menuId=MENU1079",
+        {"link_template": "https://www.kead.or.kr/campus/bbs/exrecru/bbsView.do?bbsCnId={0}&menuId=MENU1079"},
+        _date(2026, 8, 5),
+    )
+    assert [r.title for r in rows] == ["[부산직업능력개발원] 2026년 PLC분야 외부강사 모집 공고(~8.14.)"]
+    assert rows[0].url.endswith("bbsCnId=215258&menuId=MENU1079")

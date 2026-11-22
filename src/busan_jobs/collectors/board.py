@@ -46,6 +46,7 @@ from bs4 import BeautifulSoup, Tag
 
 from ..classify import infer_district
 from ..dates import extract_deadline, has_full_date, parse_date
+from ..detail import make_soup
 from ..models import Posting
 from .base import Collector
 
@@ -347,7 +348,7 @@ def _form_url(soup: BeautifulSoup, onclick: str, base_url: str) -> tuple[str, st
 def parse_board(html: bytes | str, base_url: str, opts: dict, today: date) -> list[BoardRow]:
     if opts.get("encoding") and isinstance(html, bytes):
         html = html.decode(opts["encoding"], errors="replace")
-    soup = BeautifulSoup(html, "lxml")
+    soup = make_soup(html)
     base_tag = soup.find("base", href=True)
     if opts.get("link_base"):
         base_url = opts["link_base"]
