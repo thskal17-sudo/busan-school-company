@@ -114,18 +114,21 @@ class Store:
                 return r["uid"]
         return None
 
-    def lasting_twin_url(self, p: Posting) -> str | None:
-        """다른 게시판에 '중복'으로 저장된 같은 공고의 원문 주소 (없으면 None).
+    def original_twin_url(self, p: Posting, relay_sources: set[str] | frozenset[str] = frozenset()) -> str | None:
+        """다른 게시판에 '중복'으로 저장된 같은 공고의 원문 주소 (없으면 None). 다른 모음 게시판(relay_sources)의 주소는 쓰지 않는다.
 
-        부산시청 통합 채용정보(depart/jobgonji01)는 모집이 끝나면 글을 내려서, 원문 주소를 열면 목록 화면이 나온다
-        (2026-11-05 '2027년 상반기 여성회관 교육강사 모집 공고'). 같은 공고가 부서 게시판(여성회관 공지 등)에도 있으면
-        그쪽은 마감 뒤에도 남으므로, 강사잇다 원문 링크로는 그 주소를 쓴다 (pipeline.prefer_lasting_links).
+        부산시청 통합 채용정보·부산일자리정보망·잡알리오 같은 모음 게시판은 기관 게시판의 글을 옮겨 싣는다. 모음 쪽을 먼저 보면
+        기관 게시판의 같은 글이 '중복'이 되는데, 원문 링크로는 기관 게시판 주소가 낫다. 모음 쪽은 모집이 끝나면 글을 내리기도 한다
+        (2026-11-05 '2027년 상반기 여성회관 교육강사 모집 공고': 시청 주소는 목록 화면, 여성회관 공지는 남음). pipeline.prefer_original_links
         """
         rows = self.conn.execute(
-            "SELECT title, district, posted_date, url FROM postings WHERE source_id != ? AND status = ? AND url != ''",
+            "SELECT source_id, title, district, posted_date, url FROM postings WHERE source_id != ? AND status = ? AND url != ''"
+            " ORDER BY first_seen_at",
             (p.source_id, DUPLICATE),
         )
         for r in rows:
+            if r["source_id"] in relay_sources:
+                continue
             if _same_posting(p, r["title"], r["district"], _d(r["posted_date"])):
                 return r["url"]
         return None

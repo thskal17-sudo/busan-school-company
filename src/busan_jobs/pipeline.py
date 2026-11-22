@@ -340,15 +340,16 @@ def run(
         closing_soon = [
             p for p in active if p.deadline is not None and 0 <= (p.deadline - today).days <= rules.closing_soon_days
         ]
+        # 모음 게시판(시청 통합 채용정보·일자리정보망 등)에서 받은 공고는 원래 기관 게시판 주소를 원문 링크로
+        swapped = prefer_original_links(new, store, settings.sources) + prefer_original_links(active, store, settings.sources)
+        if swapped:
+            log.info("모음 게시판 공고의 원문 링크 %d건을 원래 기관 게시판 주소로 바꿈", swapped)
         suffix = "_보충" if catch_up else ""
         # 수집현황까지 담은 보고서는 Actions 보관용, 메일에는 강사잇다 올리기 양식을 붙인다
         report_path = build_report(
             out_dir / f"부산_강사구인_{today.isoformat()}{suffix}.xlsx",
             today, new, closing_soon, active, results, source_names,
         )
-        swapped = prefer_lasting_links(active, store, settings.sources)
-        if swapped:
-            log.info("마감 뒤 내려가는 게시판의 원문 링크 %d건을 부서 게시판 주소로 바꿈", swapped)
         upload_path = build_gangsaitda(
             out_dir / f"강사잇다_부산_{today.isoformat()}{suffix}.xlsx", active, source_names, _template(config_dir)
         )
@@ -382,15 +383,20 @@ def run(
         store.close()
 
 
-def prefer_lasting_links(postings: list[Posting], store: Store, sources) -> int:
-    """마감 뒤 글을 내리는 게시판(options.link_expires)의 공고는, 같은 공고가 다른 게시판에도 있으면 그 주소를 원문으로 쓴다.
-    바꾼 공고 수 (Store.lasting_twin_url 참고)."""
-    expiring = {s.id for s in sources if (s.options or {}).get("link_expires")}
+def relay_source_ids(sources) -> set[str]:
+    """다른 기관 공고를 옮겨 싣는 모음 게시판 (options.relay, 또는 마감 뒤 글을 내리는 options.link_expires)."""
+    return {s.id for s in sources if (s.options or {}).get("relay") or (s.options or {}).get("link_expires")}
+
+
+def prefer_original_links(postings: list[Posting], store: Store, sources) -> int:
+    """모음 게시판의 공고는, 같은 공고가 원래 기관 게시판에도 있으면 그 주소를 원문으로 쓴다.
+    바꾼 공고 수 (Store.original_twin_url 참고). 메일·보고서·강사잇다 양식 모두 이 주소를 쓴다."""
+    relay = relay_source_ids(sources)
     swapped = 0
     for p in postings:
-        if p.source_id not in expiring:
+        if p.source_id not in relay:
             continue
-        url = store.lasting_twin_url(p)
+        url = store.original_twin_url(p, relay)
         if url and url != p.url:
             p.url = url
             swapped += 1
