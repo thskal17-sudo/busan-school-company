@@ -575,7 +575,7 @@ sources:
     org_type: 지자체
     district: 동구
     collector: generic_board
-    url: https://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000307&menuCd=DOM_000000104004011002
+    url: https://www.bsdonggu.go.kr/board/list.donggu?boardId=BBS_0000307&menuCd=DOM_000000103001015000  # 2026-11 메뉴 개편으로 menuCd 바뀜 (옛 주소는 404 화면, 11-07부터 0건)
     pages: 1
     keyword_filter: true
     phase: 2
